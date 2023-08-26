@@ -1,9 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CarritoDeComprasService } from './carrito-de-compras.service';
 
 @ApiTags('Carrito de compras')
 @Controller('carrito-de-compras')
 export class CarritoDeComprasController {
+
+    constructor(private readonly carritoDeComprasService: CarritoDeComprasService) { }
+
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
@@ -18,6 +22,6 @@ export class CarritoDeComprasController {
     @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getCarritoDeCompras(): string {
-        return 'Carrito de compras';
+        return this.carritoDeComprasService.getCarritoDeCompras();
     }
 }

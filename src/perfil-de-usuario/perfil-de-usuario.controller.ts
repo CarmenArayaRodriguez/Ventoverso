@@ -1,9 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PerfilDeUsuarioService } from './perfil-de-usuario.service';
 
 @ApiTags('Perfil de usuario')
 @Controller('perfil-de-usuario')
 export class PerfilDeUsuarioController {
+
+    constructor(private readonly perfilDeUsuarioService: PerfilDeUsuarioService) { }
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
@@ -18,6 +21,6 @@ export class PerfilDeUsuarioController {
     @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getPerfilDeUsuario(): string {
-        return 'Perfil de usuario';
+        return this.perfilDeUsuarioService.getPerfilDeUsuario();
     }
 }

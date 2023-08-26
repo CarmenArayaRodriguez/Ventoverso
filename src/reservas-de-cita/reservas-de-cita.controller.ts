@@ -1,9 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ReservasDeCitaService } from './reservas-de-cita.service';
 
 @ApiTags('Reservas de cita')
 @Controller('reservas-de-cita')
 export class ReservasDeCitaController {
+
+    constructor(private readonly reservasDeCitaService: ReservasDeCitaService) { }
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
@@ -18,6 +21,6 @@ export class ReservasDeCitaController {
     @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getReservasDeCita(): string {
-        return 'Reservas de cita';
+        return this.reservasDeCitaService.getReservasDeCita();
     }
 }

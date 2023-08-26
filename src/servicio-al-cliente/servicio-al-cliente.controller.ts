@@ -1,9 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ServicioAlClienteService } from './servicio-al-cliente.service';
 
 @ApiTags('Servicio al cliente')
 @Controller('servicio-al-cliente')
 export class ServicioAlClienteController {
+
+    constructor(private readonly servicioAlClienteService: ServicioAlClienteService) { }
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
@@ -18,6 +21,6 @@ export class ServicioAlClienteController {
     @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getServicioAlCliente(): string {
-        return 'Servicio al cliente';
+        return this.servicioAlClienteService.getServicioAlCliente();
     }
 }

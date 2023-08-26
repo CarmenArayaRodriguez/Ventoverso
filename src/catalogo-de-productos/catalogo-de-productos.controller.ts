@@ -1,9 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CatalogoDeProductosService } from './catalogo-de-productos.service';
 
 @ApiTags('Catalogo de productos')
 @Controller('catalogo-de-productos')
 export class CatalogoDeProductosController {
+
+    constructor(private readonly catalogoDeProductosService: CatalogoDeProductosService) { }
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
@@ -18,6 +21,6 @@ export class CatalogoDeProductosController {
     @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getCatalogoDeProduductos(): string {
-        return 'Catálogo de productos';
+        return this.catalogoDeProductosService.getCatalogoDeProductos();
     }
 }

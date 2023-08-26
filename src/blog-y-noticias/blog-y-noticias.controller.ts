@@ -1,9 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { BlogYNoticiasService } from './blog-y-noticias.service';
 
 @ApiTags('Blog y noticias')
 @Controller('blog-y-noticias')
 export class BlogYNoticiasController {
+
+    constructor(private readonly blogYNoticiasService: BlogYNoticiasService) { }
+
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
@@ -18,6 +22,6 @@ export class BlogYNoticiasController {
     @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getBlogYNoticias(): string {
-        return 'Blog y noticias';
+        return this.blogYNoticiasService.getBlogYNoticias();
     }
 }
