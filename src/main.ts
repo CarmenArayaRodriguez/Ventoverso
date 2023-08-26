@@ -8,8 +8,12 @@ async function bootstrap() {
   const nombreProyecto = process.env.npm_package_name;
   const versionProyecto = process.env.npm_package_version;
 
+  //const packageJson = require('../package.json');
+  //const descripcionProyecto = packageJson.description;
+
   let documentBuilder = new DocumentBuilder()
     .setTitle(nombreProyecto)
+    // .setDescription(descripcionProyecto)
     .setDescription('Tienda virtual de venta de instrumentos musicales de viento')
     .setVersion(versionProyecto)
     .build();
