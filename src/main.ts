@@ -17,6 +17,7 @@ async function bootstrap() {
   //const packageJson = require('../package.json');
   //const descripcionProyecto = packageJson.description;
 
+  //CONFIGURACION DE SWAGGER GENERAL
   let documentBuilder = new DocumentBuilder()
     .setTitle(nombreProyecto)
     // .setDescription(descripcionProyecto)
@@ -26,6 +27,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, documentBuilder);
   SwaggerModule.setup('docs', app, document);
 
+  
+   //CONFIGURACION SWAGGER Blog y Noticias
   const blogYNoticiasOptions = new DocumentBuilder()
     .setTitle('Ventoverso Blog y noticias API')
     .setDescription('API para el módulo de Blog y noticias')
@@ -36,6 +39,7 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/blog-y-noticias', app, blogYNoticiasDocument);
 
+  //CONFIGURACION SWAGGER Carrito de Compras 
   const carritoDeComprasOptions = new DocumentBuilder()
     .setTitle('Ventoverso Carrito de compras API')
     .setDescription('API para el módulo de Carrito de compras')
@@ -46,6 +50,7 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/carrito-de-compras', app, carritoDeComprasDocument);
 
+  //CONFIGURACION SWAGGER Catalogo de Productos
   const catalogoDeProductosOptions = new DocumentBuilder()
     .setTitle('Ventoverso Catálogo de productos API')
     .setDescription('API para el módulo de Catálogo de productos')
@@ -56,6 +61,7 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/catalogo-de-productos', app, catalogoDeProductosDocument);
 
+  //CONFIGURACION SWAGGER Perfil de usuario
   const perfilDeUsuarioOptions = new DocumentBuilder()
     .setTitle('Ventoverso Perfil de usuario API')
     .setDescription('API para el módulo de Perfil de usuario')
@@ -66,6 +72,7 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/perfil-de-usuario', app, perfilDeUsuarioDocument);
 
+  //CONFIGURACION SWAGGER Reserva de Citas
   const reservasDeCitaOptions = new DocumentBuilder()
     .setTitle('Ventoverso Reservas de cita API')
     .setDescription('API para el módulo de Reservas de cita')
@@ -76,6 +83,7 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/reservas-de-cita', app, reservasDeCitaDocument);
 
+  //CONFIGURACION SWAGGER Servicio al Cliente
   const servicioAlClienteOptions = new DocumentBuilder()
     .setTitle('Ventoverso Servicio al cliente API')
     .setDescription('API para el módulo de Servicio al cliente')
