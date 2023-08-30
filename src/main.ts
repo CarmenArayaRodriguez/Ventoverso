@@ -11,24 +11,7 @@ import { ServicioAlClienteModule } from './servicio-al-cliente/servicio-al-clien
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const nombreProyecto = process.env.npm_package_name;
-  const versionProyecto = process.env.npm_package_version;
-
-  //const packageJson = require('../package.json');
-  //const descripcionProyecto = packageJson.description;
-
-  //CONFIGURACION DE SWAGGER GENERAL
-  let documentBuilder = new DocumentBuilder()
-    .setTitle(nombreProyecto)
-    // .setDescription(descripcionProyecto)
-    .setDescription('Tienda virtual de venta de instrumentos musicales de viento')
-    .setVersion(versionProyecto)
-    .build();
-  const document = SwaggerModule.createDocument(app, documentBuilder);
-  SwaggerModule.setup('docs', app, document);
-
-  
-   //CONFIGURACION SWAGGER Blog y Noticias
+  //CONFIGURACION SWAGGER Blog y Noticias
   const blogYNoticiasOptions = new DocumentBuilder()
     .setTitle('Ventoverso Blog y noticias API')
     .setDescription('API para el módulo de Blog y noticias')
