@@ -79,7 +79,6 @@ async function bootstrap() {
   SwaggerModule.setup('docs/servicio-al-cliente', app, servicioAlClienteDocument);
 
   app.useGlobalPipes(new ValidationPipe());
-
   await app.listen(3000);
 }
 bootstrap();
