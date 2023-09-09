@@ -7,6 +7,7 @@ import { CatalogoDeProductosModule } from './catalogo-de-productos/catalogo-de-p
 import { PerfilDeUsuarioModule } from './perfil-de-usuario/perfil-de-usuario.module';
 import { ReservasDeCitaModule } from './reservas-de-cita/reservas-de-cita.module';
 import { ServicioAlClienteModule } from './servicio-al-cliente/servicio-al-cliente.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -76,6 +77,8 @@ async function bootstrap() {
     include: [ServicioAlClienteModule],
   });
   SwaggerModule.setup('docs/servicio-al-cliente', app, servicioAlClienteDocument);
+
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(3000);
 }
