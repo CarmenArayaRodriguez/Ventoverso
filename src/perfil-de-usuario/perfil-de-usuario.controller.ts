@@ -1,6 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PerfilDeUsuarioService } from './perfil-de-usuario.service';
+import { AgregarFavoritoDTO } from './producto-favorito/dto/agregar-favorito.dto';
+import { Favorito } from './producto-favorito/entities/favorito.entity';
 
 @ApiTags('Perfil de usuario')
 @Controller('perfil-de-usuario')
@@ -11,16 +13,24 @@ export class PerfilDeUsuarioController {
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
     @ApiResponse({ status: 200, description: 'La solicitud se ha procesado con éxito y la información solicitada se encuentra en la respuesta.' })
-    @ApiResponse({ status: 201, description: 'Recurso creado exitosamente.' })
-    @ApiResponse({ status: 202, description: 'La solicitud ha sido aceptada para su procesamiento, pero este no ha sido completado.' })
-    @ApiResponse({ status: 400, description: 'Solicitud incorrecta. Los parámetros proporcionados pueden estar mal formados o faltar.' })
-    @ApiResponse({ status: 401, description: 'No autorizado. El usuario necesita autenticarse para obtener permiso para responder a la solicitud.' })
-    @ApiResponse({ status: 402, description: 'Pago requerido. Se debe realizar un pago para acceder al recurso.' })
-    @ApiResponse({ status: 404, description: 'El recurso solicitado no se encontró.' })
-    @ApiResponse({ status: 500, description: 'Error interno del servidor. Algo salió mal en el servidor al procesar la solicitud.' })
-    @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
 
     getPerfilDeUsuario(): string {
         return this.perfilDeUsuarioService.getPerfilDeUsuario();
     }
+
+    @Post('favorito')
+    agregarFavorito(@Body() agregarFavoritoDTO: AgregarFavoritoDTO) {
+        return this.perfilDeUsuarioService.agregarFavorito(agregarFavoritoDTO);
+    }
+
+    @Delete('favorito/:id')
+    eliminarFavorito(@Param('id') id: string) {
+        return this.perfilDeUsuarioService.eliminarFavorito(id);
+    }
+
+    @Get('favoritos')
+    obtenerTodosFavoritos(): Favorito[] {
+        return this.perfilDeUsuarioService.obtenerTodosFavoritos();
+    }
+
 }
