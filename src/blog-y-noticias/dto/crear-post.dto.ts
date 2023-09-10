@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
 
 export class CrearPostDTO {
@@ -15,9 +16,10 @@ export class CrearPostDTO {
 
     @ApiProperty({ description: 'Fecha de publicación del post' })
     @IsDate()
+    @Transform(({ value }) => new Date(value))
     fechaPublicacion: Date;
 
     @ApiProperty({ description: 'ID del autor del post' })
-    @IsNumber()
+    @IsString()
     autorId: string;
 }
