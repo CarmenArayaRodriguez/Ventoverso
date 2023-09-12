@@ -16,6 +16,7 @@ export class Usuario {
     
     @ApiProperty()
     password: string;
+    dv: string;
 
 }
 

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import {IsNotEmpty, IsString } from 'class-validator';
+import {IsNotEmpty, IsString ,isNumber} from 'class-validator';
 
 
 
@@ -15,12 +15,28 @@ export class CrearUsuarioDTO {
     @IsNotEmpty()
     apellido: string;
 
-    @ApiProperty({ description: 'Rut del usuario' })
+    @ApiProperty({ description: 'Rut del usuario que se va a crear sin punto ni Digito verificador',
+    example: '12444356'
+    })
     @IsNotEmpty()
-    rut: string
+    rut :number;
+
+    @ApiProperty({
+        description: 'Digito verificador del rut de usuario a editar',
+        example: '5'
+    })
+    dv :number;
 
     @ApiProperty({ description: 'e-mail del usuario' })
     @IsNotEmpty()
-    email :string
+    email :string;
+    
+
+    @ApiProperty({ description: 'Password Usuario' })
+    @IsNotEmpty()
+    password :string;
+    
+
+
     
 }
