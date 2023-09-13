@@ -1,6 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get,Post,Delete,Param,Body} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CatalogoDeProductosService } from './catalogo-de-productos.service';
+import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-producto-destacado.dto';
+import { Destacado } from './producto-destacado/entities/destacado.entity';
 
 @ApiTags('Catalogo de productos')
 @Controller('catalogo-de-productos')
@@ -23,4 +25,27 @@ export class CatalogoDeProductosController {
     getCatalogoDeProduductos(): string {
         return this.catalogoDeProductosService.getCatalogoDeProductos();
     }
+
+    @Post('destacado')
+    agregarDestacado(@Body() agregarDestacadoDTO: AgregarDestacadoDTO) {
+        return this.catalogoDeProductosService.agregarDestacado(agregarDestacadoDTO);
+    }
+
+    @Delete('destacado/:id')
+    eliminarDestacado(@Param('id') id: string) {
+        return this.catalogoDeProductosService.eliminarDestacado(id);
+    }
+
+    //@Get('favoritos')
+    //obtenerTodosDestacados(): Destacado[] {
+      //  return this.catalogoDeProductosService.obtenerTodosDestacado();
+   // }
+
+
+
+
+
+
+
+
 }
