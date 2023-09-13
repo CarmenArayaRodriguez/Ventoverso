@@ -16,6 +16,7 @@ export class PerfilDeUsuarioService {
         return 'Perfil de usuario';
     }
 
+
 // Producto Favorito xxxxxxxxxxxxxxx
 
     agregarFavorito(agregarFavoritoDTO: AgregarFavoritoDTO) {
@@ -53,9 +54,11 @@ export class PerfilDeUsuarioService {
 
         return { mensaje: 'Nuevo usuario creado corrcetamente', rut: crearUsuarioDTO.rut ,dv: crearUsuarioDTO.dv };
     }
-
     
-    eliminarUsuario(rut: number , dv:number) {
+    
+
+
+        eliminarUsuario(rut: number , dv:number) {
         return { mensaje: `El usuario rut ${rut} ha sido eliminado.` };
     }
 

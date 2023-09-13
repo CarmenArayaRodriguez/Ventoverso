@@ -5,6 +5,7 @@ import { AgregarFavoritoDTO } from './producto-favorito/dto/agregar-favorito.dto
 import { Favorito } from './producto-favorito/entities/favorito.entity';
 import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto';
 import { EditarPostDTO } from 'src/blog-y-noticias/dto/editar-post.dto';
+import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
 
 @ApiTags('Perfil de usuario')
 @Controller('perfil-de-usuario')
@@ -51,18 +52,23 @@ export class PerfilDeUsuarioController {
    /* @Put('/:rut,/:dv')
     @ApiOperation({ summary: 'Editar un Usuario' })
     @ApiResponse({ status: 200, description: 'Usuario se modifico corectamente.' })
-    editar(@Param('rut,dv') rut: number,dv: number, @Body() editarUsuarioDto: EditarPostDTO): string {
+    editar(@Param('rut') rut: number,@Param('dv') dv: number, @Body() editarUsuarioDto: EditarUsuarioDTO): string {
         return this.perfilDeUsuarioService.editarUsuario(editarUsuarioDto);
     }
 */
+
+
+
+
+
     @Delete('/:rut,/:dv')
     @ApiOperation({ summary: 'Elimiar un Usuario' })
     @ApiResponse({ status: 200, description: 'Usuario sha sido eliminado.'})
-    eliminarUsuario(@Param('rut,dv') rut: number, dv:number) {
+    eliminarUsuario(@Param('rut') rut: number, @Param('dv') dv: number) {
         return this.perfilDeUsuarioService.eliminarUsuario(rut,dv);
     }
 
-
+    
 
 }
 
