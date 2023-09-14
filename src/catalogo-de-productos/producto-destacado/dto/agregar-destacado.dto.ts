@@ -7,3 +7,6 @@ export class AgregarDestacadoDTO {
     @IsNotEmpty()
     productoId: string;
 }
+
+
+

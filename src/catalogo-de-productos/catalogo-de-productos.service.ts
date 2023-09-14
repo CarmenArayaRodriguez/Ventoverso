@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { Destacado } from './producto-destacado/entities/destacado.entity';
-import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-producto-destacado.dto';
-import { CatalogoDeProductosController } from './catalogo-de-productos.controller';
+import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
+
+
+
 
 @Injectable()
-
-   
-
-
 export class CatalogoDeProductosService {
 
-    private destacado: Destacado[] = [];
-    Usuario: any;
+    private destacados: Destacado[] = [];
+    destacado: any;
+
     getCatalogoDeProductos(): string {
         return 'Catálogo de productos';
     }
 
-    agregarDestacado(agregarDestacadoDTO: AgregarDestacadoDTO) {
+
+agregarDestacado(agregarDestacadoDTO: AgregarDestacadoDTO) {
         const nuevoDestacado = new Destacado();
         nuevoDestacado.productoId = agregarDestacadoDTO.productoId;
-        nuevoDestacado.usuarioId = "usuario123";
+        nuevoDestacado.usuarioId = "User 9999";
         nuevoDestacado.fechaDestacado = new Date();
 
         this.destacado.push(nuevoDestacado);
@@ -38,7 +38,18 @@ export class CatalogoDeProductosService {
 
 
 
-
-
-
 }
+
+
+
+
+
+
+    
+
+   
+
+
+
+
+

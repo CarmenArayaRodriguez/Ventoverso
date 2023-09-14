@@ -1,8 +1,9 @@
 import { Controller, Get,Post,Delete,Param,Body} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CatalogoDeProductosService } from './catalogo-de-productos.service';
-import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-producto-destacado.dto';
+import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
 import { Destacado } from './producto-destacado/entities/destacado.entity';
+
 
 @ApiTags('Catalogo de productos')
 @Controller('catalogo-de-productos')
@@ -12,19 +13,10 @@ export class CatalogoDeProductosController {
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
-    @ApiResponse({ status: 200, description: 'La solicitud se ha procesado con éxito y la información solicitada se encuentra en la respuesta.' })
-    @ApiResponse({ status: 201, description: 'Recurso creado exitosamente.' })
-    @ApiResponse({ status: 202, description: 'La solicitud ha sido aceptada para su procesamiento, pero este no ha sido completado.' })
-    @ApiResponse({ status: 400, description: 'Solicitud incorrecta. Los parámetros proporcionados pueden estar mal formados o faltar.' })
-    @ApiResponse({ status: 401, description: 'No autorizado. El usuario necesita autenticarse para obtener permiso para responder a la solicitud.' })
-    @ApiResponse({ status: 402, description: 'Pago requerido. Se debe realizar un pago para acceder al recurso.' })
-    @ApiResponse({ status: 404, description: 'El recurso solicitado no se encontró.' })
-    @ApiResponse({ status: 500, description: 'Error interno del servidor. Algo salió mal en el servidor al procesar la solicitud.' })
-    @ApiResponse({ status: 503, description: 'Servicio no disponible. El servidor no puede manejar la solicitud en este momento.' })
-
     getCatalogoDeProduductos(): string {
         return this.catalogoDeProductosService.getCatalogoDeProductos();
     }
+    
 
     @Post('destacado')
     agregarDestacado(@Body() agregarDestacadoDTO: AgregarDestacadoDTO) {
@@ -34,18 +26,8 @@ export class CatalogoDeProductosController {
     @Delete('destacado/:id')
     eliminarDestacado(@Param('id') id: string) {
         return this.catalogoDeProductosService.eliminarDestacado(id);
+
     }
 
-    //@Get('favoritos')
-    //obtenerTodosDestacados(): Destacado[] {
-      //  return this.catalogoDeProductosService.obtenerTodosDestacado();
-   // }
-
-
-
-
-
-
-
-
 }
+    
