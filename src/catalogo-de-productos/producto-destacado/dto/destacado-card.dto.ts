@@ -20,7 +20,7 @@ export class DestacadoCardDTO {
     @IsNotEmpty()
     nombre: string;
 
-    @ApiProperty({ description: 'Precio del producto', example: 199.99 })
+    @ApiProperty({ description: 'Precio del producto', example: 19900 })
     @IsNumber()
     precio: number;
 }
