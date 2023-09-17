@@ -85,12 +85,13 @@ export class PerfilDeUsuarioService {
             throw new BadRequestException('Credenciales incorrectas');
         }
     }
-    crearUsuarioSimple(email: string, password: string) {
-        const nuevoUsuario = new Usuario();
-        nuevoUsuario.email = email;
-        nuevoUsuario.password = password;
-        this.usuarios.push(nuevoUsuario);
-    }
+    //Puede ser útil si decidimos que un usuario pueda registrarse solo con mail y contraseña
+    // crearUsuarioSimple(email: string, password: string) {
+    //     const nuevoUsuario = new Usuario();
+    //     nuevoUsuario.email = email;
+    //     nuevoUsuario.password = password;
+    //     this.usuarios.push(nuevoUsuario);
+    // }
 
 }
 
