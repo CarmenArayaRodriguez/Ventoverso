@@ -2,9 +2,10 @@ import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CatalogoDeProductosService } from './catalogo-de-productos.service';
 import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
-import { Destacado } from './producto-destacado/entities/destacado.entity';
 import { DestacadoCard } from './producto-destacado/entities/destacado-card.entity';
 import { DestacadoCardDTO } from './producto-destacado/dto/destacado-card.dto';
+import { CarouselItem } from './carrusel/entities/carrusel-item.entity';
+import { CarouselItemDTO } from './carrusel/dto/carrusel-item.dto';
 
 
 @ApiTags('Catalogo de productos')
@@ -27,7 +28,7 @@ export class CatalogoDeProductosController {
         type: [DestacadoCardDTO],
     })
     getDestacadoCards(): DestacadoCard[] {
-        const mockData: DestacadoCard[] = [
+        const mockDataDestacados: DestacadoCard[] = [
             {
                 id: 'id-1',
                 imagenUrl: 'https://ejemplo.com/imagen1.jpg',
@@ -70,7 +71,7 @@ export class CatalogoDeProductosController {
             }
         ];
 
-        return mockData;
+        return mockDataDestacados;
     }
 
 
@@ -85,5 +86,42 @@ export class CatalogoDeProductosController {
 
     }
 
+    @Get('carrusel')
+    @ApiOperation({ summary: 'Obtener los items del carrusel para el home' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de items del carrusel para el home.',
+        type: [CarouselItemDTO],
+    })
+    obtenerItemsCarrusel(): CarouselItem[] {
+        const mockDataCarrusel: CarouselItem[] = [
+            {
+                id: 'carousel-id-1',
+                titulo: 'Nueva Promoción de Verano',
+                descripcion: 'Disfruta de nuestros descuentos de verano en toda la tienda.',
+                imagenUrl: 'https://ejemplo.com/imagen-carousel1.jpg',
+                tipo: 'Promoción',
+                linkDetalle: 'https://ejemplo.com/promocion-verano'
+            },
+            {
+                id: 'carousel-id-2',
+                titulo: 'Lanzamiento Exclusivo: Producto X',
+                descripcion: 'Conoce el nuevo producto X, exclusivo en nuestra tienda.',
+                imagenUrl: 'https://ejemplo.com/imagen-carousel2.jpg',
+                tipo: 'Nuevo Producto',
+                linkDetalle: 'https://ejemplo.com/producto-x'
+            },
+            {
+                id: 'carousel-id-3',
+                titulo: '¡Participa en nuestro Gran Concurso de Invierno!',
+                descripcion: 'Compra cualquier producto y entra en el sorteo de un fabuloso premio. No te pierdas esta oportunidad.',
+                imagenUrl: 'https://ejemplo.com/imagen-carousel-concurso.jpg',
+                tipo: 'Concurso',
+                linkDetalle: 'https://ejemplo.com/concurso-invierno'
+            }
+        ];
+
+        return mockDataCarrusel;
+    }
 }
 
