@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsOptional, IsEnum } from "class-validator";
 
-export class CarouselItemDTO {
+export class CarouselItemResponseDTO {
     @ApiProperty({ description: 'ID del ítem del carrusel', example: 'carousel-id-1' })
     @IsString()
     id: string;

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PerfilDeUsuarioService } from './perfil-de-usuario.service';
 import { AgregarFavoritoDTO } from './producto-favorito/dto/agregar-favorito.dto';
@@ -6,7 +6,8 @@ import { Favorito } from './producto-favorito/entities/favorito.entity';
 import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto';
 import { EditarPostDTO } from 'src/blog-y-noticias/dto/editar-post.dto';
 import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
-import { IngresarDTO } from './ingresar/dto/ingresar.dto';
+import { IngresarRequestDTO } from './ingresar/dto/ingresar-request.dto';
+import { IngresarResponseDTO } from './ingresar/dto/ingresar-response.dto';
 
 @ApiTags('Perfil de usuario')
 @Controller('perfil-de-usuario')
@@ -71,13 +72,34 @@ export class PerfilDeUsuarioController {
 
     // Ingresar desde el home
 
+    // @Post('ingresar')
+    // @ApiOperation({ summary: 'Ingreso de un usuario' })
+    // @ApiBody({ type: IngresarRequestDTO })
+    // @ApiResponse({ status: 200, description: 'Usuario ingresado con éxito.' })
+    // @ApiResponse({ status: 400, description: 'Credenciales incorrectas.' })
+    // ingresar(@Body() ingresarDTO: IngresarRequestDTO) {
+    //     return this.perfilDeUsuarioService.ingresar(ingresarDTO);
+    // }
+    // @Post('ingresar')
+    // @ApiOperation({ summary: 'Ingreso de un usuario' })
+    // @ApiBody({ type: IngresarRequestDTO })
+    // @ApiResponse({ status: 200, type: IngresarResponseDTO, description: 'Usuario ingresado con éxito.' })
+    // @ApiResponse({ status: 400, description: 'Credenciales incorrectas.' })
+    // ingresar(@Body() ingresarDTO: IngresarRequestDTO): IngresarResponseDTO {
+    //     return this.perfilDeUsuarioService.ingresar(ingresarDTO);
+    // }
     @Post('ingresar')
     @ApiOperation({ summary: 'Ingreso de un usuario' })
-    @ApiBody({ type: IngresarDTO })
-    @ApiResponse({ status: 200, description: 'Usuario ingresado con éxito.' })
+    @ApiBody({ type: IngresarRequestDTO })
+    @ApiResponse({ status: 200, type: IngresarResponseDTO, description: 'Usuario ingresado con éxito.' })
     @ApiResponse({ status: 400, description: 'Credenciales incorrectas.' })
-    ingresar(@Body() ingresarDTO: IngresarDTO) {
-        return this.perfilDeUsuarioService.ingresar(ingresarDTO);
+    @HttpCode(200)
+    ingresar(@Body() ingresarDTO: IngresarRequestDTO): IngresarResponseDTO {
+        try {
+            return this.perfilDeUsuarioService.ingresar(ingresarDTO);
+        } catch (error) {
+            throw new BadRequestException('Credenciales incorrectas');
+        }
     }
 
 }
