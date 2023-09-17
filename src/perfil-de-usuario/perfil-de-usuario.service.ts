@@ -1,23 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AgregarFavoritoDTO } from './producto-favorito/dto/agregar-favorito.dto';
 import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto'; // verificar o borrar
 
 import { Favorito } from './producto-favorito/entities/favorito.entity';
 import { Usuario } from './gestion-usuario/entities/usuario.entity';
 import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
+import { IngresarDTO } from './ingresar/dto/ingresar.dto';
 
 @Injectable()
 export class PerfilDeUsuarioService {
 
     private favoritos: Favorito[] = [];
-    Usuario: any;
 
+    private usuarios: Usuario[] = [
+        {
+            email: "ejemplo@correo.com",
+            password: "tuContraseña",
+            rut: "12345678-4",
+            nombre: "Ejemplo",
+            apellido: "Apellido",
+            dv: "9"
+        }
+
+    ];
     getPerfilDeUsuario(): string {
         return 'Perfil de usuario';
     }
 
 
-// Producto Favorito xxxxxxxxxxxxxxx
+    // Producto Favorito xxxxxxxxxxxxxxx
 
     agregarFavorito(agregarFavoritoDTO: AgregarFavoritoDTO) {
         const nuevoFavorito = new Favorito();
@@ -39,7 +50,7 @@ export class PerfilDeUsuarioService {
     }
 
 
-//Gestion de usuario xxxxxxxxxxxxxxxxxxxxxxxxx
+    //Gestion de usuario xxxxxxxxxxxxxxxxxxxxxxxxx
 
 
     crearUsuario(crearUsuarioDTO: CrearUsuarioDTO) {
@@ -50,20 +61,36 @@ export class PerfilDeUsuarioService {
         nuevoUsuario.apellido = crearUsuarioDTO.apellido
         nuevoUsuario.email = crearUsuarioDTO.email
         nuevoUsuario.password = crearUsuarioDTO.password
-        this.Usuario.push(nuevoUsuario);
+        this.usuarios.push(nuevoUsuario);
 
-        return { mensaje: 'Nuevo usuario creado corrcetamente', rut: crearUsuarioDTO.rut ,dv: crearUsuarioDTO.dv };
+        return { mensaje: 'Nuevo usuario creado corrcetamente', rut: crearUsuarioDTO.rut, dv: crearUsuarioDTO.dv };
     }
-    
-    
 
 
-        eliminarUsuario(rut: number , dv:number) {
+
+
+    eliminarUsuario(rut: number, dv: number) {
         return { mensaje: `El usuario rut ${rut} ha sido eliminado.` };
     }
 
-    
 
+    //Ingresar desde el home
+
+    ingresar(ingresarDTO: IngresarDTO) {
+        const usuarioEncontrado = this.usuarios.find(usuario => usuario.email === ingresarDTO.email && usuario.password === ingresarDTO.password);
+
+        if (usuarioEncontrado) {
+            throw new HttpException({ mensaje: 'Usuario ingresado con éxito' }, HttpStatus.OK);
+        } else {
+            throw new BadRequestException('Credenciales incorrectas');
+        }
+    }
+    crearUsuarioSimple(email: string, password: string) {
+        const nuevoUsuario = new Usuario();
+        nuevoUsuario.email = email;
+        nuevoUsuario.password = password;
+        this.usuarios.push(nuevoUsuario);
+    }
 
 }
 

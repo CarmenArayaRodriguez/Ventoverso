@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString,isNotEmpty } from 'class-validator';
+import { IsEmail, IsString, isNotEmpty } from 'class-validator';
 
 export class Usuario {
     @ApiProperty()
-    rut: number;
+    rut: string;
 
     @ApiProperty()
     nombre: string;
@@ -13,7 +13,7 @@ export class Usuario {
 
     @ApiProperty()
     email: string;
-    
+
     @ApiProperty()
     password: string;
     dv: string;
