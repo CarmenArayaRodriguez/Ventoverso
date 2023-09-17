@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags, ApiBody, ApiParam } from '@nestjs/s
 import { BlogYNoticiasService } from './blog-y-noticias.service';
 import { CrearPostDTO } from './dto/crear-post.dto';
 import { EditarPostDTO } from './dto/editar-post.dto';
-import { CardDTO } from './dto/home-card.dto';
+import { CardResponseDTO } from './dto/home-card-response.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 @ApiTags('Blog y noticias')
@@ -24,10 +24,10 @@ export class BlogYNoticiasController {
     @ApiResponse({
         status: 200,
         description: 'Devuelve un conjunto de tarjetas de ejemplo.',
-        type: [CardDTO],
+        type: [CardResponseDTO],
     })
 
-    getHomeCards(): CardDTO[] {
+    getHomeCards(): CardResponseDTO[] {
         return [
             {
                 id: uuidv4(),

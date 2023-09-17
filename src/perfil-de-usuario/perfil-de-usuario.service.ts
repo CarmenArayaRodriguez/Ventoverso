@@ -5,7 +5,8 @@ import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto';
 import { Favorito } from './producto-favorito/entities/favorito.entity';
 import { Usuario } from './gestion-usuario/entities/usuario.entity';
 import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
-import { IngresarDTO } from './ingresar/dto/ingresar.dto';
+import { IngresarRequestDTO } from './ingresar/dto/ingresar-request.dto';
+import { IngresarResponseDTO } from './ingresar/dto/ingresar-response.dto';
 
 @Injectable()
 export class PerfilDeUsuarioService {
@@ -76,15 +77,29 @@ export class PerfilDeUsuarioService {
 
     //Ingresar desde el home
 
-    ingresar(ingresarDTO: IngresarDTO) {
+    // ingresar(ingresarDTO: IngresarRequestDTO) {
+    //     const usuarioEncontrado = this.usuarios.find(usuario => usuario.email === ingresarDTO.email && usuario.password === ingresarDTO.password);
+
+    //     if (usuarioEncontrado) {
+    //         throw new HttpException({ mensaje: 'Usuario ingresado con éxito' }, HttpStatus.OK);
+    //     } else {
+    //         throw new BadRequestException('Credenciales incorrectas');
+    //     }
+    // }
+
+    ingresar(ingresarDTO: IngresarRequestDTO): IngresarResponseDTO {
         const usuarioEncontrado = this.usuarios.find(usuario => usuario.email === ingresarDTO.email && usuario.password === ingresarDTO.password);
 
         if (usuarioEncontrado) {
-            throw new HttpException({ mensaje: 'Usuario ingresado con éxito' }, HttpStatus.OK);
+            return {
+                ingresoExitoso: true,
+                mensaje: 'Usuario ingresado con éxito'
+            };
         } else {
             throw new BadRequestException('Credenciales incorrectas');
         }
     }
+
     //Puede ser útil si decidimos que un usuario pueda registrarse solo con mail y contraseña
     // crearUsuarioSimple(email: string, password: string) {
     //     const nuevoUsuario = new Usuario();

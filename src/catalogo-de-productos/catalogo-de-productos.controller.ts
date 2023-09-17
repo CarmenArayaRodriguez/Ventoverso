@@ -3,9 +3,9 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CatalogoDeProductosService } from './catalogo-de-productos.service';
 import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
 import { DestacadoCard } from './producto-destacado/entities/destacado-card.entity';
-import { DestacadoCardDTO } from './producto-destacado/dto/destacado-card.dto';
+import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
 import { CarouselItem } from './carrusel/entities/carrusel-item.entity';
-import { CarouselItemDTO } from './carrusel/dto/carrusel-item.dto';
+import { CarouselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
 
 
 @ApiTags('Catalogo de productos')
@@ -25,7 +25,7 @@ export class CatalogoDeProductosController {
     @ApiResponse({
         status: 200,
         description: 'Devuelve un conjunto de tarjetas de productos destacados para el home.',
-        type: [DestacadoCardDTO],
+        type: [DestacadoCardResponseDTO],
     })
     getDestacadoCards(): DestacadoCard[] {
         const mockDataDestacados: DestacadoCard[] = [
@@ -91,7 +91,7 @@ export class CatalogoDeProductosController {
     @ApiResponse({
         status: 200,
         description: 'Devuelve un conjunto de items del carrusel para el home.',
-        type: [CarouselItemDTO],
+        type: [CarouselItemResponseDTO],
     })
     obtenerItemsCarrusel(): CarouselItem[] {
         const mockDataCarrusel: CarouselItem[] = [

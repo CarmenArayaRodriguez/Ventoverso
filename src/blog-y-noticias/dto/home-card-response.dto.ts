@@ -1,9 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CardDTO {
+export class CardResponseDTO {
     @ApiProperty({ description: 'ID de la tarjeta', example: 'id-123' })
-    @IsString()
     id: string;
 
     @ApiProperty({ description: 'Título de la tarjeta', example: 'Tarjeta Ejemplo' })
