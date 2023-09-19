@@ -6,9 +6,9 @@ import { DestacadoCard } from './producto-destacado/entities/destacado-card.enti
 import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
 import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
 import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
-import { ProductoNuevoResponseDTO } from './producto-nuevo/dto/producto-nuevo-response.dto';
+import { ProductoCatalogoSubcategoriaResponseDTO } from './producto-nuevo/dto/producto-catalogo-subcategoria.dto';
 import { ProductoNuevo } from './producto-nuevo/entities/producto-nuevo.entity';
-import { transformaAProductoNuevoResponseDto } from './producto-nuevo/utils/producto-campos-que-pinta.utils';
+import { transformaACatalogoSubcategoriaResponseDto } from './producto-nuevo/utils/campos-catalogo-subcategoria.utils';
 
 
 @ApiTags('Catalogo de productos')
@@ -240,12 +240,12 @@ export class CatalogoDeProductosController {
     @ApiResponse({
         status: 200,
         description: 'Devuelve un conjunto de productos de la subcategoría Clarinete Sib.',
-        type: [ProductoNuevoResponseDTO],
+        type: [ProductoCatalogoSubcategoriaResponseDTO],
 
     })
 
-    getClarineteSibProductos(): ProductoNuevoResponseDTO[] {
-        return this.clarineteSibMockData.map(transformaAProductoNuevoResponseDto);
+    getClarineteSibProductos(): ProductoCatalogoSubcategoriaResponseDTO[] {
+        return this.clarineteSibMockData.map(transformaACatalogoSubcategoriaResponseDto);
     }
 }
 
