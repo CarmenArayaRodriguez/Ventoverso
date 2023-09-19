@@ -5,6 +5,7 @@ import { CrearPostDTO } from './dto/crear-post.dto';
 import { EditarPostDTO } from './dto/editar-post.dto';
 import { CardResponseDTO } from './dto/home-card-response.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { CategoriaBlog } from './enums/categoria-blog.enum';
 
 @ApiTags('Blog y noticias')
 @Controller('blog-y-noticias')
@@ -88,4 +89,39 @@ export class BlogYNoticiasController {
     eliminar(@Param('id') id: string): string {
         return this.blogYNoticiasService.eliminarPost({ id });
     }
+
+    @Get('/clarinetes-cards')
+    @ApiOperation({ summary: 'Obtener las tarjetas para entradas de clarinetes' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de tarjetas relacionadas con clarinetes.',
+        type: [CardResponseDTO],
+    })
+
+    getClarinetesPosts(): CardResponseDTO[] {
+        return [
+            {
+                id: uuidv4(),
+                titulo: 'Clarinetista Famoso 1',
+                imagenUrl: 'https://ejemplo.com/clarinete1.jpg',
+            },
+            {
+                id: uuidv4(),
+                titulo: 'Orquesta con Clarinete 2',
+                imagenUrl: 'https://ejemplo.com/clarinete2.jpg',
+            },
+            {
+                id: uuidv4(),
+                titulo: 'Música Clásica con Clarinete 3',
+                imagenUrl: 'https://ejemplo.com/clarinete3.jpg',
+            },
+            {
+                id: uuidv4(),
+                titulo: 'El Clarinete en Jazz 4',
+                imagenUrl: 'https://ejemplo.com/clarinete4.jpg',
+            },
+        ];
+    }
+
+
 }
