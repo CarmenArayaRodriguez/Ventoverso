@@ -23,5 +23,8 @@ export class DestacadoCardResponseDTO {
     @ApiProperty({ description: 'Precio del producto', example: 19900 })
     @IsNumber()
     precio: number;
+
 }
+
+
 
