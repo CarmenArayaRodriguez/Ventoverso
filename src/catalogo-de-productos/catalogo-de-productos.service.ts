@@ -5,15 +5,11 @@ import { CarouselItem } from './carrusel/entities/carrusel-item.entity';
 import { CategoriaClarinete } from './clarinetes/entities/categoria-clarinete.entity';
 
 
-
-
 @Injectable()
 export class CatalogoDeProductosService {
 
     private destacados: Destacado[] = [];
-
     private carrusel: CarouselItem[] = [];
-
     private categoriasClarinete: CategoriaClarinete[] = [];
 
 
@@ -40,7 +36,7 @@ export class CatalogoDeProductosService {
         return this.destacados;
     }
 
-    obtenerItemsCarrusel(): CarouselItem[] {
+    obtenerItemsCarrusel(tipo: CarruselItemTipo): CarruselItem[] {
         return this.carrusel;
     }
     obtenerCategoriasClarinete(): CategoriaClarinete[] {
