@@ -9,6 +9,8 @@ import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.d
 import { ProductoCatalogoSubcategoriaResponseDTO } from './producto-nuevo/dto/producto-catalogo-subcategoria.dto';
 import { ProductoNuevo } from './producto-nuevo/entities/producto-nuevo.entity';
 import { transformaACatalogoSubcategoriaResponseDto } from './producto-nuevo/utils/campos-catalogo-subcategoria.utils';
+import { ProductoDetalleResponseDTO } from './producto-nuevo/dto/producto-detalle.dto';
+import { transformaAProductoDetalleResponseDto } from './producto-nuevo/utils/campos-detalle-producto.utils';
 
 
 @ApiTags('Catalogo de productos')
@@ -246,6 +248,40 @@ export class CatalogoDeProductosController {
 
     getClarineteSibProductos(): ProductoCatalogoSubcategoriaResponseDTO[] {
         return this.clarineteSibMockData.map(transformaACatalogoSubcategoriaResponseDto);
+    }
+
+    private detalleClarineteSibMockData: ProductoNuevo = {
+        id: 'clarinete-sib-1',
+        nombre: 'Clarinete Sib Modelo 1',
+        marca: 'Marca A',
+        modelo: 'Modelo 1',
+        estrellas: 3,
+        imagenes: [
+            'https://ejemplo.com/imagen-1-1.jpg',
+            'https://ejemplo.com/imagen-1-2.jpg',
+            'https://ejemplo.com/imagen-1-3.jpg',
+            'https://ejemplo.com/imagen-1-4.jpg',
+            'https://ejemplo.com/imagen-1-5.jpg',
+            'https://ejemplo.com/imagen-1-6.jpg',
+        ],
+        precio: 1000,
+        caracteristicasPrincipales: 'Característica principal del Modelo 1',
+        descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
+        categoria: 'clarinetes',
+        subcategoria: 'clarinete sib'
+    };
+
+    @Get('detalle-clarinete-sib')
+    @ApiOperation({ summary: 'Obtener detalle de un producto de la subcategoría Clarinete Sib' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve el detalle de un producto de la subcategoría Clarinete Sib.',
+        type: ProductoDetalleResponseDTO,
+
+    })
+
+    getDetalleClarineteSib(): ProductoDetalleResponseDTO {
+        return transformaAProductoDetalleResponseDto(this.detalleClarineteSibMockData);
     }
 }
 

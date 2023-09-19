@@ -1,4 +1,4 @@
-export function transformaAProductoNuevoResponseDto(producto) {
+export function transformaAProductoDetalleResponseDto(producto) {
     return {
         id: producto.id,
         nombre: producto.nombre,
