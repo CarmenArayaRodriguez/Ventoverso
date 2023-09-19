@@ -6,9 +6,13 @@ import { DestacadoCard } from './producto-destacado/entities/destacado-card.enti
 import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
 import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
 import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
+import { ProductoCatalogoSubcategoriaResponseDTO } from './producto-nuevo/dto/producto-catalogo-subcategoria.dto';
+import { ProductoNuevo } from './producto-nuevo/entities/producto-nuevo.entity';
+import { transformaACatalogoSubcategoriaResponseDto } from './producto-nuevo/utils/campos-catalogo-subcategoria.utils';
 import { CategoriaClarinete } from './clarinetes/entities/categoria-clarinete.entity';
 import { CategoriaClarineteResponseDTO } from './clarinetes/dto/categoria-clarinete-response.dto';
 import { convierteADestacadoCardResponseDTO } from './producto-destacado/utils/destacado-card.utils';
+
 
 
 @ApiTags('Catalogo de productos')
@@ -125,103 +129,223 @@ export class CatalogoDeProductosController {
         }));
     }
 
-    @Get('categoria-clarinete')
-    @ApiOperation({ summary: 'Obtener los datos de la categoría clarinete para el catálogo' })
+    private clarineteSibMockData: ProductoNuevo[] = [
+        {
+            id: 'clarinete-sib-1',
+            nombre: 'Clarinete Sib Modelo 1',
+            marca: 'Marca A',
+            modelo: 'Modelo 1',
+            estrellas: 3,
+            imagenes: [
+                'https://ejemplo.com/imagen-1-1.jpg',
+                'https://ejemplo.com/imagen-1-2.jpg',
+                'https://ejemplo.com/imagen-1-3.jpg',
+                'https://ejemplo.com/imagen-1-4.jpg',
+                'https://ejemplo.com/imagen-1-5.jpg',
+                'https://ejemplo.com/imagen-1-6.jpg',
+            ],
+            precio: 1000,
+            caracteristicasPrincipales: 'Característica principal del Modelo 1',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-2',
+            nombre: 'Clarinete Sib Modelo 2',
+            marca: 'Marca A',
+            modelo: 'Modelo 2',
+            estrellas: 4.7,
+            imagenes: [
+                'https://ejemplo.com/imagen-2-1.jpg',
+                'https://ejemplo.com/imagen-2-2.jpg',
+                'https://ejemplo.com/imagen-2-3.jpg',
+                'https://ejemplo.com/imagen-2-4.jpg',
+                'https://ejemplo.com/imagen-2-5.jpg',
+                'https://ejemplo.com/imagen-2-6.jpg',
+            ],
+            precio: 1100,
+            caracteristicasPrincipales: 'Característica principal del Modelo 2',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 2.',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-3',
+            nombre: 'Clarinete Sib Modelo 3',
+            marca: 'Marca A',
+            modelo: 'Modelo 3',
+            estrellas: 3.8,
+            imagenes: [
+                'https://ejemplo.com/imagen-3-1.jpg',
+                'https://ejemplo.com/imagen-3-2.jpg',
+                'https://ejemplo.com/imagen-3-3.jpg',
+                'https://ejemplo.com/imagen-3-4.jpg',
+                'https://ejemplo.com/imagen-3-5.jpg',
+                'https://ejemplo.com/imagen-3-6.jpg',
+            ],
+            precio: 16000,
+            caracteristicasPrincipales: 'Característica principal del Modelo 3',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-4',
+            nombre: 'Clarinete Sib Modelo 4',
+            marca: 'Marca A',
+            modelo: 'Modelo 4',
+            estrellas: 4,
+            imagenes: [
+                'https://ejemplo.com/imagen-4-1.jpg',
+                'https://ejemplo.com/imagen-4-2.jpg',
+                'https://ejemplo.com/imagen-4-3.jpg',
+                'https://ejemplo.com/imagen-4-4.jpg',
+                'https://ejemplo.com/imagen-4-5.jpg',
+                'https://ejemplo.com/imagen-4-6.jpg',
+
+            ],
+            precio: 16000,
+            caracteristicasPrincipales: 'Característica principal del Modelo 3',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-16',
+            nombre: 'Clarinete Sib Modelo 16',
+            marca: 'Marca D',
+            modelo: 'Modelo 16',
+            estrellas: 4.5,
+            imagenes: [
+                'https://ejemplo.com/imagen-16-1.jpg',
+                'https://ejemplo.com/imagen-16-2.jpg',
+                'https://ejemplo.com/imagen-16-3.jpg',
+                'https://ejemplo.com/imagen-16-4.jpg',
+                'https://ejemplo.com/imagen-16-5.jpg',
+                'https://ejemplo.com/imagen-16-6.jpg',
+
+            ],
+
+            precio: 1600,
+            caracteristicasPrincipales: 'Característica principal del Modelo 16',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 16.',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        }
+    ];
+
+    @Get('clarinete-sib')
+    @ApiOperation({ summary: 'Obtener productos de la subcategoría Clarinete Sib' })
     @ApiResponse({
         status: 200,
-        description: 'Devuelve un conjunto de datos de la categoría clarinete.',
-        type: [CategoriaClarineteResponseDTO],
+        description: 'Devuelve un conjunto de productos de la subcategoría Clarinete Sib.',
+        type: [ProductoCatalogoSubcategoriaResponseDTO],
+
     })
-    obtenerCategoriaClarinete(): CategoriaClarinete[] {
-        const mockDataCategoriaClarinete: CategoriaClarinete[] = [
-            {
-                id: 'id-clarinete-1',
-                nombre: 'Clarinete Sib',
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-sib.jpg',
-            },
-            {
-                id: 'id-clarinete-2',
-                nombre: 'Clarinete La',
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-la.jpg',
-            },
-            {
-                id: 'id-clarinete-3',
-                nombre: 'Clarinete Mib',
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-mib.jpg',
-            },
-            {
-                id: 'id-clarinete-4',
-                nombre: 'Campanas y barriles',
-                imagenUrl: 'https://ejemplo.com/imagen-campanas-barriles.jpg',
-            },
-            {
-                id: 'id-clarinete-5',
-                nombre: 'Cañas clarinete',
-                imagenUrl: 'https://ejemplo.com/imagen-canas-clarinete.jpg',
-            },
-            {
-                id: 'id-clarinete-6',
-                nombre: 'Accesorios clarinete',
-                imagenUrl: 'https://ejemplo.com/imagen-accesorios-clarinete.jpg',
-            },
-            {
-                id: 'id-clarinete-7',
-                nombre: 'Ver todo Clarinetes',
-                imagenUrl: 'https://ejemplo.com/imagen-ver-todo-clarinetes.jpg',
-            }
 
-        ];
+    getClarineteSibProductos(): ProductoCatalogoSubcategoriaResponseDTO[] {
+        return this.clarineteSibMockData.map(transformaACatalogoSubcategoriaResponseDto);
 
-        return mockDataCategoriaClarinete;
+
+        @Get('categoria-clarinete')
+        @ApiOperation({ summary: 'Obtener los datos de la categoría clarinete para el catálogo' })
+        @ApiResponse({
+            status: 200,
+            description: 'Devuelve un conjunto de datos de la categoría clarinete.',
+            type: [CategoriaClarineteResponseDTO],
+        })
+        obtenerCategoriaClarinete(): CategoriaClarinete[] {
+            const mockDataCategoriaClarinete: CategoriaClarinete[] = [
+                {
+                    id: 'id-clarinete-1',
+                    nombre: 'Clarinete Sib',
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-sib.jpg',
+                },
+                {
+                    id: 'id-clarinete-2',
+                    nombre: 'Clarinete La',
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-la.jpg',
+                },
+                {
+                    id: 'id-clarinete-3',
+                    nombre: 'Clarinete Mib',
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-mib.jpg',
+                },
+                {
+                    id: 'id-clarinete-4',
+                    nombre: 'Campanas y barriles',
+                    imagenUrl: 'https://ejemplo.com/imagen-campanas-barriles.jpg',
+                },
+                {
+                    id: 'id-clarinete-5',
+                    nombre: 'Cañas clarinete',
+                    imagenUrl: 'https://ejemplo.com/imagen-canas-clarinete.jpg',
+                },
+                {
+                    id: 'id-clarinete-6',
+                    nombre: 'Accesorios clarinete',
+                    imagenUrl: 'https://ejemplo.com/imagen-accesorios-clarinete.jpg',
+                },
+                {
+                    id: 'id-clarinete-7',
+                    nombre: 'Ver todo Clarinetes',
+                    imagenUrl: 'https://ejemplo.com/imagen-ver-todo-clarinetes.jpg',
+                }
+
+            ];
+
+            return mockDataCategoriaClarinete;
+        }
+
+        @Get('destacados-clarinete')
+        @ApiOperation({ summary: 'Obtener las tarjetas de productos destacados de clarinetes' })
+        @ApiResponse({
+            status: 200,
+            description: 'Devuelve un conjunto de tarjetas de productos destacados de clarinetes.',
+            type: [DestacadoCardResponseDTO],
+        })
+        getDestacadosClarinete(): DestacadoCardResponseDTO[] {
+            const mockDataDestacadosClarinete: DestacadoCardResponseDTO[] = [
+                {
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-buffet.jpg',
+                    estrellas: 5,
+                    rating: 4.8,
+                    nombre: 'Clarinete Buffet Crampon R13',
+                    precio: 250000,
+                },
+                {
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-yamaha.jpg',
+                    estrellas: 4,
+                    rating: 4.5,
+                    nombre: 'Clarinete Yamaha YCL-650',
+                    precio: 200000,
+                },
+                {
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-selmer.jpg',
+                    estrellas: 4,
+                    rating: 4.3,
+                    nombre: 'Clarinete Selmer Paris',
+                    precio: 240000,
+                },
+                {
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-backun.jpg',
+                    estrellas: 5,
+                    rating: 4.9,
+                    nombre: 'Clarinete Backun Alpha',
+                    precio: 210000,
+                },
+                {
+                    imagenUrl: 'https://ejemplo.com/imagen-clarinete-leblanc.jpg',
+                    estrellas: 4,
+                    rating: 4.4,
+                    nombre: 'Clarinete Leblanc Serenade',
+                    precio: 220000,
+                }
+            ];
+            return mockDataDestacadosClarinete.map(convierteADestacadoCardResponseDTO);
+
+        }
     }
 
-    @Get('destacados-clarinete')
-    @ApiOperation({ summary: 'Obtener las tarjetas de productos destacados de clarinetes' })
-    @ApiResponse({
-        status: 200,
-        description: 'Devuelve un conjunto de tarjetas de productos destacados de clarinetes.',
-        type: [DestacadoCardResponseDTO],
-    })
-    getDestacadosClarinete(): DestacadoCardResponseDTO[] {
-        const mockDataDestacadosClarinete: DestacadoCardResponseDTO[] = [
-            {
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-buffet.jpg',
-                estrellas: 5,
-                rating: 4.8,
-                nombre: 'Clarinete Buffet Crampon R13',
-                precio: 250000,
-            },
-            {
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-yamaha.jpg',
-                estrellas: 4,
-                rating: 4.5,
-                nombre: 'Clarinete Yamaha YCL-650',
-                precio: 200000,
-            },
-            {
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-selmer.jpg',
-                estrellas: 4,
-                rating: 4.3,
-                nombre: 'Clarinete Selmer Paris',
-                precio: 240000,
-            },
-            {
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-backun.jpg',
-                estrellas: 5,
-                rating: 4.9,
-                nombre: 'Clarinete Backun Alpha',
-                precio: 210000,
-            },
-            {
-                imagenUrl: 'https://ejemplo.com/imagen-clarinete-leblanc.jpg',
-                estrellas: 4,
-                rating: 4.4,
-                nombre: 'Clarinete Leblanc Serenade',
-                precio: 220000,
-            }
-        ];
-        return mockDataDestacadosClarinete.map(convierteADestacadoCardResponseDTO);
-    }
 }
-
-
