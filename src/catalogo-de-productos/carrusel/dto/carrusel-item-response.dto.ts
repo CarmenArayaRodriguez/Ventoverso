@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, IsOptional, IsEnum } from "class-validator";
 
-export class CarouselItemResponseDTO {
+export class CarruselItemResponseDTO {
     @ApiProperty({ description: 'ID del ítem del carrusel', example: 'carousel-id-1' })
     @IsString()
     id: string;
@@ -20,15 +20,6 @@ export class CarouselItemResponseDTO {
     @IsString()
     @IsNotEmpty()
     imagenUrl: string;
-
-    @ApiProperty({
-        description: 'Tipo de ítem del carrusel', enum: ['Promoción', 'Nuevo Producto', 'Concurso'],
-        example: 'Concurso'
-    })
-    @IsString()
-    @IsNotEmpty()
-    @IsEnum(['Promoción', 'Nuevo Producto', 'Concurso'])
-    tipo: 'Promoción' | 'Nuevo Producto' | 'Concurso';
 
     @ApiProperty({ description: 'URL de detalle para el ítem del carrusel', example: 'https://ejemplo.com/concurso-xyz', required: false })
     @IsString()

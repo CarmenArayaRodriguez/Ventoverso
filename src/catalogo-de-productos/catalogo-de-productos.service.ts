@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Destacado } from './producto-destacado/entities/destacado.entity';
 import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
-import { CarouselItem } from './carrusel/entities/carrusel-item.entity';
-
-
+import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
+import { CarruselItemTipo } from './carrusel/enums/carousel-item-tipo.enum';
 
 
 @Injectable()
@@ -11,8 +10,7 @@ export class CatalogoDeProductosService {
 
     private destacados: Destacado[] = [];
 
-
-    private carrusel: CarouselItem[] = [];
+    private carrusel: CarruselItem[] = [];
 
     getCatalogoDeProductos(): string {
         return 'Catálogo de productos';
@@ -37,7 +35,7 @@ export class CatalogoDeProductosService {
         return this.destacados;
     }
 
-    obtenerItemsCarrusel(): CarouselItem[] {
+    obtenerItemsCarrusel(tipo: CarruselItemTipo): CarruselItem[] {
         return this.carrusel;
     }
 

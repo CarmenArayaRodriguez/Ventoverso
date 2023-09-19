@@ -4,8 +4,8 @@ import { CatalogoDeProductosService } from './catalogo-de-productos.service';
 import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
 import { DestacadoCard } from './producto-destacado/entities/destacado-card.entity';
 import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
-import { CarouselItem } from './carrusel/entities/carrusel-item.entity';
-import { CarouselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
+import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
+import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
 
 
 @ApiTags('Catalogo de productos')
@@ -91,16 +91,15 @@ export class CatalogoDeProductosController {
     @ApiResponse({
         status: 200,
         description: 'Devuelve un conjunto de items del carrusel para el home.',
-        type: [CarouselItemResponseDTO],
+        type: [CarruselItemResponseDTO],
     })
-    obtenerItemsCarrusel(): CarouselItem[] {
-        const mockDataCarrusel: CarouselItem[] = [
+    obtenerItemsCarrusel(): CarruselItemResponseDTO[] {
+        const mockDataCarrusel: CarruselItemResponseDTO[] = [
             {
                 id: 'carousel-id-1',
                 titulo: 'Nueva Promoción de Verano',
                 descripcion: 'Disfruta de nuestros descuentos de verano en toda la tienda.',
                 imagenUrl: 'https://ejemplo.com/imagen-carousel1.jpg',
-                tipo: 'Promoción',
                 linkDetalle: 'https://ejemplo.com/promocion-verano'
             },
             {
@@ -108,7 +107,6 @@ export class CatalogoDeProductosController {
                 titulo: 'Lanzamiento Exclusivo: Producto X',
                 descripcion: 'Conoce el nuevo producto X, exclusivo en nuestra tienda.',
                 imagenUrl: 'https://ejemplo.com/imagen-carousel2.jpg',
-                tipo: 'Nuevo Producto',
                 linkDetalle: 'https://ejemplo.com/producto-x'
             },
             {
@@ -116,12 +114,18 @@ export class CatalogoDeProductosController {
                 titulo: '¡Participa en nuestro Gran Concurso de Invierno!',
                 descripcion: 'Compra cualquier producto y entra en el sorteo de un fabuloso premio. No te pierdas esta oportunidad.',
                 imagenUrl: 'https://ejemplo.com/imagen-carousel-concurso.jpg',
-                tipo: 'Concurso',
                 linkDetalle: 'https://ejemplo.com/concurso-invierno'
             }
         ];
 
-        return mockDataCarrusel;
+        return mockDataCarrusel.map(item => ({
+            id: item.id,
+            titulo: item.titulo,
+            descripcion: item.descripcion,
+            imagenUrl: item.imagenUrl,
+            linkDetalle: item.linkDetalle
+        }));
     }
 }
+
 
