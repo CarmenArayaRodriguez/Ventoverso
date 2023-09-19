@@ -6,6 +6,9 @@ import { DestacadoCard } from './producto-destacado/entities/destacado-card.enti
 import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
 import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
 import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
+import { ProductoNuevoResponseDTO } from './producto-nuevo/dto/producto-nuevo-response.dto';
+import { ProductoNuevo } from './producto-nuevo/entities/producto-nuevo.entity';
+import { transformaAProductoNuevoResponseDto } from './producto-nuevo/utils/producto-campos-que-pinta.utils';
 
 
 @ApiTags('Catalogo de productos')
@@ -125,6 +128,119 @@ export class CatalogoDeProductosController {
             imagenUrl: item.imagenUrl,
             linkDetalle: item.linkDetalle
         }));
+    }
+    private clarineteSibMockData: ProductoNuevo[] = [
+        {
+            id: 'clarinete-sib-1',
+            nombre: 'Clarinete Sib Modelo 1',
+            marca: 'Marca A',
+            modelo: 'Modelo 1',
+            imagenes: [
+                'https://ejemplo.com/imagen-1-1.jpg',
+                'https://ejemplo.com/imagen-1-2.jpg',
+                'https://ejemplo.com/imagen-1-3.jpg',
+                'https://ejemplo.com/imagen-1-4.jpg',
+                'https://ejemplo.com/imagen-1-5.jpg',
+                'https://ejemplo.com/imagen-1-6.jpg',
+            ],
+            precio: 1000,
+            caracteristicasPrincipales: 'Característica principal del Modelo 1',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-2',
+            nombre: 'Clarinete Sib Modelo 2',
+            marca: 'Marca A',
+            modelo: 'Modelo 2',
+            imagenes: [
+                'https://ejemplo.com/imagen-2-1.jpg',
+                'https://ejemplo.com/imagen-2-2.jpg',
+                'https://ejemplo.com/imagen-2-3.jpg',
+                'https://ejemplo.com/imagen-2-4.jpg',
+                'https://ejemplo.com/imagen-2-5.jpg',
+                'https://ejemplo.com/imagen-2-6.jpg',
+            ],
+            precio: 1100,
+            caracteristicasPrincipales: 'Característica principal del Modelo 2',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 2.',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-3',
+            nombre: 'Clarinete Sib Modelo 3',
+            marca: 'Marca A',
+            modelo: 'Modelo 3',
+            imagenes: [
+                'https://ejemplo.com/imagen-3-1.jpg',
+                'https://ejemplo.com/imagen-3-2.jpg',
+                'https://ejemplo.com/imagen-3-3.jpg',
+                'https://ejemplo.com/imagen-3-4.jpg',
+                'https://ejemplo.com/imagen-3-5.jpg',
+                'https://ejemplo.com/imagen-3-6.jpg',
+            ],
+            precio: 16000,
+            caracteristicasPrincipales: 'Característica principal del Modelo 3',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-4',
+            nombre: 'Clarinete Sib Modelo 4',
+            marca: 'Marca A',
+            modelo: 'Modelo 4',
+            imagenes: [
+                'https://ejemplo.com/imagen-4-1.jpg',
+                'https://ejemplo.com/imagen-4-2.jpg',
+                'https://ejemplo.com/imagen-4-3.jpg',
+                'https://ejemplo.com/imagen-4-4.jpg',
+                'https://ejemplo.com/imagen-4-5.jpg',
+                'https://ejemplo.com/imagen-4-6.jpg',
+
+            ],
+            precio: 16000,
+            caracteristicasPrincipales: 'Característica principal del Modelo 3',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        },
+        {
+            id: 'clarinete-sib-16',
+            nombre: 'Clarinete Sib Modelo 16',
+            marca: 'Marca D',
+            modelo: 'Modelo 16',
+            imagenes: [
+                'https://ejemplo.com/imagen-16-1.jpg',
+                'https://ejemplo.com/imagen-16-2.jpg',
+                'https://ejemplo.com/imagen-16-3.jpg',
+                'https://ejemplo.com/imagen-16-4.jpg',
+                'https://ejemplo.com/imagen-16-5.jpg',
+                'https://ejemplo.com/imagen-16-6.jpg',
+
+            ],
+
+            precio: 1600,
+            caracteristicasPrincipales: 'Característica principal del Modelo 16',
+            descripcion: 'Descripción detallada del Clarinete Sib Modelo 16.',
+            categoria: 'clarinetes',
+            subcategoria: 'clarinete sib'
+        }
+    ];
+
+    @Get('clarinete-sib')
+    @ApiOperation({ summary: 'Obtener productos de la subcategoría Clarinete Sib' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de productos de la subcategoría Clarinete Sib.',
+        type: [ProductoNuevoResponseDTO],
+
+    })
+
+    getClarineteSibProductos(): ProductoNuevoResponseDTO[] {
+        return this.clarineteSibMockData.map(transformaAProductoNuevoResponseDto);
     }
 }
 
