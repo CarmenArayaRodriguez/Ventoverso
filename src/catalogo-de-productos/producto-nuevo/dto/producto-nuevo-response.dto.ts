@@ -20,6 +20,10 @@ export class ProductoNuevoResponseDTO {
     @IsNotEmpty()
     modelo: string;
 
+    @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 4 })
+    @IsNumber()
+    estrellas: number;
+
     @ApiProperty({ description: 'Imágenes del producto', type: [String] })
     @IsArray()
     @IsNotEmpty()

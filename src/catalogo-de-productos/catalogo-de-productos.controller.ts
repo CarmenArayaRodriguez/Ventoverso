@@ -135,6 +135,7 @@ export class CatalogoDeProductosController {
             nombre: 'Clarinete Sib Modelo 1',
             marca: 'Marca A',
             modelo: 'Modelo 1',
+            estrellas: 3,
             imagenes: [
                 'https://ejemplo.com/imagen-1-1.jpg',
                 'https://ejemplo.com/imagen-1-2.jpg',
@@ -154,6 +155,7 @@ export class CatalogoDeProductosController {
             nombre: 'Clarinete Sib Modelo 2',
             marca: 'Marca A',
             modelo: 'Modelo 2',
+            estrellas: 4.7,
             imagenes: [
                 'https://ejemplo.com/imagen-2-1.jpg',
                 'https://ejemplo.com/imagen-2-2.jpg',
@@ -173,6 +175,7 @@ export class CatalogoDeProductosController {
             nombre: 'Clarinete Sib Modelo 3',
             marca: 'Marca A',
             modelo: 'Modelo 3',
+            estrellas: 3.8,
             imagenes: [
                 'https://ejemplo.com/imagen-3-1.jpg',
                 'https://ejemplo.com/imagen-3-2.jpg',
@@ -192,6 +195,7 @@ export class CatalogoDeProductosController {
             nombre: 'Clarinete Sib Modelo 4',
             marca: 'Marca A',
             modelo: 'Modelo 4',
+            estrellas: 4,
             imagenes: [
                 'https://ejemplo.com/imagen-4-1.jpg',
                 'https://ejemplo.com/imagen-4-2.jpg',
@@ -212,6 +216,7 @@ export class CatalogoDeProductosController {
             nombre: 'Clarinete Sib Modelo 16',
             marca: 'Marca D',
             modelo: 'Modelo 16',
+            estrellas: 4.5,
             imagenes: [
                 'https://ejemplo.com/imagen-16-1.jpg',
                 'https://ejemplo.com/imagen-16-2.jpg',

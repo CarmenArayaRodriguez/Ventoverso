@@ -4,6 +4,7 @@ export function transformaAProductoNuevoResponseDto(producto) {
         nombre: producto.nombre,
         marca: producto.marca,
         modelo: producto.modelo,
+        estrellas: producto.estrellas,
         imagenes: producto.imagenes,
         precio: producto.precio,
         caracteristicasPrincipales: producto.caracteristicasPrincipales,
