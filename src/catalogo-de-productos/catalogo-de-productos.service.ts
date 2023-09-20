@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Destacado } from './producto-destacado/entities/destacado.entity';
 import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
-
 import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
-import { CarruselItemTipo } from './carrusel/enums/carousel-item-tipo.enum';
 import { ProductoNuevo } from './producto-nuevo/entities/producto-nuevo.entity';
 import { CategoriaClarinete } from './clarinetes/entities/categoria-clarinete.entity';
+import { CarruselItemTipo } from './carrusel/enums/carrusel-item-tipo.enum';
 
 
 @Injectable()

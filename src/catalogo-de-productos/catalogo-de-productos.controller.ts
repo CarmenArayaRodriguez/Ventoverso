@@ -250,6 +250,56 @@ export class CatalogoDeProductosController {
         return this.clarineteSibMockData.map(transformaACatalogoSubcategoriaResponseDto);
 
     }
+    @Get('categoria-clarinete')
+    @ApiOperation({ summary: 'Obtener los datos de la categoría clarinete para el catálogo' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de datos de la categoría clarinete.',
+        type: [CategoriaClarineteResponseDTO],
+    })
+    obtenerCategoriaClarinete(): CategoriaClarinete[] {
+        const mockDataCategoriaClarinete: CategoriaClarinete[] = [
+            {
+                id: 'id-clarinete-1',
+                nombre: 'Clarinete Sib',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-sib.jpg',
+            },
+            {
+                id: 'id-clarinete-2',
+                nombre: 'Clarinete La',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-la.jpg',
+            },
+            {
+                id: 'id-clarinete-3',
+                nombre: 'Clarinete Mib',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-mib.jpg',
+            },
+            {
+                id: 'id-clarinete-4',
+                nombre: 'Campanas y barriles',
+                imagenUrl: 'https://ejemplo.com/imagen-campanas-barriles.jpg',
+            },
+            {
+                id: 'id-clarinete-5',
+                nombre: 'Cañas clarinete',
+                imagenUrl: 'https://ejemplo.com/imagen-canas-clarinete.jpg',
+            },
+            {
+                id: 'id-clarinete-6',
+                nombre: 'Accesorios clarinete',
+                imagenUrl: 'https://ejemplo.com/imagen-accesorios-clarinete.jpg',
+            },
+            {
+                id: 'id-clarinete-7',
+                nombre: 'Ver todo Clarinetes',
+                imagenUrl: 'https://ejemplo.com/imagen-ver-todo-clarinetes.jpg',
+            }
+
+        ];
+
+        return mockDataCategoriaClarinete;
+
+    }
 
     private detalleClarineteSibMockData: ProductoNuevo = {
         id: 'clarinete-sib-1',
@@ -389,3 +439,4 @@ export class CatalogoDeProductosController {
     }
 
 }
+
