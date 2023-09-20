@@ -247,7 +247,7 @@ export class CatalogoDeProductosController {
     getClarineteSibProductos(): ProductoCatalogoSubcategoriaResponseDTO[] {
         return this.clarineteSibMockData.map(transformaACatalogoSubcategoriaResponseDto);
 
-
+    }
     @Get('categoria-clarinete')
     @ApiOperation({ summary: 'Obtener los datos de la categoría clarinete para el catálogo' })
     @ApiResponse({
@@ -347,5 +347,4 @@ export class CatalogoDeProductosController {
 
     }
 }
-
 
