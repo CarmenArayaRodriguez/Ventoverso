@@ -4,8 +4,11 @@ import { CatalogoDeProductosService } from './catalogo-de-productos.service';
 import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
 import { DestacadoCard } from './producto-destacado/entities/destacado-card.entity';
 import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
-import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
-import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
+import { CarouselItem } from './carrusel/entities/carrusel-item.entity';
+import { CarouselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
+import { CategoriaClarinete } from './clarinetes/entities/categoria-clarinete.entity';
+import { CategoriaClarineteResponseDTO } from './clarinetes/dto/categoria-clarinete-response.dto';
+import { convierteADestacadoCardResponseDTO } from './producto-destacado/utils/destacado-card.utils';
 
 
 @ApiTags('Catalogo de productos')
@@ -27,10 +30,9 @@ export class CatalogoDeProductosController {
         description: 'Devuelve un conjunto de tarjetas de productos destacados para el home.',
         type: [DestacadoCardResponseDTO],
     })
-    getDestacadoCards(): DestacadoCard[] {
-        const mockDataDestacados: DestacadoCard[] = [
+    getDestacadosHome(): DestacadoCardResponseDTO[] {
+        const mockDataDestacadosHome: DestacadoCardResponseDTO[] = [
             {
-                id: 'id-1',
                 imagenUrl: 'https://ejemplo.com/imagen1.jpg',
                 estrellas: 5,
                 rating: 4.8,
@@ -38,7 +40,6 @@ export class CatalogoDeProductosController {
                 precio: 990,
             },
             {
-                id: 'id-2',
                 imagenUrl: 'https://ejemplo.com/imagen2.jpg',
                 estrellas: 4,
                 rating: 4.3,
@@ -46,7 +47,6 @@ export class CatalogoDeProductosController {
                 precio: 8700,
             },
             {
-                id: 'id-3',
                 imagenUrl: 'https://ejemplo.com/imagen3.jpg',
                 estrellas: 3,
                 rating: 3.8,
@@ -54,7 +54,6 @@ export class CatalogoDeProductosController {
                 precio: 79000,
             },
             {
-                id: 'id-4',
                 imagenUrl: 'https://ejemplo.com/imagen4.jpg',
                 estrellas: 5,
                 rating: 4.9,
@@ -62,7 +61,6 @@ export class CatalogoDeProductosController {
                 precio: 69900,
             },
             {
-                id: 'id-5',
                 imagenUrl: 'https://ejemplo.com/imagen5.jpg',
                 estrellas: 4,
                 rating: 4.1,
@@ -71,7 +69,7 @@ export class CatalogoDeProductosController {
             }
         ];
 
-        return mockDataDestacados;
+        return mockDataDestacadosHome.map(convierteADestacadoCardResponseDTO);
     }
 
 
@@ -125,6 +123,104 @@ export class CatalogoDeProductosController {
             imagenUrl: item.imagenUrl,
             linkDetalle: item.linkDetalle
         }));
+    }
+
+    @Get('categoria-clarinete')
+    @ApiOperation({ summary: 'Obtener los datos de la categoría clarinete para el catálogo' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de datos de la categoría clarinete.',
+        type: [CategoriaClarineteResponseDTO],
+    })
+    obtenerCategoriaClarinete(): CategoriaClarinete[] {
+        const mockDataCategoriaClarinete: CategoriaClarinete[] = [
+            {
+                id: 'id-clarinete-1',
+                nombre: 'Clarinete Sib',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-sib.jpg',
+            },
+            {
+                id: 'id-clarinete-2',
+                nombre: 'Clarinete La',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-la.jpg',
+            },
+            {
+                id: 'id-clarinete-3',
+                nombre: 'Clarinete Mib',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-mib.jpg',
+            },
+            {
+                id: 'id-clarinete-4',
+                nombre: 'Campanas y barriles',
+                imagenUrl: 'https://ejemplo.com/imagen-campanas-barriles.jpg',
+            },
+            {
+                id: 'id-clarinete-5',
+                nombre: 'Cañas clarinete',
+                imagenUrl: 'https://ejemplo.com/imagen-canas-clarinete.jpg',
+            },
+            {
+                id: 'id-clarinete-6',
+                nombre: 'Accesorios clarinete',
+                imagenUrl: 'https://ejemplo.com/imagen-accesorios-clarinete.jpg',
+            },
+            {
+                id: 'id-clarinete-7',
+                nombre: 'Ver todo Clarinetes',
+                imagenUrl: 'https://ejemplo.com/imagen-ver-todo-clarinetes.jpg',
+            }
+
+        ];
+
+        return mockDataCategoriaClarinete;
+    }
+
+    @Get('destacados-clarinete')
+    @ApiOperation({ summary: 'Obtener las tarjetas de productos destacados de clarinetes' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de tarjetas de productos destacados de clarinetes.',
+        type: [DestacadoCardResponseDTO],
+    })
+    getDestacadosClarinete(): DestacadoCardResponseDTO[] {
+        const mockDataDestacadosClarinete: DestacadoCardResponseDTO[] = [
+            {
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-buffet.jpg',
+                estrellas: 5,
+                rating: 4.8,
+                nombre: 'Clarinete Buffet Crampon R13',
+                precio: 250000,
+            },
+            {
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-yamaha.jpg',
+                estrellas: 4,
+                rating: 4.5,
+                nombre: 'Clarinete Yamaha YCL-650',
+                precio: 200000,
+            },
+            {
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-selmer.jpg',
+                estrellas: 4,
+                rating: 4.3,
+                nombre: 'Clarinete Selmer Paris',
+                precio: 240000,
+            },
+            {
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-backun.jpg',
+                estrellas: 5,
+                rating: 4.9,
+                nombre: 'Clarinete Backun Alpha',
+                precio: 210000,
+            },
+            {
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-leblanc.jpg',
+                estrellas: 4,
+                rating: 4.4,
+                nombre: 'Clarinete Leblanc Serenade',
+                precio: 220000,
+            }
+        ];
+        return mockDataDestacadosClarinete.map(convierteADestacadoCardResponseDTO);
     }
 }
 
