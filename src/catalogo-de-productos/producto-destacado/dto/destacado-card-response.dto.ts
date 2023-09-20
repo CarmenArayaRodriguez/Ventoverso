@@ -11,9 +11,9 @@ export class DestacadoCardResponseDTO {
     @IsNumber()
     estrellas: number;
 
-    @ApiProperty({ description: 'Rating del producto', example: 4.5 })
-    @IsNumber()
-    rating: number;
+    // @ApiProperty({ description: 'Rating del producto', example: 4.5 })
+    // @IsNumber()
+    // rating: number;
 
     @ApiProperty({ description: 'Nombre del producto', example: 'Producto genial' })
     @IsString()

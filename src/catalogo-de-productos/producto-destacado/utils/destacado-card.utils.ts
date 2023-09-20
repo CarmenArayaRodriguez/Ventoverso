@@ -5,7 +5,7 @@ export function convierteADestacadoCardResponseDTO(destacadoCard: DestacadoCard)
     return {
         imagenUrl: destacadoCard.imagenUrl,
         estrellas: destacadoCard.estrellas,
-        rating: destacadoCard.rating,
+        // rating: destacadoCard.rating,
         nombre: destacadoCard.nombre,
         precio: destacadoCard.precio,
     };
