@@ -7,7 +7,6 @@ import { CategoriaClarinete } from './clarinetes/entities/categoria-clarinete.en
 import { CarruselItemTipo } from './carrusel/enums/carrusel-item-tipo.enum';
 
 
-
 @Injectable()
 export class CatalogoDeProductosService {
 
