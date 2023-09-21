@@ -39,37 +39,37 @@ export class CatalogoDeProductosController {
     getDestacadosHome(): DestacadoCardResponseDTO[] {
         const mockDataDestacadosHome: DestacadoCardResponseDTO[] = [
             {
+                id: 'id-destacado-home-1',
                 imagenUrl: 'https://ejemplo.com/imagen1.jpg',
                 estrellas: 5,
-                // rating: 4.8,
                 nombre: 'Producto genial 1',
                 precio: 990,
             },
             {
+                id: 'id-destacado-home-2',
                 imagenUrl: 'https://ejemplo.com/imagen2.jpg',
                 estrellas: 4,
-                // rating: 4.3,
                 nombre: 'Producto genial 2',
                 precio: 8700,
             },
             {
+                id: 'id-destacado-home-3',
                 imagenUrl: 'https://ejemplo.com/imagen3.jpg',
                 estrellas: 3,
-                // rating: 3.8,
                 nombre: 'Producto genial 3',
                 precio: 79000,
             },
             {
+                id: 'id-destacado-home-4',
                 imagenUrl: 'https://ejemplo.com/imagen4.jpg',
                 estrellas: 5,
-                // rating: 4.9,
                 nombre: 'Producto genial 4',
                 precio: 69900,
             },
             {
+                id: 'id-destacado-home-5',
                 imagenUrl: 'https://ejemplo.com/imagen5.jpg',
                 estrellas: 4,
-                // rating: 4.1,
                 nombre: 'Producto genial 5',
                 precio: 60000,
             }
@@ -310,37 +310,37 @@ export class CatalogoDeProductosController {
     getDestacadosClarinete(): DestacadoCardResponseDTO[] {
         const mockDataDestacadosClarinete: DestacadoCardResponseDTO[] = [
             {
+                id: 'id-destacado-clarinete-1',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-buffet.jpg',
                 estrellas: 5,
-                // rating: 4.8,
                 nombre: 'Clarinete Buffet Crampon R13',
                 precio: 250000,
             },
             {
+                id: 'id-destacado-clarinete-2',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-yamaha.jpg',
                 estrellas: 4,
-                // rating: 4.5,
                 nombre: 'Clarinete Yamaha YCL-650',
                 precio: 200000,
             },
             {
+                id: 'id-destacado-clarinete-3',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-selmer.jpg',
                 estrellas: 4,
-                // rating: 4.3,
                 nombre: 'Clarinete Selmer Paris',
                 precio: 240000,
             },
             {
+                id: 'id-destacado-clarinete-4',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-backun.jpg',
                 estrellas: 5,
-                // rating: 4.9,
                 nombre: 'Clarinete Backun Alpha',
                 precio: 210000,
             },
             {
+                id: 'id-destacado-clarinete-5',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-leblanc.jpg',
                 estrellas: 4,
-                // rating: 4.4,
                 nombre: 'Clarinete Leblanc Serenade',
                 precio: 220000,
             }
