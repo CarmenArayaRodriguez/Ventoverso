@@ -3,9 +3,9 @@ import { DestacadoCard } from "../entities/destacado-card.entity";
 
 export function convierteADestacadoCardResponseDTO(destacadoCard: DestacadoCard): DestacadoCardResponseDTO {
     return {
+        id: destacadoCard.id,
         imagenUrl: destacadoCard.imagenUrl,
         estrellas: destacadoCard.estrellas,
-        // rating: destacadoCard.rating,
         nombre: destacadoCard.nombre,
         precio: destacadoCard.precio,
     };

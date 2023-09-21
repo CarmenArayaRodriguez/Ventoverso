@@ -6,7 +6,6 @@ export class DestacadoCard {
     id: string = uuidv4();
     imagenUrl: string;
     estrellas: number;
-    // rating: number;
     nombre: string;
     precio: number;
     categoria: CategoriaProducto;
