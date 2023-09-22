@@ -44,6 +44,7 @@ export class CatalogoDeProductosController {
                 estrellas: 5,
                 nombre: 'Producto genial 1',
                 precio: 990,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-home-2',
@@ -51,6 +52,7 @@ export class CatalogoDeProductosController {
                 estrellas: 4,
                 nombre: 'Producto genial 2',
                 precio: 8700,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-home-3',
@@ -58,6 +60,7 @@ export class CatalogoDeProductosController {
                 estrellas: 3,
                 nombre: 'Producto genial 3',
                 precio: 79000,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-home-4',
@@ -65,6 +68,7 @@ export class CatalogoDeProductosController {
                 estrellas: 5,
                 nombre: 'Producto genial 4',
                 precio: 69900,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-home-5',
@@ -72,6 +76,7 @@ export class CatalogoDeProductosController {
                 estrellas: 4,
                 nombre: 'Producto genial 5',
                 precio: 60000,
+                linkDetalle: 'https://ejemplo.com/producto'
             }
         ];
 
@@ -315,6 +320,7 @@ export class CatalogoDeProductosController {
                 estrellas: 5,
                 nombre: 'Clarinete Buffet Crampon R13',
                 precio: 250000,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-clarinete-2',
@@ -322,6 +328,7 @@ export class CatalogoDeProductosController {
                 estrellas: 4,
                 nombre: 'Clarinete Yamaha YCL-650',
                 precio: 200000,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-clarinete-3',
@@ -329,6 +336,7 @@ export class CatalogoDeProductosController {
                 estrellas: 4,
                 nombre: 'Clarinete Selmer Paris',
                 precio: 240000,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-clarinete-4',
@@ -336,6 +344,7 @@ export class CatalogoDeProductosController {
                 estrellas: 5,
                 nombre: 'Clarinete Backun Alpha',
                 precio: 210000,
+                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
                 id: 'id-destacado-clarinete-5',
@@ -343,6 +352,7 @@ export class CatalogoDeProductosController {
                 estrellas: 4,
                 nombre: 'Clarinete Leblanc Serenade',
                 precio: 220000,
+                linkDetalle: 'https://ejemplo.com/producto'
             }
         ];
         return mockDataDestacadosClarinete.map(convierteADestacadoCardResponseDTO);

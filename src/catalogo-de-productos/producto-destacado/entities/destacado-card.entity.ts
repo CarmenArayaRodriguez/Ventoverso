@@ -8,6 +8,7 @@ export class DestacadoCard {
     estrellas: number;
     nombre: string;
     precio: number;
+    linkDetalle: string;
     categoria: CategoriaProducto;
     seccion: SeccionDestacado;
 }
