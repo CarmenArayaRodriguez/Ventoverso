@@ -8,5 +8,6 @@ export function convierteADestacadoCardResponseDTO(destacadoCard: DestacadoCard)
         estrellas: destacadoCard.estrellas,
         nombre: destacadoCard.nombre,
         precio: destacadoCard.precio,
+        linkDetalle: destacadoCard.linkDetalle,
     };
 }

@@ -4,4 +4,5 @@ export interface IDestacadoCard {
     estrellas: number;
     nombre: string;
     precio: number;
+    linkDetalle: string;
 }
