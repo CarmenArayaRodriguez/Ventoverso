@@ -7,6 +7,7 @@ export function transformaAProductoDetalleResponseDto(producto) {
         estrellas: producto.estrellas,
         imagenes: producto.imagenes,
         precio: producto.precio,
+        linkDetalle: producto.linkDetalle,
         caracteristicasPrincipales: producto.caracteristicasPrincipales,
         descripcion: producto.descripcion
     };
