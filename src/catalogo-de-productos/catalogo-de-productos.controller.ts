@@ -152,6 +152,7 @@ export class CatalogoDeProductosController {
                 'https://ejemplo.com/imagen-1-6.jpg',
             ],
             precio: 1000,
+            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 1',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
             categoria: 'clarinetes',
@@ -172,6 +173,7 @@ export class CatalogoDeProductosController {
                 'https://ejemplo.com/imagen-2-6.jpg',
             ],
             precio: 1100,
+            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 2',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 2.',
             categoria: 'clarinetes',
@@ -192,6 +194,7 @@ export class CatalogoDeProductosController {
                 'https://ejemplo.com/imagen-3-6.jpg',
             ],
             precio: 16000,
+            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 3',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
             categoria: 'clarinetes',
@@ -213,6 +216,7 @@ export class CatalogoDeProductosController {
 
             ],
             precio: 16000,
+            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 3',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
             categoria: 'clarinetes',
@@ -235,6 +239,7 @@ export class CatalogoDeProductosController {
             ],
 
             precio: 1600,
+            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 16',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 16.',
             categoria: 'clarinetes',
@@ -268,36 +273,43 @@ export class CatalogoDeProductosController {
                 id: 'id-clarinete-1',
                 nombre: 'Clarinete Sib',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-sib.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             },
             {
                 id: 'id-clarinete-2',
                 nombre: 'Clarinete La',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-la.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             },
             {
                 id: 'id-clarinete-3',
                 nombre: 'Clarinete Mib',
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-mib.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             },
             {
                 id: 'id-clarinete-4',
                 nombre: 'Campanas y barriles',
                 imagenUrl: 'https://ejemplo.com/imagen-campanas-barriles.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             },
             {
                 id: 'id-clarinete-5',
                 nombre: 'Cañas clarinete',
                 imagenUrl: 'https://ejemplo.com/imagen-canas-clarinete.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             },
             {
                 id: 'id-clarinete-6',
                 nombre: 'Accesorios clarinete',
                 imagenUrl: 'https://ejemplo.com/imagen-accesorios-clarinete.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             },
             {
                 id: 'id-clarinete-7',
                 nombre: 'Ver todo Clarinetes',
                 imagenUrl: 'https://ejemplo.com/imagen-ver-todo-clarinetes.jpg',
+                linkDetalle: 'https://ejemplo.com/subcategoria'
             }
 
         ];
@@ -373,6 +385,7 @@ export class CatalogoDeProductosController {
             'https://ejemplo.com/imagen-1-6.jpg',
         ],
         precio: 1000,
+        linkDetalle: 'https://ejemplo.com/producto',
         caracteristicasPrincipales: 'Característica principal del Modelo 1',
         descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
         categoria: 'clarinetes',

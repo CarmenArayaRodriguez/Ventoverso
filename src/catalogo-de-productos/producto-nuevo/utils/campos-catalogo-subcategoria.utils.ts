@@ -5,5 +5,6 @@ export function transformaACatalogoSubcategoriaResponseDto(producto) {
         estrellas: producto.estrellas,
         nombre: producto.nombre,
         precio: producto.precio,
+        linkDetalle: producto.linkDetalle
     };
 }

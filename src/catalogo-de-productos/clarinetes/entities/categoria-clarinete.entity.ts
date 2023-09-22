@@ -4,4 +4,5 @@ export class CategoriaClarinete {
     id: string = uuidv4();
     nombre: string;
     imagenUrl: string;
+    linkDetalle: string
 }

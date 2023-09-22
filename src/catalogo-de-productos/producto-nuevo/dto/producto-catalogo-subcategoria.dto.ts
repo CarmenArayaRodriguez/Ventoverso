@@ -23,4 +23,8 @@ export class ProductoCatalogoSubcategoriaResponseDTO {
     @IsNumber()
     @IsNotEmpty()
     precio: number;
+
+    @ApiProperty({ description: 'URL de detalle del producto', example: 'https://ejemplo.com/producto', required: true })
+    @IsString()
+    linkDetalle: string;
 }

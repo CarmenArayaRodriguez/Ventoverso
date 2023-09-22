@@ -8,6 +8,7 @@ export class ProductoNuevo {
     estrellas: number;
     imagenes: string[];
     precio: number;
+    linkDetalle: string;
     caracteristicasPrincipales: string;
     descripcion: string;
     categoria: string;
