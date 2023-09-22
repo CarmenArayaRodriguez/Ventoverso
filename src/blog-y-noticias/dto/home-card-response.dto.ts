@@ -14,4 +14,9 @@ export class CardResponseDTO {
     @IsString()
     @IsNotEmpty()
     imagenUrl: string;
+
+    @ApiProperty({ description: 'URL de detalle para entrada de blog', example: 'https://ejemplo.com/publicacion', required: true })
+    @IsString()
+    linkDetalle: string;
+
 }

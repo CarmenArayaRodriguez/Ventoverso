@@ -8,4 +8,5 @@ export class BlogPost {
     fechaPublicacion: Date;
     autorId: string;
     categoria: CategoriaBlog;
+    linkDetalle: string
 }
