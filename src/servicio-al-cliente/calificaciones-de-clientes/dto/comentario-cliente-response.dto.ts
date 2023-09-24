@@ -35,3 +35,4 @@ export class ComentarioClienteResponseDTO {
     @Type(() => ReaccionesAComentarioDTO)
     reacciones: ReaccionesAComentarioDTO;
 }
+

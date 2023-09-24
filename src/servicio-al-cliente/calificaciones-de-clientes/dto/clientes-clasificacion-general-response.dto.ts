@@ -18,5 +18,4 @@ export class ClientesCalificacionGeneralResponseDTO {
     @ApiProperty()
     @IsNumber()
     numeroComentarios: number;
-
 }
