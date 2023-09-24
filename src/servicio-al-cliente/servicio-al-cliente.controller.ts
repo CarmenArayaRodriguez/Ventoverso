@@ -42,7 +42,6 @@ export class ServicioAlClienteController {
         return this.servicioAlClienteService.darDeBaja(id);
     }
 
-
     @Get(':idProducto/calificaciones')
     @ApiOperation({ summary: 'Obtener calificaciones generales de un producto' })
     @ApiResponse({
@@ -114,3 +113,4 @@ export class ServicioAlClienteController {
         return mockDataComentarios;
     }
 }
+
