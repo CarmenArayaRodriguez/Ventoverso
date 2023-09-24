@@ -405,6 +405,118 @@ export class CatalogoDeProductosController {
         return transformaAProductoDetalleResponseDto(this.detalleClarineteSibMockData);
     }
 
+    @Get('productos-relacionados')
+    @ApiOperation({ summary: 'Obtener productos relacionados de la categoría Clarinetes' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de productos relacionados de la categoría Clarinetes.',
+        type: [DestacadoCardResponseDTO],
+    })
+
+    getProductosRelacionados(): DestacadoCardResponseDTO[] {
+        const mockDataProductosRelacionados: DestacadoCardResponseDTO[] = [
+
+            {
+                id: 'id-relacionado-1',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
+                estrellas: 4,
+                nombre: 'Producto Relacionado 1',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-relacionado-2',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
+                estrellas: 4,
+                nombre: 'Producto Relacionado 2',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-relacionado-3',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
+                estrellas: 4,
+                nombre: 'Producto Relacionado 4',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-relacionado-4',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
+                estrellas: 4,
+                nombre: 'Producto Relacionado 4',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-relacionado-5',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
+                estrellas: 4,
+                nombre: 'Producto Relacionado 1',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+
+
+        ];
+        return mockDataProductosRelacionados.map(convierteADestacadoCardResponseDTO);
+    }
+
+    @Get('productos-similares')
+    @ApiOperation({ summary: 'Obtener productos similares de la misma subcategoría del producto principal' })
+    @ApiResponse({
+        status: 200,
+        description: 'Devuelve un conjunto de productos similares de la misma subcategoría del producto principal.',
+        type: [DestacadoCardResponseDTO],
+    })
+    getProductosSimilares(): DestacadoCardResponseDTO[] {
+        const mockDataProductosSimilares: DestacadoCardResponseDTO[] = [
+            {
+                id: 'id-similar-1',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
+                estrellas: 4,
+                nombre: 'Clarinete Similar 1',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-similar-2',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
+                estrellas: 4,
+                nombre: 'Clarinete Similar 2',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-similar-3',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
+                estrellas: 4,
+                nombre: 'Clarinete Similar 3',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-similar-4',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
+                estrellas: 4,
+                nombre: 'Clarinete Similar 4',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+            {
+                id: 'id-similar-5',
+                imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
+                estrellas: 4,
+                nombre: 'Clarinete Similar 5',
+                precio: 230000,
+                linkDetalle: 'https://ejemplo.com/producto'
+            },
+
+        ];
+        return mockDataProductosSimilares.map(convierteADestacadoCardResponseDTO);
+    }
+
+
 }
 
 
