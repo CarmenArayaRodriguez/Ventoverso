@@ -370,7 +370,7 @@ export class CatalogoDeProductosController {
         return mockDataDestacadosClarinete.map(convierteADestacadoCardResponseDTO);
     }
 
-    private detalleClarineteSibMockData: ProductoNuevo = {
+    private detalleClarineteSibMockData: ProductoDetalleResponseDTO = {
         id: 'clarinete-sib-1',
         nombre: 'Clarinete Sib Modelo 1',
         marca: 'Marca A',
@@ -385,11 +385,8 @@ export class CatalogoDeProductosController {
             'https://ejemplo.com/imagen-1-6.jpg',
         ],
         precio: 1000,
-        linkDetalle: 'https://ejemplo.com/producto',
         caracteristicasPrincipales: 'Característica principal del Modelo 1',
-        descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
-        categoria: 'clarinetes',
-        subcategoria: 'clarinete sib'
+        descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.'
     };
 
     @Get('detalle-clarinete-sib')

@@ -3,6 +3,7 @@ import { IsString, IsNotEmpty, Min, Max, IsInt, IsObject, ValidateNested } from 
 import { v4 as uuidv4 } from 'uuid';
 import { ReaccionesAComentarioDTO } from './reacciones-a-comentario.response.dto';
 import { ApiProperty } from '@nestjs/swagger';
+import { CalificacionPorCategoriaDTO } from './calificacion-por-categoria-response.dto';
 
 export class ComentarioClienteResponseDTO {
     @ApiProperty()
@@ -28,6 +29,12 @@ export class ComentarioClienteResponseDTO {
     @IsString()
     @IsNotEmpty()
     texto: string;
+
+    @ApiProperty({ type: CalificacionPorCategoriaDTO })
+    @IsObject()
+    @ValidateNested()
+    @Type(() => CalificacionPorCategoriaDTO)
+    calificaciones: CalificacionPorCategoriaDTO;
 
     @ApiProperty({ type: ReaccionesAComentarioDTO, example: { MeGusta: 5, NoMeGusta: 2, Denunciar: 0 } })
     @IsObject()

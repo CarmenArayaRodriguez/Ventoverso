@@ -55,6 +55,7 @@ export class ServicioAlClienteController {
             productoId: '1234',
             promedioEstrellas: 4.2,
             numeroComentarios: 5,
+            promedioCalificaciones: { caracteristicas: 4.5, sonido: 4.2, fabricacion: 4.0 }
         };
 
         return mockCalificacionGeneral;
@@ -98,6 +99,7 @@ export class ServicioAlClienteController {
                 fotoClienteUrl: 'https://ejemplo.com/foto-cliente-1.jpg',
                 estrellas: 5,
                 texto: 'Excelente producto!',
+                calificaciones: { caracteristicas: 5, sonido: 5, fabricacion: 5 },
                 reacciones: { MeGusta: 10, NoMeGusta: 1, Denunciar: 0 }
             },
             {
@@ -106,6 +108,7 @@ export class ServicioAlClienteController {
                 fotoClienteUrl: 'https://ejemplo.com/foto-cliente-2.jpg',
                 estrellas: 4,
                 texto: 'Muy buen producto.',
+                calificaciones: { caracteristicas: 4, sonido: 4, fabricacion: 4 },
                 reacciones: { MeGusta: 8, NoMeGusta: 2, Denunciar: 0 }
             }
         ];
