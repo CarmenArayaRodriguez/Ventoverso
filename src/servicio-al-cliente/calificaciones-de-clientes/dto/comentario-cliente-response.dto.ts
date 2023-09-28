@@ -20,6 +20,11 @@ export class ComentarioClienteResponseDTO {
     fotoClienteUrl: string;
 
     @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    nombreCliente: string;
+
+    @ApiProperty()
     @IsInt()
     @Min(1)
     @Max(5)
@@ -28,7 +33,13 @@ export class ComentarioClienteResponseDTO {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    texto: string;
+    titulo: string;
+
+
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    comentario: string;
 
     @ApiProperty({ type: CalificacionPorCategoriaDTO })
     @IsObject()

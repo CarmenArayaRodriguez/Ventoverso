@@ -97,8 +97,10 @@ export class ServicioAlClienteController {
                 productoId: '1234',
                 cliente: '5678',
                 fotoClienteUrl: 'https://ejemplo.com/foto-cliente-1.jpg',
+                nombreCliente: 'Benjamín Rojas',
                 estrellas: 5,
-                texto: 'Excelente producto!',
+                titulo: 'Excelente producto!',
+                comentario: 'Me encantó mi nuevo clarinete',
                 calificaciones: { caracteristicas: 5, sonido: 5, fabricacion: 5 },
                 reacciones: { MeGusta: 10, NoMeGusta: 1, Denunciar: 0 }
             },
@@ -106,8 +108,10 @@ export class ServicioAlClienteController {
                 productoId: '1234',
                 cliente: '9012',
                 fotoClienteUrl: 'https://ejemplo.com/foto-cliente-2.jpg',
+                nombreCliente: 'Ana Farías',
                 estrellas: 4,
-                texto: 'Muy buen producto.',
+                titulo: 'Muy buen producto.',
+                comentario: 'Es un buen producto pero esperaba más de sus características y sonido',
                 calificaciones: { caracteristicas: 4, sonido: 4, fabricacion: 4 },
                 reacciones: { MeGusta: 8, NoMeGusta: 2, Denunciar: 0 }
             }
