@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty } from 'class-validator';
 
-export class EliminarProductoCarritoDTO {
+export class EliminarProductoCarritoRequestDTO {
     @ApiProperty({
         description: 'El ID del carrito del cual se quiere eliminar el producto',
         example: '1234-abcd-5678-efgh'
