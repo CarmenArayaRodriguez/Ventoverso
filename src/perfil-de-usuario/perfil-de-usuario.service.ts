@@ -1,5 +1,5 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { AgregarFavoritoDTO } from './producto-favorito/dto/agregar-favorito.dto';
+import { AgregarFavoritoRequestDTO } from './producto-favorito/dto/agregar-favorito-request.dto';
 import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto'; // verificar o borrar
 
 import { Favorito } from './producto-favorito/entities/favorito.entity';
@@ -31,24 +31,24 @@ export class PerfilDeUsuarioService {
 
     // Producto Favorito xxxxxxxxxxxxxxx
 
-    agregarFavorito(agregarFavoritoDTO: AgregarFavoritoDTO) {
-        const nuevoFavorito = new Favorito();
-        nuevoFavorito.productoId = agregarFavoritoDTO.productoId;
-        nuevoFavorito.usuarioId = "usuario123";
-        nuevoFavorito.fechaAgregado = new Date();
+    // agregarFavorito(agregarFavoritoDTO: AgregarFavoritoRequestDTO) {
+    //     const nuevoFavorito = new Favorito();
+    //     nuevoFavorito.productoId = agregarFavoritoDTO.productoId;
+    //     nuevoFavorito.usuarioId = "usuario123";
+    //     nuevoFavorito.fechaAgregado = new Date();
 
-        this.favoritos.push(nuevoFavorito);
+    //     this.favoritos.push(nuevoFavorito);
 
-        return { mensaje: 'Producto añadido a favoritos', productoId: agregarFavoritoDTO.productoId };
-    }
+    //     return { mensaje: 'Producto añadido a favoritos', productoId: agregarFavoritoDTO.productoId };
+    // }
 
-    eliminarFavorito(id: string) {
-        return { mensaje: `Producto con ID ${id} eliminado de favoritos` };
-    }
+    // eliminarFavorito(id: string) {
+    //     return { mensaje: `Producto con ID ${id} eliminado de favoritos` };
+    // }
 
-    obtenerTodosFavoritos(): Favorito[] {
-        return this.favoritos;
-    }
+    // obtenerTodosFavoritos(): Favorito[] {
+    //     return this.favoritos;
+    // }
 
 
     //Gestion de usuario xxxxxxxxxxxxxxxxxxxxxxxxx

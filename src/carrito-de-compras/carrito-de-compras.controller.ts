@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CarritoDeComprasService } from './carrito-de-compras.service';
-import { AgregarProductoCarritoDTO } from './dto/agregar-producto-carrito.dto';
+import { AgregarProductoCarritoRequestDTO } from './dto/agregar-producto-carrito-request.dto';
 import { CrearCarritoDTO } from './dto/crear-carrito.dto';
 import { ActualizarProductoCarritoDTO } from './dto/actualizar-producto-carrito.dto';
+import { CarritoConProductosResponseDTO } from './dto/carrito-con-productos-response.dto';
+import { EliminarProductoCarritoResponseDTO } from './dto/eliminar-producto-carrito-response.dto';
 
 @ApiTags('Carrito de compras')
 @Controller('carrito-de-compras')
@@ -27,8 +29,22 @@ export class CarritoDeComprasController {
 
     @Post('/agregar-producto')
     @ApiOperation({ summary: 'Agregar un producto al carrito' })
-    agregarProducto(@Body() agregarProductoDto: AgregarProductoCarritoDTO) {
-        return this.carritoDeComprasService.agregarProducto(agregarProductoDto);
+    @ApiResponse({ status: 201, description: 'Producto agregado exitosamente', type: CarritoConProductosResponseDTO })
+    agregarProducto(@Body() agregarProductoDto: AgregarProductoCarritoRequestDTO): CarritoConProductosResponseDTO {
+        const carritoConProductosMock: CarritoConProductosResponseDTO = {
+            carritoId: 'carrito123',
+            productos: [
+                {
+                    productoId: 'producto123',
+                    marca: 'Marca Ejemplo',
+                    modelo: 'Modelo Ejemplo',
+                    precio: 199000,
+                    cantidad: 1,
+                    imagenUrl: 'https://ejemplo.com/imagen.jpg'
+                }
+            ]
+        };
+        return carritoConProductosMock;
     }
 
     @Put('/:carritoId/producto/:productoId')
@@ -43,11 +59,17 @@ export class CarritoDeComprasController {
 
     @Delete('/:carritoId/producto/:productoId')
     @ApiOperation({ summary: 'Eliminar un producto del carrito' })
+    @ApiParam({ name: 'carritoId', description: 'ID del carrito', required: true, type: String })
+    @ApiParam({ name: 'productoId', description: 'ID del producto', required: true, type: String })
+    @ApiResponse({ status: 200, description: 'Producto eliminado exitosamente', type: EliminarProductoCarritoResponseDTO })
     eliminarProducto(
         @Param('carritoId') carritoId: string,
         @Param('productoId') productoId: string
-    ) {
-        return this.carritoDeComprasService.eliminarProducto(carritoId, productoId);
+    ): EliminarProductoCarritoResponseDTO {
+        const respuestaMock: EliminarProductoCarritoResponseDTO = {
+            mensaje: 'Producto eliminado exitosamente'
+        };
+        return respuestaMock;
     }
 
 }

@@ -1,13 +1,16 @@
 import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PerfilDeUsuarioService } from './perfil-de-usuario.service';
-import { AgregarFavoritoDTO } from './producto-favorito/dto/agregar-favorito.dto';
+import { AgregarFavoritoRequestDTO } from './producto-favorito/dto/agregar-favorito-request.dto';
 import { Favorito } from './producto-favorito/entities/favorito.entity';
 import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto';
 import { EditarPostDTO } from 'src/blog-y-noticias/dto/editar-post.dto';
 import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
 import { IngresarRequestDTO } from './ingresar/dto/ingresar-request.dto';
 import { IngresarResponseDTO } from './ingresar/dto/ingresar-response.dto';
+import { AgregarFavoritoResponseDTO } from './producto-favorito/dto/agregar-favorito-response.dto';
+import { EliminarFavoritoResponseDTO } from './producto-favorito/dto/eliminar-favorito-response.dto';
+import { EliminarFavoritoRequestDTO } from './producto-favorito/dto/eliminar-favorito-request.dto';
 
 @ApiTags('Perfil de usuario')
 @Controller('perfil-de-usuario')
@@ -25,21 +28,30 @@ export class PerfilDeUsuarioController {
 
     // Producto Favorito xxxxxxxxxxxxxxx
 
-    @Post('favorito')
-    agregarFavorito(@Body() agregarFavoritoDTO: AgregarFavoritoDTO) {
-        return this.perfilDeUsuarioService.agregarFavorito(agregarFavoritoDTO);
+    @Post('/favoritos')
+    @ApiOperation({ summary: 'Agregar un producto a favoritos' })
+    @ApiResponse({ status: 200, description: 'Producto agregado a favoritos', type: AgregarFavoritoResponseDTO })
+    agregarFavorito(@Body() agregarFavoritoDto: AgregarFavoritoRequestDTO): AgregarFavoritoResponseDTO {
+
+        return { mensaje: 'Producto agregado a favoritos correctamente' };
     }
 
-    @Delete('favorito/:id')
-    eliminarFavorito(@Param('id') id: string) {
-        return this.perfilDeUsuarioService.eliminarFavorito(id);
-    }
+    @Delete('/:productoId')
+    @ApiOperation({ summary: 'Eliminar un producto de favoritos' })
+    @ApiResponse({
+        status: 200,
+        description: 'Producto eliminado de favoritos correctamente',
+        type: EliminarFavoritoResponseDTO,
+    })
+    eliminarFavorito(
+        @Param('productoId') productoId: string,
+        @Body() eliminarFavoritoDto: EliminarFavoritoRequestDTO,
+    ): EliminarFavoritoResponseDTO {
 
-    @Get('favoritos')
-    obtenerTodosFavoritos(): Favorito[] {
-        return this.perfilDeUsuarioService.obtenerTodosFavoritos();
+        return {
+            mensaje: 'Producto eliminado de favoritos correctamente',
+        };
     }
-
 
 
     //Gestion de usuario xxxxxxxxxxxxxxxxxxxxxxxxx
@@ -60,9 +72,6 @@ export class PerfilDeUsuarioController {
  */
 
 
-
-
-
     @Delete('/:rut,/:dv')
     @ApiOperation({ summary: 'Elimiar un Usuario' })
     @ApiResponse({ status: 200, description: 'Usuario sha sido eliminado.' })
@@ -72,22 +81,6 @@ export class PerfilDeUsuarioController {
 
     // Ingresar desde el home
 
-    // @Post('ingresar')
-    // @ApiOperation({ summary: 'Ingreso de un usuario' })
-    // @ApiBody({ type: IngresarRequestDTO })
-    // @ApiResponse({ status: 200, description: 'Usuario ingresado con éxito.' })
-    // @ApiResponse({ status: 400, description: 'Credenciales incorrectas.' })
-    // ingresar(@Body() ingresarDTO: IngresarRequestDTO) {
-    //     return this.perfilDeUsuarioService.ingresar(ingresarDTO);
-    // }
-    // @Post('ingresar')
-    // @ApiOperation({ summary: 'Ingreso de un usuario' })
-    // @ApiBody({ type: IngresarRequestDTO })
-    // @ApiResponse({ status: 200, type: IngresarResponseDTO, description: 'Usuario ingresado con éxito.' })
-    // @ApiResponse({ status: 400, description: 'Credenciales incorrectas.' })
-    // ingresar(@Body() ingresarDTO: IngresarRequestDTO): IngresarResponseDTO {
-    //     return this.perfilDeUsuarioService.ingresar(ingresarDTO);
-    // }
     @Post('ingresar')
     @ApiOperation({ summary: 'Ingreso de un usuario' })
     @ApiBody({ type: IngresarRequestDTO })
