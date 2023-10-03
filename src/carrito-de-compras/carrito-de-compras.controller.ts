@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CarritoDeComprasService } from './carrito-de-compras.service';
 import { AgregarProductoCarritoRequestDTO } from './dto/agregar-producto-carrito-request.dto';
 import { CrearCarritoDTO } from './dto/crear-carrito.dto';
@@ -8,6 +8,8 @@ import { CarritoConProductosResponseDTO } from './dto/carrito-con-productos-resp
 import { EliminarProductoCarritoResponseDTO } from './dto/eliminar-producto-carrito-response.dto';
 import { ProductoEnCarritoResponseDTO } from './dto/producto-en-carrito-response.dto';
 import { ResumenCompraResponseDTO } from './dto/resumen-compra-response.dto';
+import { CheckoutResponseDTO } from './dto/checkout-response.dto';
+import { CheckoutRequestDTO } from './dto/checkout-request.dto';
 
 @ApiTags('Carrito de compras')
 @Controller('carrito-de-compras')
@@ -100,6 +102,54 @@ export class CarritoDeComprasController {
             mensaje: 'Producto eliminado exitosamente'
         };
         return respuestaMock;
+    }
+    @Post('procesar-checkout')
+    @ApiOperation({ summary: 'Procesa el checkout' })
+    @ApiBody({ type: CheckoutRequestDTO })
+    @ApiResponse({ status: 201, description: 'Checkout procesado exitosamente', type: CheckoutResponseDTO })
+    procesarCheckout(@Body() checkoutRequestDTO: CheckoutRequestDTO): CheckoutResponseDTO {
+        const checkoutMock: CheckoutResponseDTO = {
+            carritoId: 'carrito123',
+            productos: [
+                {
+                    productoId: 'producto123',
+                    marca: 'Marca Ejemplo',
+                    modelo: 'Modelo Ejemplo',
+                    precio: 199000,
+                    cantidad: 1,
+                    imagenUrl: 'https://ejemplo.com/imagen.jpg'
+                }
+            ],
+            resumenCompra: {
+                subtotalProductos: 199000,
+                iva: 37810,
+                totalCompra: 236810,
+            },
+            datosComprador: {
+                userId: checkoutRequestDTO.userId,
+                nombre: checkoutRequestDTO.nombre,
+                apellido: checkoutRequestDTO.apellido,
+                rut: checkoutRequestDTO.rut,
+                email: checkoutRequestDTO.email,
+                direccion: checkoutRequestDTO.direccion,
+                region: checkoutRequestDTO.region,
+                ciudad: checkoutRequestDTO.ciudad,
+                comuna: checkoutRequestDTO.comuna,
+                telefono: checkoutRequestDTO.telefono
+            },
+            datosEnvio: {
+                servicioPaqueteria: 'Correos Chile',
+                tiempoEntrega: '2-5 días hábiles',
+                costoEnvio: 9999
+            },
+            datosPago: {
+                metodoPago: checkoutRequestDTO.metodoPago
+            },
+            totalPagar: 246809,
+            comentarios: checkoutRequestDTO.comentarios
+        };
+
+        return checkoutMock;
     }
 }
 
