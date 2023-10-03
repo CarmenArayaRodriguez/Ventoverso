@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CarritoDeComprasService } from './carrito-de-compras.service';
 import { AgregarProductoCarritoRequestDTO } from './dto/agregar-producto-carrito-request.dto';
@@ -10,6 +10,8 @@ import { ProductoEnCarritoResponseDTO } from './dto/producto-en-carrito-response
 import { ResumenCompraResponseDTO } from './dto/resumen-compra-response.dto';
 import { CheckoutResponseDTO } from './dto/checkout-response.dto';
 import { CheckoutRequestDTO } from './dto/checkout-request.dto';
+import { ErrorPagoResponseDTO } from './dto/error-de-pago-response.dto';
+import { CompraExitosaResponseDTO } from './dto/compra-exitosa-response.dto';
 
 @ApiTags('Carrito de compras')
 @Controller('carrito-de-compras')
@@ -150,6 +152,29 @@ export class CarritoDeComprasController {
         };
 
         return checkoutMock;
+    }
+
+    @Get('compra-exitosa')
+    @ApiOperation({ summary: 'Obtener detalles de compra exitosa' })
+    @ApiResponse({ status: 200, description: 'Compra exitosa', type: CompraExitosaResponseDTO })
+    obtenerCompraExitosa(): CompraExitosaResponseDTO {
+        return {
+            numeroPedido: '9999999',
+            mensaje: 'Gracias por preferir Ventoverso :)',
+            linkDescargarComprobante: 'https://ejemplo.com/descargar-comprobante'
+        };
+    }
+
+    @Get('error-pago')
+    @HttpCode(400)
+    @ApiOperation({ summary: 'Obtener detalles de error en el proceso de pago' })
+    @ApiResponse({ status: 400, description: 'Error en el proceso de pago', type: ErrorPagoResponseDTO })
+    obtenerErrorPago(): ErrorPagoResponseDTO {
+        return {
+            mensajeError: 'No pudimos procesar tu pago.',
+            linkVolverAlCheckout: 'https://ejemplo.com/volver-al-checkout',
+            linkCentroDeAyuda: 'https://ejemplo.com/centro-de-ayuda'
+        };
     }
 }
 
