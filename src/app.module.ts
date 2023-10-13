@@ -5,10 +5,11 @@ import { CarritoDeComprasModule } from './carrito-de-compras/carrito-de-compras.
 import { PerfilDeUsuarioModule } from './perfil-de-usuario/perfil-de-usuario.module';
 import { BlogYNoticiasModule } from './blog-y-noticias/blog-y-noticias.module';
 import { ReservasDeCitaModule } from './reservas-de-cita/reservas-de-cita.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [CatalogoDeProductosModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule { }
