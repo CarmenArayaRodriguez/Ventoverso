@@ -1,0 +1,20 @@
+erDiagram
+     
+   erDiagram
+     
+    USUARIO ||--o{ PEDIDO : realiza
+    USUARIO ||--o{ ARTICULOBYN : realiza
+    USUARIO ||--o{ COMENTBYN : comenta
+    ARTICULOBYN ||--o{ COMENTBYN : tiene
+    PEDIDO }|--|{ PRODUCTO : tiene
+    PRODUCTO }|--|{ CATEGORIA : pertenece
+    CATEGORIA||--|{ SUBCATEGORIA : pertenece
+    USUARIO ||--o{ CARRITO : tiene
+    PRODUCTO ||--|{ MARCA : pertenece
+    MARCA }|--|{ CATEGORIA_MARCA : pertenece
+    PRODUCTO ||--|{ CARRUSEL : asociado
+    PRODUCTO }|--|{ DESTACADO : tiene
+    METODO_PAGO }|--|{PEDIDO  : tiene
+
+
+
