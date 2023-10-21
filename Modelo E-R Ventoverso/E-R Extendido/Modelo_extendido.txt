@@ -1,61 +1,60 @@
-table usuario {
-	rut_usuario int [pk]
-	dv_usuario char
-	nombre varchar[250]
-	apellido varchar[250]
-	email varchar[250]
-	direccion varchar[250]
-	ciudad varchar[250]
-	comuna varchar[250]
-	region varchar[50]
-	password varchar[250]
-	telefono varchar[250]
+table cliente {
+	rut_cliente varchar(10) [pk]
+	dv_cliente char
+	nombre varchar(20)
+	apellido varchar(30)
+	email varchar(30)
+	direccion varchar(50)
+	ciudad varchar(50)
+	comuna varchar(50)
+	region varchar(50)
+	password varchar(20)
+	telefono varchar(20)
 	
 }
 
 table pedido {
-  id int [pk]
-  rut_usuario integer [ref: > usuario.rut_usuario]
+  id integer [pk]
+  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
   id_producto integer [ref: > producto.id]
-  estado varchar[10]
+  estado varchar(10)
   sub_total integer
-  total int
-  direccionEnvio varchar[250]
+  total integer
+  direccionEnvio varchar(50)
   cantidad integer
   fecha datetime
-  id_metodoPago integer [ref: > metodo_pago.id]
+ 
   
 }
 table producto {
-  id int [pk]
+  id integer [pk]
   id_categoria integer [ref: > categoria.id]
   id_subcategoria integer [ref: - subcategoria.id]
-  nombre varchar[250]
-  descripcion varchar[250]
+  nombre varchar(100)
+  descripcion varchar(250)
   precio integer
   stock integer
-  imagen varchar[250]
-  url_producto varchar[250]
+  imagen blob
+  url_producto varchar(250)
 }
 
 table detalle_pedido {
 id_producto integer [ref: > producto.id]
 id_pedido integer [ ref: > pedido.id]
 
-
 }
 
 table categoria {
 id integer [pk]
-nombre string //nombre categoria
-descripcion varchar[250]
+nombre varchar(10) //nombre categoria
+descripcion varchar(250)
 }
 
 
 table subcategoria {
 id integer [pk]
-nombre varchar[250]
-descripcion varchar[250]
+nombre varchar(250)
+descripcion varchar(250)
 id_categoria integer [ref: - categoria.id]
 
 }
@@ -63,8 +62,8 @@ id_categoria integer [ref: - categoria.id]
 
 table marcas {
   id integer [pk]
-  marca string
-  detalle varchar[250]
+  marca varchar(20)
+  detalle varchar(250)
 }
 
 
@@ -76,65 +75,49 @@ table categoria_marcas {
 
 table carrito {
  id integer [pk]
- rut_usuario integer [ref: > usuario.rut_usuario]
- satus_carrito varchar[250]
+ rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+ status_carrito varchar(50)
  creacion_date datetime
 }
 
 table coment_byn {
   id integer [pk]
-  rut_usuario integer [ref: > usuario.rut_usuario]
+  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
   id_articulo integer [ref: > articulobyn.id]
   publicacion_date datetime
-  contenido varchar[250]
+  contenido varchar(250)
 
 }
 
 table articulobyn {
 id integer [pk]
-rut_usuario integer [ref: > usuario.rut_usuario]
-titulo varchar[250]
-contenido varchar[250]
+rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+titulo varchar(50)
+contenido varchar(250)
 publicacion_date datetime
-autor varchar[250]
+autor varchar(50)
 }
-// Almacena articulos creados por el cliente o el equipo (por definir) que proporciona información sobre productos, servicios, ofertas, novedades o cualquier otro tema relacionado con el comercio electrónico y ques seran comentadas por usuarios registrados.
-
-
-
+// Almacena articulos creados por el cliente o el equipo (por definir) que proporciona información sobre productos, servicios, ofertas, novedades o cualquier otro tema relacionado con el comercio electrónico y ques seran comentadas por clientes registrados.
 
 table carrusel {
 id integer [pk]
-nombre varchar[250] // Nombre que describe el carrusel
-descripcion varchar[250]
+nombre varchar(50) // Nombre que describe el carrusel
+descripcion varchar(250)
 fechainicio datetime
 fechafin datetime
-
 }
-
 
 table carrusel_producto {
 id_producto integer [ref: > producto.id]
 id_carrusel integer [ref: > carrusel.id]
-
-
 }
-
-table metodo_pago {
-id integer [pk]
-nombre_metodo_pago varchar[50]
-detalle_metodo_pago varchar[50]
-
-}
-
 
 table destacado {
 id integer [pk]
 FechaInicio datetime    //fecha inicio producto destacado        
 FechaFin    datetime    //fecha termino producto destacado
-estrellas   number 
-descuento number           
-
+estrellas   integer
+descuento integer          
 
 }
 
@@ -143,7 +126,45 @@ id_destacado integer [ref: > destacado.id]
 id_producto integer [ref: > producto.id]
 FechaInicio datetime    //fecha inicio producto destacado        
 FechaFin    datetime    //fecha termino producto destacado
-           
+}
 
+
+
+table metodoEnvio {
+id integer [pk]
+nombre varchar(20)
+descripcion varchar(50)
+costo_envio integer
+}
+
+
+table regionEnvio {
+id integer [pk]
+nombre varchar(20)
+codigo_postal integer
+}
+
+table envio {
+id integer [pk]
+id_pedido integer [ref: - pedido.id]
+id_metodoEnvio integer [ref: - metodoEnvio.id]
+id_regionEnvio integer [ref: > regionEnvio.id]
+fc_envio date
+}
+
+table metodoPago {
+id integer [pk]
+nombre_metodo_pago varchar(50)
+detalle_metodo_pago varchar(50)
+}
+
+
+table pago {
+id integer [pk]
+id_pedido integer [ref: - pedido.id]
+id_metodoPago integer [ref: - metodoPago.id]
+fcPago date
+estado varchar(20)
+monto integer
 
 }

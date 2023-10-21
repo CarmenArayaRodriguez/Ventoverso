@@ -2,7 +2,7 @@ erDiagram
      
    erDiagram
      
-    USUARIO ||--o{ PEDIDO : realiza
+     USUARIO ||--o{ PEDIDO : realiza
     USUARIO ||--o{ ARTICULOBYN : realiza
     USUARIO ||--o{ COMENTBYN : comenta
     ARTICULOBYN ||--o{ COMENTBYN : tiene
@@ -15,6 +15,10 @@ erDiagram
     PRODUCTO ||--|{ CARRUSEL : asociado
     PRODUCTO }|--|{ DESTACADO : tiene
     METODO_PAGO }|--|{PEDIDO  : tiene
+    PEDIDO ||--|| ENVIO : asocia
+    METODO_ENVIO ||--|| ENVIO : asocia
+    ENVIO }|--|| REGION_ENVIO : realiza
+    PAGO ||--|| METODO_PAGO :tiene 
 
 
 
