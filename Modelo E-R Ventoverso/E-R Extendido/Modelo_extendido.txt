@@ -46,7 +46,7 @@ id_pedido integer [ ref: > pedido.id]
 
 table categoria {
 id integer [pk]
-nombre varchar(10) //nombre categoria
+nombre varchar(50) //nombre categoria
 descripcion varchar(250)
 }
 

@@ -21,7 +21,7 @@ CREATE TABLE `pedido` (
   `total` integer,
   `direccionEnvio` varchar(50),
   `cantidad` integer,
-  `fecha` datetime
+  `fecha` date 
 );
 
 CREATE TABLE `producto` (
@@ -43,7 +43,7 @@ CREATE TABLE `detalle_pedido` (
 
 CREATE TABLE `categoria` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
-  `nombre` varchar(10),
+  `nombre` varchar(50),
   `descripcion` varchar(250)
 );
 
@@ -56,7 +56,7 @@ CREATE TABLE `subcategoria` (
 
 CREATE TABLE `marcas` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
-  `marca` varchar(20),
+  `marca` varchar(50),
   `detalle` varchar(250)
 );
 
@@ -69,14 +69,14 @@ CREATE TABLE `carrito` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `rut_cliente` varchar(10),
   `status_carrito` varchar(50),
-  `creacion_date` datetime
+  `creacion_date` DATE 
 );
 
 CREATE TABLE `coment_byn` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `rut_cliente` varchar(10),
   `id_articulo` integer,
-  `publicacion_date` datetime,
+  `publicacion_date` date ,
   `contenido` varchar(250)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE `articulobyn` (
   `rut_cliente` varchar(10),
   `titulo` varchar(50),
   `contenido` varchar(250),
-  `publicacion_date` datetime,
+  `publicacion_date` DATE,
   `autor` varchar(50)
 );
 
@@ -93,8 +93,8 @@ CREATE TABLE `carrusel` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(50),
   `descripcion` varchar(250),
-  `fechainicio` datetime,
-  `fechafin` datetime
+  `fechainicio` date,
+  `fechafin` date
 );
 
 CREATE TABLE `carrusel_producto` (
@@ -104,8 +104,8 @@ CREATE TABLE `carrusel_producto` (
 
 CREATE TABLE `destacado` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
-  `FechaInicio` datetime,
-  `FechaFin` datetime,
+  `FechaInicio` date ,
+  `FechaFin` date ,
   `estrellas` integer,
   `descuento` integer
 );
@@ -113,20 +113,20 @@ CREATE TABLE `destacado` (
 CREATE TABLE `producto_destacado` (
   `id_destacado` integer,
   `id_producto` integer,
-  `FechaInicio` datetime,
-  `FechaFin` datetime
+  `FechaInicio` date ,
+  `FechaFin` date
 );
 
 CREATE TABLE `metodoEnvio` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
-  `nombre` varchar(20),
-  `descripcion` varchar(50),
+  `nombre` varchar(50),
+  `descripcion` varchar(250),
   `costo_envio` integer
 );
 
 CREATE TABLE `regionEnvio` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
-  `nombre` varchar(20),
+  `nombre` varchar(50),
   `codigo_postal` integer
 );
 
@@ -140,8 +140,8 @@ CREATE TABLE `envio` (
 
 CREATE TABLE `metodoPago` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
-  `nombre_metodo_pago` varchar(50),
-  `detalle_metodo_pago` varchar(50)
+  `nombre_metodo_pago` varchar(100),
+  `detalle_metodo_pago` varchar(100)
 );
 
 CREATE TABLE `pago` (
