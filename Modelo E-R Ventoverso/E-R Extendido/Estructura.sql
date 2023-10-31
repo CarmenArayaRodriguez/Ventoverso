@@ -13,7 +13,7 @@ CREATE TABLE `cliente` (
 );
 
 CREATE TABLE `pedido` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `rut_cliente` varchar(10),
   `id_producto` integer,
   `estado` varchar(10),
@@ -25,7 +25,7 @@ CREATE TABLE `pedido` (
 );
 
 CREATE TABLE `producto` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `id_categoria` integer,
   `id_subcategoria` integer,
   `nombre` varchar(100),
@@ -42,20 +42,20 @@ CREATE TABLE `detalle_pedido` (
 );
 
 CREATE TABLE `categoria` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(10),
   `descripcion` varchar(250)
 );
 
 CREATE TABLE `subcategoria` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(250),
   `descripcion` varchar(250),
   `id_categoria` integer
 );
 
 CREATE TABLE `marcas` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `marca` varchar(20),
   `detalle` varchar(250)
 );
@@ -66,14 +66,14 @@ CREATE TABLE `categoria_marcas` (
 );
 
 CREATE TABLE `carrito` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `rut_cliente` varchar(10),
   `status_carrito` varchar(50),
   `creacion_date` datetime
 );
 
 CREATE TABLE `coment_byn` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `rut_cliente` varchar(10),
   `id_articulo` integer,
   `publicacion_date` datetime,
@@ -81,7 +81,7 @@ CREATE TABLE `coment_byn` (
 );
 
 CREATE TABLE `articulobyn` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `rut_cliente` varchar(10),
   `titulo` varchar(50),
   `contenido` varchar(250),
@@ -90,7 +90,7 @@ CREATE TABLE `articulobyn` (
 );
 
 CREATE TABLE `carrusel` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(50),
   `descripcion` varchar(250),
   `fechainicio` datetime,
@@ -103,7 +103,7 @@ CREATE TABLE `carrusel_producto` (
 );
 
 CREATE TABLE `destacado` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `FechaInicio` datetime,
   `FechaFin` datetime,
   `estrellas` integer,
@@ -118,20 +118,20 @@ CREATE TABLE `producto_destacado` (
 );
 
 CREATE TABLE `metodoEnvio` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(20),
   `descripcion` varchar(50),
   `costo_envio` integer
 );
 
 CREATE TABLE `regionEnvio` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(20),
   `codigo_postal` integer
 );
 
 CREATE TABLE `envio` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `id_pedido` integer,
   `id_metodoEnvio` integer,
   `id_regionEnvio` integer,
@@ -139,13 +139,13 @@ CREATE TABLE `envio` (
 );
 
 CREATE TABLE `metodoPago` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre_metodo_pago` varchar(50),
   `detalle_metodo_pago` varchar(50)
 );
 
 CREATE TABLE `pago` (
-  `id` integer PRIMARY KEY,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `id_pedido` integer,
   `id_metodoPago` integer,
   `fcPago` date,
