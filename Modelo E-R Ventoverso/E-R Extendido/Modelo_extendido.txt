@@ -1,9 +1,9 @@
 table cliente {
 	rut_cliente varchar(10) [pk]
 	dv_cliente char
-	nombre varchar(20)
-	apellido varchar(30)
-	email varchar(30)
+	nombre varchar(50)
+	apellido varchar(50)
+	email varchar(50)
 	direccion varchar(50)
 	ciudad varchar(50)
 	comuna varchar(50)
@@ -14,7 +14,7 @@ table cliente {
 }
 
 table pedido {
-  id integer [pk]
+  id integer [increment,pk]
   rut_cliente varchar(10) [ref: > cliente.rut_cliente]
   id_producto integer [ref: > producto.id]
   estado varchar(10)
@@ -22,100 +22,97 @@ table pedido {
   total integer
   direccionEnvio varchar(50)
   cantidad integer
-  fecha datetime
+  fecha date
  
   
 }
 table producto {
-  id integer [pk]
+  id integer [increment,pk]
   id_categoria integer [ref: > categoria.id]
   id_subcategoria integer [ref: - subcategoria.id]
+  id_marcas integer [ref: > marcas.id]
   nombre varchar(100)
-  descripcion varchar(250)
+  descripcion varchar(300)
   precio integer
   stock integer
-  imagen blob
   url_producto varchar(250)
+  
 }
 
-table detalle_pedido {
+table detallePedido {
 id_producto integer [ref: > producto.id]
 id_pedido integer [ ref: > pedido.id]
-
 }
 
 table categoria {
-id integer [pk]
-nombre varchar(50) //nombre categoria
+id integer [increment,pk]
+nombre varchar(100) //nombre categoria
 descripcion varchar(250)
 }
 
-
 table subcategoria {
-id integer [pk]
+id integer [increment,pk]
 nombre varchar(250)
 descripcion varchar(250)
 id_categoria integer [ref: - categoria.id]
-
 }
-
 
 table marcas {
-  id integer [pk]
-  marca varchar(20)
-  detalle varchar(250)
+id integer [increment,pk]
+marca varchar(100)
+detalle varchar(300)
 }
 
 
-table categoria_marcas {
-  id_categoria integer [ ref: > categoria.id ]
-  id_marcas integer [ref: > marcas.id]
+table categoriaMarcas {
+id_categoria integer [ ref: > categoria.id ]
+id_marcas integer [ref: > marcas.id]
 
 }
 
 table carrito {
- id integer [pk]
+ id integer [increment,pk]
  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
  status_carrito varchar(50)
- creacion_date datetime
+ creacion_date date
 }
 
-table coment_byn {
-  id integer [pk]
+table comentByn {
+  id integer [increment,pk]
   rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-  id_articulo integer [ref: > articulobyn.id]
-  publicacion_date datetime
+  id_articulo integer [ref: > articuloByn.id]
+  publicacion_date date
   contenido varchar(250)
 
 }
 
-table articulobyn {
-id integer [pk]
+table articuloByn {
+id integer [increment,pk]
 rut_cliente varchar(10) [ref: > cliente.rut_cliente]
 titulo varchar(50)
-contenido varchar(250)
-publicacion_date datetime
-autor varchar(50)
+contenido varchar(300)
+publicacion_date date
+autor varchar(100)
 }
 // Almacena articulos creados por el cliente o el equipo (por definir) que proporciona información sobre productos, servicios, ofertas, novedades o cualquier otro tema relacionado con el comercio electrónico y ques seran comentadas por clientes registrados.
 
 table carrusel {
-id integer [pk]
+id integer [increment,pk]
 nombre varchar(50) // Nombre que describe el carrusel
 descripcion varchar(250)
-fechainicio datetime
-fechafin datetime
+fechainicio date
+fechafin date
 }
 
-table carrusel_producto {
+table carruselProducto {
 id_producto integer [ref: > producto.id]
 id_carrusel integer [ref: > carrusel.id]
 }
 
 table destacado {
-id integer [pk]
-FechaInicio datetime    //fecha inicio producto destacado        
-FechaFin    datetime    //fecha termino producto destacado
+id integer [increment,pk]
+FechaInicio date   //fecha inicio producto destacado        
+FechaFin    date    //fecha termino producto destacado
 estrellas   integer
 descuento integer          
 
@@ -124,14 +121,14 @@ descuento integer
 table producto_destacado {
 id_destacado integer [ref: > destacado.id]
 id_producto integer [ref: > producto.id]
-FechaInicio datetime    //fecha inicio producto destacado        
-FechaFin    datetime    //fecha termino producto destacado
+FechaInicio date   //fecha inicio producto destacado        
+FechaFin    date   //fecha termino producto destacado
 }
 
 
 
 table metodoEnvio {
-id integer [pk]
+id integer [increment,pk]
 nombre varchar(20)
 descripcion varchar(50)
 costo_envio integer
@@ -139,13 +136,13 @@ costo_envio integer
 
 
 table regionEnvio {
-id integer [pk]
-nombre varchar(20)
+id integer [increment,pk]
+nombre varchar(100)
 codigo_postal integer
 }
 
 table envio {
-id integer [pk]
+id integer [increment,pk]
 id_pedido integer [ref: - pedido.id]
 id_metodoEnvio integer [ref: - metodoEnvio.id]
 id_regionEnvio integer [ref: > regionEnvio.id]
@@ -153,14 +150,14 @@ fc_envio date
 }
 
 table metodoPago {
-id integer [pk]
+id integer [increment,pk]
 nombre_metodo_pago varchar(50)
 detalle_metodo_pago varchar(50)
 }
 
 
 table pago {
-id integer [pk]
+id integer [increment,pk]
 id_pedido integer [ref: - pedido.id]
 id_metodoPago integer [ref: - metodoPago.id]
 fcPago date
@@ -168,3 +165,12 @@ estado varchar(20)
 monto integer
 
 }
+table imagenProducto {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+nombre varchar(100)
+descripcion varchar(100)
+imagen blob
+}
+
+
