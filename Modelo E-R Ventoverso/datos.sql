@@ -193,12 +193,23 @@ VALUES
     ('13554351', 3, 'Enviado',1390000,1390000 , 'Plaza Central 789', 1, '2023-11-05'),
     ('14333565', 4, 'Entregado', 1390000, 1390000, 'Boulevard Norte 234', 1, '2023-11-06');
 
+
+/* INSERT TABLA detallePedido */
 INSERT INTO `detallePedido` (`id_producto`, `id_pedido`)
 VALUES
     (1, 1),
     (2, 2),
     (3, 3),
     (4, 4);
+
+
+INSERT INTO `pago` (`id_pedido`, `id_metodoPago`, `fcPago`, `estado`, `monto`)
+VALUES
+    (1, 1, '2023-11-03', 'Aprobado', 950000),
+    (2, 2, '2023-11-04', 'Aprobado', 890000),
+    (3, 1, '2023-11-05', 'Aprobado', 1390000);
+    (4, 1, '2023-11-05', 'Aprobado', 1390000);
+
 
 
 /* INSERT TABLA carrusel */
@@ -219,7 +230,6 @@ VALUES
     (2, 1), -- Producto 2 en Carrusel 1 (Ofertas)
     (3, 2), -- Producto 3 en Carrusel 2 (Novedades)
     (4, 3); -- Producto 4 en Carrusel 3 (Destacados)
-
 
 
 
