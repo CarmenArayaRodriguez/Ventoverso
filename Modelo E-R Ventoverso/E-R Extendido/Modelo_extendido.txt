@@ -109,18 +109,11 @@ id_producto integer [ref: > producto.id]
 id_carrusel integer [ref: > carrusel.id]
 }
 
-table destacado {
-id integer [increment,pk]
-FechaInicio date   //fecha inicio producto destacado        
-FechaFin    date    //fecha termino producto destacado
-estrellas   integer
-descuento integer          
-
-}
-
 table producto_destacado {
-id_destacado integer [ref: > destacado.id]
+id integer [increment,pk]
 id_producto integer [ref: > producto.id]
+valoracion varchar(10)
+descuento integer
 FechaInicio date   //fecha inicio producto destacado        
 FechaFin    date   //fecha termino producto destacado
 }
@@ -172,5 +165,7 @@ nombre varchar(100)
 descripcion varchar(100)
 imagen blob
 }
+
+
 
 

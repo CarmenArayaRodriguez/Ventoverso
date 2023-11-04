@@ -175,5 +175,52 @@ VALUES ('Región de Arica y Parinacota', 1100000),
        ('Región de Magallanes y de la Antártica Chilena', 6200000);
 
 
-
+/* INSERT TABLA productoDestacado */
+INSERT INTO `producto_destacado` (`id_producto`, `valoracion`, `descuento`, `FechaInicio`, `FechaFin`)
+VALUES
+    (1, '5 estrellas', 10, '2023-11-03', '2023-11-10'),
+    (2, '4 estrellas', 15, '2023-11-05', '2023-11-12'),
+    (3, '2 estrellas', 20, '2023-11-07', '2023-11-14'),
+    (4, '3 estrellas', 5, '2023-11-09', '2023-11-16');
        
+
+/* INSERT TABLA pedido */
+
+INSERT INTO `pedido` (`rut_cliente`, `id_producto`, `estado`, `sub_total`, `total`, `direccionEnvio`, `cantidad`, `fecha`)
+VALUES
+    ('12227463', 1, 'Pendiente', 950000, 950000, 'Calle Principal 123', 2, '2023-11-03'),
+    ('11222356', 2, 'En Proceso', 890000, 890000, 'Avenida Secundaria 456', 1, '2023-11-04'),
+    ('13554351', 3, 'Enviado',1390000,1390000 , 'Plaza Central 789', 1, '2023-11-05'),
+    ('14333565', 4, 'Entregado', 1390000, 1390000, 'Boulevard Norte 234', 1, '2023-11-06');
+
+INSERT INTO `detallePedido` (`id_producto`, `id_pedido`)
+VALUES
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4);
+
+
+/* INSERT TABLA carrusel */
+INSERT INTO `carrusel` (`nombre`, `descripcion`, `fechainicio`, `fechafin`)
+VALUES
+    ('Carrusel de Ofertas', 'Descubre nuestras mejores ofertas en instrumentos', '2023-11-01', '2023-11-30'),
+    ('Carrusel de Novedades', 'Explora los últimos lanzamientos en instrumentos', '2023-11-01', '2023-11-30'),
+    ('Carrusel de Destacados', 'Los instrumentos más populares del mes', '2023-11-01', '2023-11-30');
+
+
+
+/* INSERT TABLA intermedia carruselProducto */
+
+
+INSERT INTO `carruselProducto` (`id_producto`, `id_carrusel`)
+VALUES
+    (1, 1), -- Producto 1 en Carrusel 1 (Ofertas)
+    (2, 1), -- Producto 2 en Carrusel 1 (Ofertas)
+    (3, 2), -- Producto 3 en Carrusel 2 (Novedades)
+    (4, 3); -- Producto 4 en Carrusel 3 (Destacados)
+
+
+
+
+    

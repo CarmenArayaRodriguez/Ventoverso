@@ -1,3 +1,8 @@
+create database ventoverso;
+
+use ventoverso;
+
+
 CREATE TABLE `cliente` (
   `rut_cliente` varchar(10) PRIMARY KEY,
   `dv_cliente` char,
@@ -102,17 +107,11 @@ CREATE TABLE `carruselProducto` (
   `id_carrusel` integer
 );
 
-CREATE TABLE `destacado` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `FechaInicio` date,
-  `FechaFin` date,
-  `estrellas` integer,
-  `descuento` integer
-);
-
 CREATE TABLE `producto_destacado` (
-  `id_destacado` integer,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
+  `valoracion` varchar(10),
+  `descuento` integer,
   `FechaInicio` date,
   `FechaFin` date
 );
@@ -192,8 +191,6 @@ ALTER TABLE `articuloByn` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (
 ALTER TABLE `carruselProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
 ALTER TABLE `carruselProducto` ADD FOREIGN KEY (`id_carrusel`) REFERENCES `carrusel` (`id`);
-
-ALTER TABLE `producto_destacado` ADD FOREIGN KEY (`id_destacado`) REFERENCES `destacado` (`id`);
 
 ALTER TABLE `producto_destacado` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
