@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ReservasDeCitaService } from './reservas-de-cita.service';
+import { ReservasDeCitaService } from '../services/reservas-de-cita.service';
 
 @ApiTags('Reservas de cita')
 @Controller('reservas-de-cita')

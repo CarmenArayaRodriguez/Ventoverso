@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { SuscripcionDTO } from './suscripcion/dto/suscripcion.dto';
-import { EditarSuscripcionDTO } from './suscripcion/dto/editar-suscripcion.dto';
+import { SuscripcionDTO } from '../dto/suscripcion.dto';
+import { EditarSuscripcionDTO } from '../dto/editar-suscripcion.dto';
 
 @Injectable()
 export class ServicioAlClienteService {

@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CarritoDeComprasService } from './carrito-de-compras.service';
-import { AgregarProductoCarritoRequestDTO } from './dto/agregar-producto-carrito-request.dto';
-import { CrearCarritoDTO } from './dto/crear-carrito.dto';
-import { ActualizarProductoCarritoDTO } from './dto/actualizar-producto-carrito.dto';
-import { CarritoConProductosResponseDTO } from './dto/carrito-con-productos-response.dto';
-import { EliminarProductoCarritoResponseDTO } from './dto/eliminar-producto-carrito-response.dto';
-import { ProductoEnCarritoResponseDTO } from './dto/producto-en-carrito-response.dto';
-import { ResumenCompraResponseDTO } from './dto/resumen-compra-response.dto';
-import { CheckoutResponseDTO } from './dto/checkout-response.dto';
-import { CheckoutRequestDTO } from './dto/checkout-request.dto';
-import { ErrorPagoResponseDTO } from './dto/error-de-pago-response.dto';
-import { CompraExitosaResponseDTO } from './dto/compra-exitosa-response.dto';
+import { CarritoDeComprasService } from '../services/carrito-de-compras.service';
+import { AgregarProductoCarritoRequestDTO } from '../dto/agregar-producto-carrito-request.dto';
+import { CrearCarritoDTO } from '../dto/crear-carrito.dto';
+import { ActualizarProductoCarritoDTO } from '../dto/actualizar-producto-carrito.dto';
+import { CarritoConProductosResponseDTO } from '../dto/carrito-con-productos-response.dto';
+import { EliminarProductoCarritoResponseDTO } from '../dto/eliminar-producto-carrito-response.dto';
+import { ProductoEnCarritoResponseDTO } from '../dto/producto-en-carrito-response.dto';
+import { ResumenCompraResponseDTO } from '../dto/resumen-compra-response.dto';
+import { CheckoutResponseDTO } from '../dto/checkout-response.dto';
+import { CheckoutRequestDTO } from '../dto/checkout-request.dto';
+import { ErrorPagoResponseDTO } from '../dto/error-de-pago-response.dto';
+import { CompraExitosaResponseDTO } from '../dto/compra-exitosa-response.dto';
 
 @ApiTags('Carrito de compras')
 @Controller('carrito-de-compras')

@@ -1,19 +1,19 @@
 import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CatalogoDeProductosService } from './catalogo-de-productos.service';
-import { AgregarDestacadoDTO } from './producto-destacado/dto/agregar-destacado.dto';
-import { DestacadoCard } from './producto-destacado/entities/destacado-card.entity';
-import { DestacadoCardResponseDTO } from './producto-destacado/dto/destacado-card-response.dto';
-import { CarruselItem } from './carrusel/entities/carrusel-item.entity';
-import { CarruselItemResponseDTO } from './carrusel/dto/carrusel-item-response.dto';
-import { ProductoCatalogoSubcategoriaResponseDTO } from './producto-nuevo/dto/producto-catalogo-subcategoria.dto';
-import { ProductoNuevo } from './producto-nuevo/entities/producto-nuevo.entity';
-import { transformaACatalogoSubcategoriaResponseDto } from './producto-nuevo/utils/campos-catalogo-subcategoria.utils';
-import { ProductoDetalleResponseDTO } from './producto-nuevo/dto/producto-detalle.dto';
-import { transformaAProductoDetalleResponseDto } from './producto-nuevo/utils/campos-detalle-producto.utils';
-import { CategoriaClarinete } from './clarinetes/entities/categoria-clarinete.entity';
-import { CategoriaClarineteResponseDTO } from './clarinetes/dto/categoria-clarinete-response.dto';
-import { convierteADestacadoCardResponseDTO } from './producto-destacado/utils/destacado-card.utils';
+import { ProductoService } from '../services/producto.service';
+import { AgregarDestacadoDTO } from '../dto/agregar-destacado.dto';
+import { DestacadoCard } from '../catalogo-de-productos/producto-destacado/entities/destacado-card.entity';
+import { DestacadoCardResponseDTO } from '../dto/destacado-card-response.dto';
+import { CarruselItem } from '../catalogo-de-productos/carrusel/entities/carrusel-item.entity';
+import { CarruselItemResponseDTO } from '../dto/carrusel-item-response.dto';
+import { ProductoCatalogoSubcategoriaResponseDTO } from '../dto/producto-catalogo-subcategoria.dto';
+import { ProductoNuevo } from '../catalogo-de-productos/producto-nuevo/entities/producto-nuevo.entity';
+import { transformaACatalogoSubcategoriaResponseDto } from '../catalogo-de-productos/producto-nuevo/utils/campos-catalogo-subcategoria.utils';
+import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
+import { transformaAProductoDetalleResponseDto } from '../catalogo-de-productos/producto-nuevo/utils/campos-detalle-producto.utils';
+import { CategoriaClarinete } from '../catalogo-de-productos/clarinetes/entities/categoria-clarinete.entity';
+import { CategoriaClarineteResponseDTO } from '../dto/categoria-clarinete-response.dto';
+import { convierteADestacadoCardResponseDTO } from '../catalogo-de-productos/producto-destacado/utils/destacado-card.utils';
 
 
 
@@ -21,13 +21,13 @@ import { convierteADestacadoCardResponseDTO } from './producto-destacado/utils/d
 @Controller('catalogo-de-productos')
 export class CatalogoDeProductosController {
 
-    constructor(private readonly catalogoDeProductosService: CatalogoDeProductosService) { }
+    constructor(private readonly catalogoDeProductosService: ProductoService) { }
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 
-    getCatalogoDeProduductos(): string {
-        return this.catalogoDeProductosService.getCatalogoDeProductos();
-    }
+    // getCatalogoDeProduductos(): string {
+    //     return this.catalogoDeProductosService.getCatalogoDeProductos();
+    // }
 
     @Get('destacados-home')
     @ApiOperation({ summary: 'Obtener las tarjetas de productos destacados para el home' })
@@ -84,16 +84,16 @@ export class CatalogoDeProductosController {
     }
 
 
-    @Post('destacado')
-    agregarDestacado(@Body() agregarDestacadoDTO: AgregarDestacadoDTO) {
-        return this.catalogoDeProductosService.agregarDestacado(agregarDestacadoDTO);
-    }
+    // @Post('destacado')
+    // agregarDestacado(@Body() agregarDestacadoDTO: AgregarDestacadoDTO) {
+    //     return this.catalogoDeProductosService.agregarDestacado(agregarDestacadoDTO);
+    // }
 
-    @Delete('destacado/:id')
-    eliminarDestacado(@Param('id') id: string) {
-        return this.catalogoDeProductosService.eliminarDestacado(id);
+    // @Delete('destacado/:id')
+    // eliminarDestacado(@Param('id') id: string) {
+    //     return this.catalogoDeProductosService.eliminarDestacado(id);
 
-    }
+    // }
 
     @Get('carrusel')
     @ApiOperation({ summary: 'Obtener los items del carrusel para el home' })

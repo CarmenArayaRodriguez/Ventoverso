@@ -1,16 +1,16 @@
 import { BadRequestException, Body, Controller, Delete, Get, HttpCode, Param, Post, Put } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PerfilDeUsuarioService } from './perfil-de-usuario.service';
-import { AgregarFavoritoRequestDTO } from './producto-favorito/dto/agregar-favorito-request.dto';
-import { Favorito } from './producto-favorito/entities/favorito.entity';
-import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto';
-import { EditarPostDTO } from 'src/blog-y-noticias/dto/editar-post.dto';
-import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
-import { IngresarRequestDTO } from './ingresar/dto/ingresar-request.dto';
-import { IngresarResponseDTO } from './ingresar/dto/ingresar-response.dto';
-import { AgregarFavoritoResponseDTO } from './producto-favorito/dto/agregar-favorito-response.dto';
-import { EliminarFavoritoResponseDTO } from './producto-favorito/dto/eliminar-favorito-response.dto';
-import { EliminarFavoritoRequestDTO } from './producto-favorito/dto/eliminar-favorito-request.dto';
+import { PerfilDeUsuarioService } from '../services/perfil-de-usuario.service';
+import { AgregarFavoritoRequestDTO } from '../dto/agregar-favorito-request.dto';
+import { Favorito } from '../perfil-de-usuario/producto-favorito/entities/favorito.entity';
+import { CrearUsuarioDTO } from '../dto/crear-nuevo-usuario.dto';
+import { EditarPostDTO } from 'src/dto/editar-post.dto';
+import { EditarUsuarioDTO } from '../dto/editar-usuario.dto';
+import { IngresarRequestDTO } from '../dto/ingresar-request.dto';
+import { IngresarResponseDTO } from '../dto/ingresar-response.dto';
+import { AgregarFavoritoResponseDTO } from '../dto/agregar-favorito-response.dto';
+import { EliminarFavoritoResponseDTO } from '../dto/eliminar-favorito-response.dto';
+import { EliminarFavoritoRequestDTO } from '../dto/eliminar-favorito-request.dto';
 
 @ApiTags('Perfil de usuario')
 @Controller('perfil-de-usuario')

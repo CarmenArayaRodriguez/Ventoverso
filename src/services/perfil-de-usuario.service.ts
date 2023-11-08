@@ -1,12 +1,12 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { AgregarFavoritoRequestDTO } from './producto-favorito/dto/agregar-favorito-request.dto';
-import { CrearUsuarioDTO } from './gestion-usuario/dto/crear-nuevo-usuario.dto'; // verificar o borrar
+import { AgregarFavoritoRequestDTO } from '../dto/agregar-favorito-request.dto';
+import { CrearUsuarioDTO } from '../dto/crear-nuevo-usuario.dto'; // verificar o borrar
 
-import { Favorito } from './producto-favorito/entities/favorito.entity';
-import { Usuario } from './gestion-usuario/entities/usuario.entity';
-import { EditarUsuarioDTO } from './gestion-usuario/dto/editar-usuario.dto';
-import { IngresarRequestDTO } from './ingresar/dto/ingresar-request.dto';
-import { IngresarResponseDTO } from './ingresar/dto/ingresar-response.dto';
+import { Favorito } from '../perfil-de-usuario/producto-favorito/entities/favorito.entity';
+import { Usuario } from '../perfil-de-usuario/gestion-usuario/entities/usuario.entity';
+import { EditarUsuarioDTO } from '../dto/editar-usuario.dto';
+import { IngresarRequestDTO } from '../dto/ingresar-request.dto';
+import { IngresarResponseDTO } from '../dto/ingresar-response.dto';
 
 @Injectable()
 export class PerfilDeUsuarioService {

@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ServicioAlClienteService } from './servicio-al-cliente.service';
-import { SuscripcionDTO } from './suscripcion/dto/suscripcion.dto';
-import { EditarSuscripcionDTO } from './suscripcion/dto/editar-suscripcion.dto';
-import { DetalleEstrellasResponseDTO } from './calificaciones-de-clientes/dto/detalle-de-estrellas-response.dto';
-import { ComentarioClienteResponseDTO } from './calificaciones-de-clientes/dto/comentario-cliente-response.dto';
-import { ClientesCalificacionGeneralResponseDTO } from './calificaciones-de-clientes/dto/clientes-clasificacion-general-response.dto';
+import { ServicioAlClienteService } from '../services/servicio-al-cliente.service';
+import { SuscripcionDTO } from '../dto/suscripcion.dto';
+import { EditarSuscripcionDTO } from '../dto/editar-suscripcion.dto';
+import { DetalleEstrellasResponseDTO } from '../dto/detalle-de-estrellas-response.dto';
+import { ComentarioClienteResponseDTO } from '../dto/comentario-cliente-response.dto';
+import { ClientesCalificacionGeneralResponseDTO } from '../dto/clientes-clasificacion-general-response.dto';
 
 @ApiTags('Servicio al cliente')
 @Controller('servicio-al-cliente')

@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { BlogYNoticiasModule } from './blog-y-noticias/blog-y-noticias.module';
-import { CarritoDeComprasModule } from './carrito-de-compras/carrito-de-compras.module';
-import { CatalogoDeProductosModule } from './catalogo-de-productos/catalogo-de-productos.module';
-import { PerfilDeUsuarioModule } from './perfil-de-usuario/perfil-de-usuario.module';
-import { ReservasDeCitaModule } from './reservas-de-cita/reservas-de-cita.module';
-import { ServicioAlClienteModule } from './servicio-al-cliente/servicio-al-cliente.module';
+import { BlogYNoticiasModule } from './modules/blog-y-noticias.module';
+import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
+import { ProductoModule } from './modules/producto.module';
+import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
+import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
+import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -41,7 +41,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const catalogoDeProductosDocument = SwaggerModule.createDocument(app, catalogoDeProductosOptions, {
-    include: [CatalogoDeProductosModule],
+    include: [ProductoModule],
   });
   SwaggerModule.setup('docs/catalogo-de-productos', app, catalogoDeProductosDocument);
 
