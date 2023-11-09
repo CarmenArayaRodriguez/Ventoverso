@@ -386,7 +386,8 @@ export class CatalogoDeProductosController {
         ],
         precio: 1000,
         caracteristicasPrincipales: 'Característica principal del Modelo 1',
-        descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.'
+        descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
+        stock: 10,
     };
 
     @Get('detalle-clarinete-sib')

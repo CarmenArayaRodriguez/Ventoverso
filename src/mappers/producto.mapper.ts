@@ -1,5 +1,6 @@
 import { Producto } from "../entities/producto.entity";
 import { ProductoDetalleResponseDTO } from "../dto/producto-detalle-response.dto";
+import { CrearProductoDTO } from "src/dto/crear-producto.dto";
 
 export class ProductoMapper {
 
@@ -11,9 +12,39 @@ export class ProductoMapper {
         dto.imagenes = producto.imagenes?.map(imagen => imagen.url);
         dto.precio = producto.precio;
         dto.descripcion = producto.descripcion;
+        dto.stock = producto.stock;
+        dto.urlProducto = producto.urlProducto
 
         return dto;
     }
 
+    static async toEntity(crearProductoDto: CrearProductoDTO, categoriaRepo, subcategoriaRepo, marcaRepo): Promise<Producto> {
+        const producto = new Producto();
+        producto.nombre = crearProductoDto.nombre;
+        producto.descripcion = crearProductoDto.descripcion;
+        producto.precio = crearProductoDto.precio;
+        producto.stock = crearProductoDto.stock;
+        producto.urlProducto = crearProductoDto.url_producto;
+        if (crearProductoDto.id_categoria) {
+            producto.categoria = await categoriaRepo.findOne({ where: { id: crearProductoDto.id_categoria } });
+            console.log('ID Categoria:', crearProductoDto.id_categoria);
+        }
+        if (crearProductoDto.id_subcategoria) {
+            producto.subcategoria = await subcategoriaRepo.findOne({ where: { id: crearProductoDto.id_subcategoria } });
+            console.log('ID Subcategoria:', crearProductoDto.id_subcategoria);
+        }
+        if (crearProductoDto.id_marcas) {
+            producto.marca = await marcaRepo.findOne({ where: { id: crearProductoDto.id_marcas } });
+            console.log('ID Marca:', crearProductoDto.id_marcas);
+        }
+        if (crearProductoDto.url_producto) {
+            producto.urlProducto = crearProductoDto.url_producto;
+        }
+
+        return producto;
+    }
 
 }
+
+
+

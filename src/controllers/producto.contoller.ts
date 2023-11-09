@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { CrearProductoDTO } from '../dto/crear-producto.dto';
@@ -33,6 +33,10 @@ export class ProductoController {
 
     @Delete(':id')
     @ApiOperation({ summary: 'Eliminar un producto' })
+    @ApiResponse({
+        status: 200,
+        description: 'El producto ha sido eliminado correctamente.',
+    })
     async eliminarProducto(@Param('id') id: number): Promise<void> {
         return this.productoService.eliminarProducto(id);
     }
