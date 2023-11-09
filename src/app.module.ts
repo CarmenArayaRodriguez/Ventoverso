@@ -6,11 +6,17 @@ import { PerfilDeUsuarioModule } from './perfil-de-usuario/perfil-de-usuario.mod
 import { BlogYNoticiasModule } from './blog-y-noticias/blog-y-noticias.module';
 import { ReservasDeCitaModule } from './reservas-de-cita/reservas-de-cita.module';
 import { AppController } from './app.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+
 
 @Module({
   imports: [CatalogoDeProductosModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
+  
 })
-export class AppModule { }
+
+
+export class AppModule { };
 
