@@ -26,6 +26,9 @@ import { Subcategoria } from './entities/subcategoria.entity';
   }), CatalogoDeProductosModule, ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
+  
 })
-export class AppModule { }
+
+
+export class AppModule { };
 

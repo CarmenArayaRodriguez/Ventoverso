@@ -112,7 +112,7 @@ id_carrusel integer [ref: > carrusel.id]
 table producto_destacado {
 id integer [increment,pk]
 id_producto integer [ref: > producto.id]
-valoracion varchar(10)
+valoracion varchar(50)
 descuento integer
 FechaInicio date   //fecha inicio producto destacado        
 FechaFin    date   //fecha termino producto destacado
@@ -163,9 +163,5 @@ id integer [increment,pk]
 id_producto integer [ref: > producto.id]
 nombre varchar(100)
 descripcion varchar(100)
-imagen blob
+imagen varchar (250)
 }
-
-
-
-
