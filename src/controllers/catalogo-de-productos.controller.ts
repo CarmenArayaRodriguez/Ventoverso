@@ -1,27 +1,26 @@
 import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ProductoService } from '../services/producto.service';
-import { AgregarDestacadoDTO } from '../dto/agregar-destacado.dto';
+import { CatalogoDeProductosService } from 'src/services/catalogo-de-productos.service';
+import { AgregarDestacadoDTO } from 'src/dto/agregar-destacado.dto';
 import { DestacadoCard } from '../catalogo-de-productos/producto-destacado/entities/destacado-card.entity';
-import { DestacadoCardResponseDTO } from '../dto/destacado-card-response.dto';
+import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 import { CarruselItem } from '../catalogo-de-productos/carrusel/entities/carrusel-item.entity';
-import { CarruselItemResponseDTO } from '../dto/carrusel-item-response.dto';
-import { ProductoCatalogoSubcategoriaResponseDTO } from '../dto/producto-catalogo-subcategoria.dto';
-import { ProductoNuevo } from '../catalogo-de-productos/producto-nuevo/entities/producto-nuevo.entity';
-import { transformaACatalogoSubcategoriaResponseDto } from '../catalogo-de-productos/producto-nuevo/utils/campos-catalogo-subcategoria.utils';
-import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
+import { CarruselItemResponseDTO } from 'src/dto/carrusel-item-response.dto';
+import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
+import { ProductoNuevo } from 'src/catalogo-de-productos/producto-nuevo/entities/producto-nuevo.entity';
+import { transformaACatalogoSubcategoriaResponseDto } from 'src/catalogo-de-productos/producto-nuevo/utils/campos-catalogo-subcategoria.utils';
+import { ProductoDetalleResponseDTO } from 'src/dto/producto-detalle-response.dto';
 import { transformaAProductoDetalleResponseDto } from '../catalogo-de-productos/producto-nuevo/utils/campos-detalle-producto.utils';
-import { CategoriaClarinete } from '../catalogo-de-productos/clarinetes/entities/categoria-clarinete.entity';
-import { CategoriaClarineteResponseDTO } from '../dto/categoria-clarinete-response.dto';
-import { convierteADestacadoCardResponseDTO } from '../catalogo-de-productos/producto-destacado/utils/destacado-card.utils';
-
+import { CategoriaClarinete } from 'src/catalogo-de-productos/clarinetes/entities/categoria-clarinete.entity';
+import { CategoriaClarineteResponseDTO } from 'src/dto/categoria-clarinete-response.dto';
+import { convierteADestacadoCardResponseDTO } from 'src/catalogo-de-productos/producto-destacado/utils/destacado-card.utils';
 
 
 @ApiTags('Catalogo de productos')
 @Controller('catalogo-de-productos')
 export class CatalogoDeProductosController {
 
-    constructor(private readonly catalogoDeProductosService: ProductoService) { }
+    constructor(private readonly catalogoDeProductosService: CatalogoDeProductosService) { }
     @Get()
     @ApiOperation({ summary: 'Obtener el nombre del módulo' })
 

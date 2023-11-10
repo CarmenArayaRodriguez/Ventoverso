@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { ProductoModule } from './modules/producto.module';
 import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
@@ -22,7 +23,7 @@ import { Subcategoria } from './entities/subcategoria.entity';
     password: 'Fechita1',
     database: 'ventoverso',
     entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria]
-  }), ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+  }), CatalogoDeProductosModule, ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
 })
