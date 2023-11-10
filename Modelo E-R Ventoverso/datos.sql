@@ -104,7 +104,7 @@ VALUES (1, 10);
 
 
 INSERT INTO imagenProducto (id_producto, nombre, descripcion, imagen)
-VALUES (1, 'Clarinete SIB FAU_1', 'Modelo 621 high ', LOAD_FILE('/Users/claudioandressanmartinconcha/Desktop/fotosVentoverso/FA Uebel/Modelo 621/ClarineteSibFAU_1.jpg'));
+VALUES (1, 'Clarinete SIB FAU_1', 'Modelo 621 high ', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
 
 
 
@@ -207,7 +207,7 @@ INSERT INTO `pago` (`id_pedido`, `id_metodoPago`, `fcPago`, `estado`, `monto`)
 VALUES
     (1, 1, '2023-11-03', 'Aprobado', 950000),
     (2, 2, '2023-11-04', 'Aprobado', 890000),
-    (3, 1, '2023-11-05', 'Aprobado', 1390000);
+    (3, 1, '2023-11-05', 'Aprobado', 1390000),
     (4, 1, '2023-11-05', 'Aprobado', 1390000);
 
 
