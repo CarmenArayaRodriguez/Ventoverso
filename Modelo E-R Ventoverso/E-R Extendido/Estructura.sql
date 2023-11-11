@@ -40,8 +40,6 @@ CREATE TABLE `producto` (
   `stock` integer,
   `estrellas` integer,
   `caracteristicasPrincipales` varchar(255),
-  `url_producto` varchar(250)
-  `estrellas` integer
 );
 
 CREATE TABLE `detallePedido` (
