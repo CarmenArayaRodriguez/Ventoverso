@@ -36,10 +36,11 @@ CREATE TABLE `producto` (
   `id_marcas` integer,
   `nombre` varchar(100),
   `descripcion` varchar(300),
+  `caracteristicasPrincipales` varchar(255),
   `precio` integer,
   `stock` integer,
-  `estrellas` integer,
-  `caracteristicasPrincipales` varchar(255),
+  `estrellas` integer
+  
 );
 
 CREATE TABLE `detallePedido` (
