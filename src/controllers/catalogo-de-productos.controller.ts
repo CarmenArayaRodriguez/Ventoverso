@@ -7,13 +7,13 @@ import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 import { CarruselItem } from '../catalogo-de-productos/carrusel/entities/carrusel-item.entity';
 import { CarruselItemResponseDTO } from 'src/dto/carrusel-item-response.dto';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
-import { ProductoNuevo } from 'src/catalogo-de-productos/producto-nuevo/entities/producto-nuevo.entity';
 import { transformaACatalogoSubcategoriaResponseDto } from 'src/catalogo-de-productos/producto-nuevo/utils/campos-catalogo-subcategoria.utils';
 import { ProductoDetalleResponseDTO } from 'src/dto/producto-detalle-response.dto';
 import { transformaAProductoDetalleResponseDto } from '../catalogo-de-productos/producto-nuevo/utils/campos-detalle-producto.utils';
 import { CategoriaClarinete } from 'src/catalogo-de-productos/clarinetes/entities/categoria-clarinete.entity';
 import { CategoriaClarineteResponseDTO } from 'src/dto/categoria-clarinete-response.dto';
 import { convierteADestacadoCardResponseDTO } from 'src/catalogo-de-productos/producto-destacado/utils/destacado-card.utils';
+import { ProductoNuevo } from 'src/catalogo-de-productos/producto-nuevo/entities/producto-nuevo.entity';
 
 
 @ApiTags('Catalogo de productos')
@@ -151,7 +151,6 @@ export class CatalogoDeProductosController {
                 'https://ejemplo.com/imagen-1-6.jpg',
             ],
             precio: 1000,
-            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 1',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 1.',
             categoria: 'clarinetes',
@@ -172,7 +171,6 @@ export class CatalogoDeProductosController {
                 'https://ejemplo.com/imagen-2-6.jpg',
             ],
             precio: 1100,
-            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 2',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 2.',
             categoria: 'clarinetes',
@@ -193,7 +191,6 @@ export class CatalogoDeProductosController {
                 'https://ejemplo.com/imagen-3-6.jpg',
             ],
             precio: 16000,
-            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 3',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
             categoria: 'clarinetes',
@@ -215,7 +212,6 @@ export class CatalogoDeProductosController {
 
             ],
             precio: 16000,
-            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 3',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 3',
             categoria: 'clarinetes',
@@ -238,7 +234,6 @@ export class CatalogoDeProductosController {
             ],
 
             precio: 1600,
-            linkDetalle: 'https://ejemplo.com/producto',
             caracteristicasPrincipales: 'Característica principal del Modelo 16',
             descripcion: 'Descripción detallada del Clarinete Sib Modelo 16.',
             categoria: 'clarinetes',

@@ -34,6 +34,7 @@ CREATE TABLE `producto` (
   `precio` integer,
   `stock` integer,
   `url_producto` varchar(250)
+  `estrellas` integer
 );
 
 CREATE TABLE `detallePedido` (
