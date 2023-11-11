@@ -33,6 +33,9 @@ export class Producto {
     @Column('int')
     stock: number;
 
+    @Column('int', { nullable: true })
+    estrellas?: number;
+
     @Column({ name: 'url_producto', nullable: true, type: 'varchar' })
     urlProducto?: string;
 

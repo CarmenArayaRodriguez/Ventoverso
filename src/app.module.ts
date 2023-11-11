@@ -13,6 +13,7 @@ import { Categoria } from './entities/categoria.entity';
 import { ImagenProducto } from './entities/imagen.entity';
 import { Marca } from './entities/marca.entity';
 import { Subcategoria } from './entities/subcategoria.entity';
+import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -23,10 +24,10 @@ import { Subcategoria } from './entities/subcategoria.entity';
     password: 'Fechita1',
     database: 'ventoverso',
     entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria]
-  }), CatalogoDeProductosModule, ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
-  
+
 })
 
 

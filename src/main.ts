@@ -9,6 +9,7 @@ import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
 import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 import { ValidationPipe } from '@nestjs/common';
 import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
+import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -56,6 +57,18 @@ async function bootstrap() {
     include: [ProductoModule],
   });
   SwaggerModule.setup('docs/producto', app, productoDocument);
+
+  //CONFIGURACION SWAGGER Catalogo de Subcategoría
+  const catalogoSubcategoriaOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Catálogo Subcategoría de Productos API')
+    .setDescription('API para los productos por subcategoría')
+    .setVersion('1.0')
+    .build();
+  const catalogoSubcategoriaDocument = SwaggerModule.createDocument(app, catalogoSubcategoriaOptions, {
+    include: [CatalogoSubcategoriaModule],
+  });
+  SwaggerModule.setup('docs/catalogo-subcategoria', app, catalogoSubcategoriaDocument);
+
 
   //CONFIGURACION SWAGGER Perfil de usuario
   const perfilDeUsuarioOptions = new DocumentBuilder()
