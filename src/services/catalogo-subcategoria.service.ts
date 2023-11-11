@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Producto } from 'src/entities/producto.entity';
@@ -18,7 +18,7 @@ export class CatalogoSubcategoriaService {
     async obtenerProductos(): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
         const subcategoriaObj = await this.subcategoriaRepository.findOne({ where: { id: 2 } });
         if (!subcategoriaObj) {
-            throw new Error("Subcategoría no encontrada");
+            throw new NotFoundException("Subcategoría no encontrada");;
         }
 
         const productos = await this.productoRepository.find({
@@ -31,18 +31,6 @@ export class CatalogoSubcategoriaService {
         }
 
         return productos.map(CatalogoSubcategoriaMapper.toDto) || [];
-    }
-
-    async obtenerProductosConEstrellas(subcategoria: string): Promise<Producto[]> {
-        const productos = await this.productoRepository.createQueryBuilder("producto")
-            .leftJoinAndSelect("producto.productoDestacado", "productoDestacado")
-            .where("producto.subcategoria = :subcategoria", { subcategoria })
-            .getMany();
-
-        return productos.map(producto => {
-
-            return producto;
-        });
     }
 
 }
