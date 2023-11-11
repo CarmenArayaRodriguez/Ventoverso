@@ -116,11 +116,11 @@ INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripc
 VALUES (1, 2, 7, 'Clarinete SIB FAU Mini', 'Modelo 621 mini', 890000, 02, 4);
 INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, estrellas)
 VALUES (1, 2, 9, 'Clarinete SIB OA ', 'Modelo 320 High', 1390000, 04, , 2);
-INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
+INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, estrellas)
 VALUES (1, 2, 9, 'Clarinete SIB OA ', 'Modelo 320 Mini', 1390000, 05, 5);
-INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
+INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, estrellas)
 VALUES (1, 2, 8, 'Clarinete SIB Screiber ', 'Modelo D12 Mini', 1390000, 05, 3);
-INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
+INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, estrellas)
 VALUES (1, 2, 8, 'Clarinete SIB Screiber', 'Modelo D12 High', 1390000, 05, 5);
 
 
