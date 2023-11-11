@@ -38,6 +38,8 @@ CREATE TABLE `producto` (
   `descripcion` varchar(300),
   `precio` integer,
   `stock` integer,
+  `estrellas` integer,
+  `caracteristicasPrincipales` varchar(255),
   `url_producto` varchar(250)
 );
 
@@ -110,7 +112,7 @@ CREATE TABLE `carruselProducto` (
 CREATE TABLE `producto_destacado` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
-  `valoracion` varchar(10),
+  `valoracion` varchar(50),
   `descuento` integer,
   `FechaInicio` date,
   `FechaFin` date
@@ -157,7 +159,7 @@ CREATE TABLE `imagenProducto` (
   `id_producto` integer,
   `nombre` varchar(100),
   `descripcion` varchar(100),
-  `imagen` blob
+  `imagen` varchar(250)
 );
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);

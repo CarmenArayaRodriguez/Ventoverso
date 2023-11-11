@@ -35,6 +35,8 @@ table producto {
   descripcion varchar(300)
   precio integer
   stock integer
+  estrellas integer
+  caracteristicasPrincipales varchar(255)
   url_producto varchar(250)
   
 }
