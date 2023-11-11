@@ -110,18 +110,18 @@ VALUES (1, 'Clarinete SIB FAU_1', 'Modelo 621 high ', 'https://drive.google.com/
 
 
 /* INSERT TABLA Productos */
+INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, estrellas)
+VALUES (1, 2, 7, 'Clarinete SIB FAU_1', 'Modelo 621 hight', 950000, 05, 1);
+INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock,  estrellas)
+VALUES (1, 2, 7, 'Clarinete SIB FAU Mini', 'Modelo 621 mini', 890000, 02, 4);
+INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, estrellas)
+VALUES (1, 2, 9, 'Clarinete SIB OA ', 'Modelo 320 High', 1390000, 04, , 2);
 INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
-VALUES (1, 2, 7, 'Clarinete SIB FAU_1', 'Modelo 621 hight', 950000, 05, 'https://ejemplo.com/imagen.jpg', 1);
+VALUES (1, 2, 9, 'Clarinete SIB OA ', 'Modelo 320 Mini', 1390000, 05, 5);
 INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
-VALUES (1, 2, 7, 'Clarinete SIB FAU Mini', 'Modelo 621 mini', 890000, 02, 'https://ejemplo.com/imagen.jpg', 4);
+VALUES (1, 2, 8, 'Clarinete SIB Screiber ', 'Modelo D12 Mini', 1390000, 05, 3);
 INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
-VALUES (1, 2, 9, 'Clarinete SIB OA ', 'Modelo 320 High', 1390000, 04, 'https://ejemplo.com/imagen.jpg', 2);
-INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
-VALUES (1, 2, 9, 'Clarinete SIB OA ', 'Modelo 320 Mini', 1390000, 05, 'https://ejemplo.com/imagen.jpg', 5);
-INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
-VALUES (1, 2, 8, 'Clarinete SIB Screiber ', 'Modelo D12 Mini', 1390000, 05, 'https://ejemplo.com/imagen.jpg', 3);
-INSERT INTO producto (id_categoria, id_subcategoria, id_marcas, nombre, descripcion, precio, stock, url_producto, estrellas)
-VALUES (1, 2, 8, 'Clarinete SIB Screiber', 'Modelo D12 High', 1390000, 05, 'https://ejemplo.com/imagen.jpg', 5);
+VALUES (1, 2, 8, 'Clarinete SIB Screiber', 'Modelo D12 High', 1390000, 05, 5);
 
 
 /* INSERT TABLA imagenProducto */
