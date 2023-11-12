@@ -118,18 +118,18 @@ VALUES (1, 2, 8, 'Clarinete SIB Screiber', 'Modelo D12 High', 'Apoyo del pulgar 
 
 /* INSERT TABLA imagenProducto */
 
-INSERT INTO imagenProducto (id_producto, nombre, modelo, imagen)
-VALUES (1, 'Clarinete SIB FAU_1', 'Modelo 621 high ', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
-INSERT INTO imagenProducto (id_producto, nombre, modelo, imagen)
-VALUES (2, 'Clarinete SIB FAU Mini', 'Modelo 621 mini ', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
-INSERT INTO imagenProducto (id_producto, nombre, modelo, imagen)
-VALUES (3, 'Clarinete SIB OA', 'Modelo 320 High', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
-INSERT INTO imagenProducto (id_producto, nombre, modelo, imagen)
-VALUES (4, 'Clarinete SIB OA', 'Modelo 320 Mini', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
-INSERT INTO imagenProducto (id_producto, nombre, modelo, imagen)
-VALUES (5, 'Clarinete SIB Screiber', 'Modelo D12 Mini', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
-INSERT INTO imagenProducto (id_producto, nombre, modelo, imagen)
-VALUES (6, 'Clarinete SIB Screiber', 'Modelo D12 High', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO imagenProducto (id_producto, imagen)
+VALUES (1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO imagenProducto (id_producto, imagen)
+VALUES (2, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO imagenProducto (id_producto, imagen)
+VALUES (3, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO imagenProducto (id_producto, imagen)
+VALUES (4, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO imagenProducto (id_producto, imagen)
+VALUES (5, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO imagenProducto (id_producto, imagen)
+VALUES (6, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
 
 
 /* INSERT TABLA metodoPago */

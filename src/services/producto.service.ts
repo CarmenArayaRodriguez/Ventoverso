@@ -60,8 +60,6 @@ export class ProductoService {
                     const imagenProducto = new ImagenProducto();
                     imagenProducto.imagen = url;
                     imagenProducto.producto = productoGuardado;
-                    imagenProducto.nombre = nuevoProducto.nombre;
-                    imagenProducto.modelo = nuevoProducto.modelo;
                     await entityManager.save(imagenProducto);
                 }
             });
@@ -103,8 +101,6 @@ export class ProductoService {
 
             const imagenesEntidad = imagenes.map(url => {
                 const imagenProducto = new ImagenProducto();
-                imagenProducto.nombre = producto.nombre;
-                imagenProducto.modelo = producto.modelo;
                 imagenProducto.imagen = url;
                 imagenProducto.producto = producto;
                 return imagenProducto;
