@@ -1,8 +1,3 @@
-create database ventoverso;
-
-use ventoverso;
-
-
 CREATE TABLE `cliente` (
   `rut_cliente` varchar(10) PRIMARY KEY,
   `dv_cliente` char,
@@ -35,12 +30,12 @@ CREATE TABLE `producto` (
   `id_subcategoria` integer,
   `id_marcas` integer,
   `nombre` varchar(100),
+  `modelo` varchar(255),
   `descripcion` varchar(300),
+  `caracteristicasPrincipales` varchar(255),
   `precio` integer,
   `stock` integer,
-  `estrellas` integer,
-  `caracteristicasPrincipales` varchar(255),
-  `url_producto` varchar(250)
+  `estrellas` integer
 );
 
 CREATE TABLE `detallePedido` (
@@ -157,8 +152,6 @@ CREATE TABLE `pago` (
 CREATE TABLE `imagenProducto` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
-  `nombre` varchar(100),
-  `descripcion` varchar(100),
   `imagen` varchar(250)
 );
 

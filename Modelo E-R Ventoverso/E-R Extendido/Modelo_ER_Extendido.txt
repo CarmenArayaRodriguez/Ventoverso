@@ -32,12 +32,12 @@ table producto {
   id_subcategoria integer [ref: - subcategoria.id]
   id_marcas integer [ref: > marcas.id]
   nombre varchar(100)
+  modelo varchar (255)
   descripcion varchar(300)
+  caracteristicasPrincipales varchar(255)
   precio integer
   stock integer
   estrellas integer
-  caracteristicasPrincipales varchar(255)
-  url_producto varchar(250)
   
 }
 
@@ -163,7 +163,5 @@ monto integer
 table imagenProducto {
 id integer [increment,pk]
 id_producto integer [ref: > producto.id]
-nombre varchar(100)
-descripcion varchar(100)
 imagen varchar (250)
 }

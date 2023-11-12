@@ -2,7 +2,6 @@ create database ventoverso;
 
 use ventoverso;
 
-
 CREATE TABLE `cliente` (
   `rut_cliente` varchar(10) PRIMARY KEY,
   `dv_cliente` char,
@@ -35,8 +34,8 @@ CREATE TABLE `producto` (
   `id_subcategoria` integer,
   `id_marcas` integer,
   `nombre` varchar(100),
-  `modelo` varchar(300),
-  `descripcion` varchar(255),
+  `modelo` varchar(255),
+  `descripcion` varchar(300),
   `caracteristicasPrincipales` varchar(255),
   `precio` integer,
   `stock` integer,
@@ -157,8 +156,6 @@ CREATE TABLE `pago` (
 CREATE TABLE `imagenProducto` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
-  `nombre` varchar(100),
-  `modelo` varchar(100),
   `imagen` varchar(250)
 );
 
@@ -207,3 +204,4 @@ ALTER TABLE `pago` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
 ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`id`);
 
 ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+
