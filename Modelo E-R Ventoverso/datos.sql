@@ -234,4 +234,15 @@ VALUES
 
 
 
-    
+    /* INSERT TABLA carrito */
+INSERT INTO carrito (rut_cliente, status_carrito, creacion_date) 
+VALUES
+    ('12227463', 'activo', CURDATE()),
+    ('11222356', 'activo', CURDATE());
+
+/* INSERT TABLA producto carrito */
+INSERT INTO productoCarrito (id_carrito, id_producto, cantidad) 
+VALUES
+    (1, 1, 2), 
+    (1, 2, 1),  
+    (2, 3, 3);  

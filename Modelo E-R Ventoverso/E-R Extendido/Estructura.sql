@@ -78,6 +78,13 @@ CREATE TABLE `carrito` (
   `creacion_date` date
 );
 
+CREATE TABLE `productoCarrito` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_carrito` integer,
+  `id_producto` integer,
+  `cantidad` integer
+);
+
 CREATE TABLE `comentByn` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
@@ -180,6 +187,10 @@ ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categ
 ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_marcas`) REFERENCES `marcas` (`id`);
 
 ALTER TABLE `carrito` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+
+ALTER TABLE `productoCarrito` ADD FOREIGN KEY (`id_carrito`) REFERENCES `carrito` (`id`);
+
+ALTER TABLE `productoCarrito` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
 ALTER TABLE `comentByn` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
