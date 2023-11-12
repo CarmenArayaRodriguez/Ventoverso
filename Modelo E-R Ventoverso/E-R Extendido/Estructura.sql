@@ -40,7 +40,6 @@ CREATE TABLE `producto` (
   `precio` integer,
   `stock` integer,
   `estrellas` integer
-  
 );
 
 CREATE TABLE `detallePedido` (
