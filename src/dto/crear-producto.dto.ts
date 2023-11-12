@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsUrl, IsArray } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsUrl, IsArray, Min, Max } from 'class-validator';
 
 export class CrearProductoDTO {
     @ApiProperty({ description: 'ID de la categoría del producto' })
@@ -22,6 +22,11 @@ export class CrearProductoDTO {
     @IsNotEmpty()
     nombre: string;
 
+    @ApiProperty({ description: 'Modelo del producto' })
+    @IsString()
+    @IsNotEmpty()
+    modelo: string;
+
     @ApiProperty({ description: 'Descripción del producto' })
     @IsString()
     @IsNotEmpty()
@@ -37,15 +42,22 @@ export class CrearProductoDTO {
     @IsNotEmpty()
     stock: number;
 
-    @ApiProperty({ description: 'URL del producto', required: false })
-    @IsUrl()
+    @ApiProperty({ description: 'Características principales del producto', required: false })
+    @IsString()
     @IsOptional()
-    url_producto?: string
+    caracteristicasPrincipales?: string;
 
     @ApiProperty({ description: 'URLs de las imágenes del producto', type: [String], required: false })
     @IsArray()
     @IsUrl({}, { each: true })
     @IsOptional()
     imagenes?: string[];
+
+    @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 4, required: false })
+    @IsNumber()
+    @IsOptional()
+    @Min(0)
+    @Max(5)
+    estrellas?: number;
 }
 

@@ -35,7 +35,8 @@ CREATE TABLE `producto` (
   `id_subcategoria` integer,
   `id_marcas` integer,
   `nombre` varchar(100),
-  `descripcion` varchar(300),
+  `modelo` varchar(300),
+  `descripcion` varchar(255),
   `caracteristicasPrincipales` varchar(255),
   `precio` integer,
   `stock` integer,
@@ -157,7 +158,7 @@ CREATE TABLE `imagenProducto` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
   `nombre` varchar(100),
-  `descripcion` varchar(100),
+  `modelo` varchar(100),
   `imagen` varchar(250)
 );
 

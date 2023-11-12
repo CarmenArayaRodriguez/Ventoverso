@@ -15,14 +15,14 @@ export class ProductoDetalleResponseDTO {
     @IsNotEmpty()
     marca: string;
 
+    @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 4 })
+    @IsNumber()
+    estrellas: number;
+
     @ApiProperty({ description: 'Modelo del producto' })
     @IsString()
     @IsNotEmpty()
     modelo: string;
-
-    @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 4 })
-    @IsNumber()
-    estrellas: number;
 
     @ApiProperty({ description: 'Imágenes del producto', type: [String] })
     @IsArray()
