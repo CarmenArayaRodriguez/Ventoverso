@@ -36,9 +36,6 @@ export class Producto {
     @Column('int', { nullable: true })
     estrellas?: number;
 
-    @Column({ name: 'url_producto', nullable: true, type: 'varchar' })
-    urlProducto?: string;
-
     @OneToMany(() => ImagenProducto, imagenProducto => imagenProducto.producto)
     imagenes: ImagenProducto[];
 }

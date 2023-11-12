@@ -11,5 +11,5 @@ export class ImagenProducto {
     producto: Producto;
 
     @Column()
-    url: string;
+    imagen: string;
 }

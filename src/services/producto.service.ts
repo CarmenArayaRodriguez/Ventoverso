@@ -59,7 +59,6 @@ export class ProductoService {
 
                 if (crearProductoDto.url_producto) {
                     const imagenProducto = new ImagenProducto();
-                    imagenProducto.url = crearProductoDto.url_producto;
                     imagenProducto.producto = productoGuardado;
                     await entityManager.save(imagenProducto);
                 }
@@ -67,7 +66,7 @@ export class ProductoService {
 
                 for (const url of imagenesAdicionales) {
                     const imagenProducto = new ImagenProducto();
-                    imagenProducto.url = url;
+                    imagenProducto.imagen = url;
                     imagenProducto.producto = productoGuardado;
                     await entityManager.save(imagenProducto);
                 }
@@ -110,7 +109,6 @@ export class ProductoService {
 
             const imagenesEntidad = imagenes.map(url => {
                 const imagenProducto = new ImagenProducto();
-                imagenProducto.url = url;
                 imagenProducto.producto = producto;
                 return imagenProducto;
             });

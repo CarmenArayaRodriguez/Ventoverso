@@ -21,13 +21,16 @@ export class CatalogoSubcategoriaController {
     })
 
     async getClarineteSibProductos(): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
+        console.log("Inicio de getClarineteSibProductos");
         try {
             const productos = await this.catalogoSubcategoriaService.obtenerProductos();
+            console.log("Productos obtenidos:", productos);
             if (productos.length === 0) {
                 throw new HttpException('Subcategoría no encontrada', HttpStatus.NOT_FOUND);
             }
             return productos;
         } catch (error) {
+            console.error("Error en getClarineteSibProductos", error);
             throw new HttpException('Error interno del servidor', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

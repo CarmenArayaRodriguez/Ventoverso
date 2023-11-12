@@ -49,10 +49,4 @@ export class ProductoDetalleResponseDTO {
     @Min(0)
     @IsNotEmpty()
     stock: number;
-
-    @ApiProperty({
-        description: 'URL de la imagen del producto',
-        example: 'https://ejemplo.com/imagen.jpg',
-    })
-    urlProducto?: string;
 }

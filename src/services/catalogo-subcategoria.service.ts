@@ -16,7 +16,9 @@ export class CatalogoSubcategoriaService {
     ) { }
 
     async obtenerProductos(): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
+        console.log("Inicio de obtenerProductos");
         const subcategoriaObj = await this.subcategoriaRepository.findOne({ where: { id: 2 } });
+        console.log("Subcategoría obtenida:", subcategoriaObj);
         if (!subcategoriaObj) {
             throw new NotFoundException("Subcategoría no encontrada");;
         }
@@ -25,7 +27,7 @@ export class CatalogoSubcategoriaService {
             where: { subcategoria: subcategoriaObj },
             relations: ['imagenes']
         });
-
+        console.log("Productos encontrados:", productos);
         if (!productos || productos.length === 0) {
             return [];
         }

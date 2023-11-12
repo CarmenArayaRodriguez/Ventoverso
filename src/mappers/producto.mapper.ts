@@ -9,11 +9,10 @@ export class ProductoMapper {
         dto.id = producto.id.toString();
         dto.nombre = producto.nombre;
         dto.marca = producto.marca?.marca;
-        dto.imagenes = producto.imagenes?.map(imagen => imagen.url);
+        dto.imagenes = producto.imagenes?.map(imagenProducto => imagenProducto.imagen);
         dto.precio = producto.precio;
         dto.descripcion = producto.descripcion;
         dto.stock = producto.stock;
-        dto.urlProducto = producto.urlProducto
 
         return dto;
     }
@@ -24,7 +23,7 @@ export class ProductoMapper {
         producto.descripcion = crearProductoDto.descripcion;
         producto.precio = crearProductoDto.precio;
         producto.stock = crearProductoDto.stock;
-        producto.urlProducto = crearProductoDto.url_producto;
+
         if (crearProductoDto.id_categoria) {
             producto.categoria = await categoriaRepo.findOne({ where: { id: crearProductoDto.id_categoria } });
             console.log('ID Categoria:', crearProductoDto.id_categoria);
@@ -37,9 +36,7 @@ export class ProductoMapper {
             producto.marca = await marcaRepo.findOne({ where: { id: crearProductoDto.id_marcas } });
             console.log('ID Marca:', crearProductoDto.id_marcas);
         }
-        if (crearProductoDto.url_producto) {
-            producto.urlProducto = crearProductoDto.url_producto;
-        }
+
 
         return producto;
     }

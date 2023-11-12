@@ -7,7 +7,7 @@ export class CatalogoSubcategoriaMapper {
             return null;
         }
 
-        const imagenes = producto.imagenes ? producto.imagenes.map(imagen => imagen.url) : [];
+        const imagenes = producto.imagenes ? producto.imagenes.map(imagenProducto => imagenProducto.imagen) : [];
 
         return {
             id: producto.id.toString() || '',
