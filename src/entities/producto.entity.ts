@@ -24,8 +24,14 @@ export class Producto {
     @Column()
     nombre: string;
 
+    @Column('varchar', { length: 300 })
+    modelo: string;
+
     @Column('text')
     descripcion: string;
+
+    @Column('varchar', { length: 255 })
+    caracteristicasPrincipales: string;
 
     @Column('int')
     precio: number;

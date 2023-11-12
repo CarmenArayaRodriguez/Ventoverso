@@ -7,10 +7,13 @@ export class ProductoMapper {
     static toDto(producto: Producto): ProductoDetalleResponseDTO {
         const dto = new ProductoDetalleResponseDTO();
         dto.id = producto.id.toString();
+        dto.estrellas = producto.estrellas || 0;
         dto.nombre = producto.nombre;
         dto.marca = producto.marca?.marca;
+        dto.modelo = producto.modelo;
         dto.imagenes = producto.imagenes?.map(imagenProducto => imagenProducto.imagen);
         dto.precio = producto.precio;
+        dto.caracteristicasPrincipales = producto.caracteristicasPrincipales;
         dto.descripcion = producto.descripcion;
         dto.stock = producto.stock;
 
@@ -23,6 +26,9 @@ export class ProductoMapper {
         producto.descripcion = crearProductoDto.descripcion;
         producto.precio = crearProductoDto.precio;
         producto.stock = crearProductoDto.stock;
+        producto.modelo = crearProductoDto.modelo;
+        producto.caracteristicasPrincipales = crearProductoDto.caracteristicasPrincipales;
+        producto.estrellas = crearProductoDto.estrellas;
 
         if (crearProductoDto.id_categoria) {
             producto.categoria = await categoriaRepo.findOne({ where: { id: crearProductoDto.id_categoria } });

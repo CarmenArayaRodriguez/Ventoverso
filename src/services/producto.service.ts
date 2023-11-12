@@ -55,19 +55,13 @@ export class ProductoService {
                 productoGuardado = await entityManager.save(nuevoProducto);
 
 
-                const imagenesAdicionales = crearProductoDto.imagenes.filter(url => url !== crearProductoDto.url_producto);
 
-                if (crearProductoDto.url_producto) {
-                    const imagenProducto = new ImagenProducto();
-                    imagenProducto.producto = productoGuardado;
-                    await entityManager.save(imagenProducto);
-                }
-
-
-                for (const url of imagenesAdicionales) {
+                for (const url of crearProductoDto.imagenes || []) {
                     const imagenProducto = new ImagenProducto();
                     imagenProducto.imagen = url;
                     imagenProducto.producto = productoGuardado;
+                    imagenProducto.nombre = nuevoProducto.nombre;
+                    imagenProducto.modelo = nuevoProducto.modelo;
                     await entityManager.save(imagenProducto);
                 }
             });
@@ -109,6 +103,9 @@ export class ProductoService {
 
             const imagenesEntidad = imagenes.map(url => {
                 const imagenProducto = new ImagenProducto();
+                imagenProducto.nombre = producto.nombre;
+                imagenProducto.modelo = producto.modelo;
+                imagenProducto.imagen = url;
                 imagenProducto.producto = producto;
                 return imagenProducto;
             });
@@ -124,21 +121,27 @@ export class ProductoService {
         return ProductoMapper.toDto(producto);
     }
 
-
     async eliminarProducto(id: number): Promise<void> {
         try {
+            const producto = await this.productoRepository.findOne({ where: { id } });
+
+            if (!producto) {
+                throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+            }
 
             await this.productoRepository.manager.transaction(async entityManager => {
-
                 await entityManager.delete(ImagenProducto, { producto: { id } });
-
                 await entityManager.delete(Producto, { id });
             });
 
-            console.log(`Producto con ID: ${id} eliminado correctamente.`);
         } catch (error) {
+            if (error instanceof NotFoundException) {
+
+                throw error;
+            }
+
             console.error(`Error al eliminar producto con ID: ${id}`, error);
-            throw new InternalServerErrorException(`No se pudo eliminar el producto con ID: ${id}`);
+            throw new InternalServerErrorException('Error al eliminar producto');
         }
     }
 
