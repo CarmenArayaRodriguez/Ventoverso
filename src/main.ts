@@ -12,6 +12,7 @@ import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.modul
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
 import { CarritoModule } from './modules/carrito.module';
 import { ProductosDestacadosModule } from './modules/productos-destacados.module';
+import { VentoNewsModule } from './modules/vento-news.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -27,6 +28,17 @@ async function bootstrap() {
     include: [BlogYNoticiasModule],
   });
   SwaggerModule.setup('docs/blog-y-noticias', app, blogYNoticiasDocument);
+
+  //CONFIGURACION SWAGGER Vento News
+  const VentoNewsOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Vento News API')
+    .setDescription('API para Vento News')
+    .setVersion('1.0')
+    .build();
+  const VentoNewsDocument = SwaggerModule.createDocument(app, VentoNewsOptions, {
+    include: [VentoNewsModule],
+  });
+  SwaggerModule.setup('docs/vento-news', app, VentoNewsDocument);
 
   //CONFIGURACION SWAGGER Carrito de Compras 
   const carritoDeComprasOptions = new DocumentBuilder()
