@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MoreThanOrEqual, Repository } from 'typeorm';
 import { Producto } from '../entities/producto.entity';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { ProductoMapper } from 'src/mappers/producto.mapper';
@@ -10,6 +10,7 @@ import { Categoria } from '../entities/categoria.entity';
 import { Subcategoria } from '../entities/subcategoria.entity';
 import { Marca } from '../entities/marca.entity';
 import { ImagenProducto } from 'src/entities/imagen.entity';
+import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 @Injectable()
 export class ProductoService {
     constructor(
@@ -141,7 +142,59 @@ export class ProductoService {
         }
     }
 
+    // async obtenerProductosDestacados(): Promise<DestacadoCardResponseDTO[]> {
+    //     console.log("Iniciando obtenerProductosDestacados");
+    //     const productosDestacados = await this.productoRepository.find({
+    //         where: { estrellas: 5 },
+    //         take: 5
+    //     });
+
+    //     console.log("Productos destacados encontrados:", productosDestacados);
+
+    //     return productosDestacados.map(producto => {
+    //         const resultado = {
+    //             id: producto.id.toString(),
+    //             imagenUrl: producto.imagenes.length > 0 ? producto.imagenes[0].imagen : '',
+    //             estrellas: producto.estrellas,
+    //             nombre: producto.nombre,
+    //             precio: producto.precio,
+    //         };
+    //         console.log("Resultado mapeado:", resultado);
+    //         return resultado;
+    //     });
+
+    async obtenerProductosDestacados(): Promise<DestacadoCardResponseDTO[]> {
+        try {
+            console.log("Iniciando obtenerProductosDestacados");
+
+            const productosDestacados = await this.productoRepository.find({
+                where: { estrellas: 5 },
+                take: 5
+            });
+
+            console.log("Productos destacados encontrados:", productosDestacados);
+
+            return productosDestacados.map(producto => {
+                const resultado = {
+                    id: producto.id,
+                    imagenUrl: producto.imagenes.length > 0 ? producto.imagenes[0].imagen : '',
+                    estrellas: producto.estrellas,
+                    nombre: producto.nombre,
+                    precio: producto.precio,
+                };
+
+                console.log("Resultado mapeado:", resultado);
+                return resultado;
+            });
+        } catch (error) {
+            console.error("Error al obtener productos destacados:", error);
+            throw new InternalServerErrorException('Descripción del error');
+        }
+    }
+
 }
+
+
 
 
 

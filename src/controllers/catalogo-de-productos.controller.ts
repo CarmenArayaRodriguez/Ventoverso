@@ -38,44 +38,39 @@ export class CatalogoDeProductosController {
     getDestacadosHome(): DestacadoCardResponseDTO[] {
         const mockDataDestacadosHome: DestacadoCardResponseDTO[] = [
             {
-                id: 'id-destacado-home-1',
+                id: 1,
                 imagenUrl: 'https://ejemplo.com/imagen1.jpg',
                 estrellas: 5,
                 nombre: 'Producto genial 1',
                 precio: 990,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-home-2',
+                id: 2,
                 imagenUrl: 'https://ejemplo.com/imagen2.jpg',
                 estrellas: 4,
                 nombre: 'Producto genial 2',
                 precio: 8700,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-home-3',
+                id: 2,
                 imagenUrl: 'https://ejemplo.com/imagen3.jpg',
                 estrellas: 3,
                 nombre: 'Producto genial 3',
                 precio: 79000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-home-4',
+                id: 4,
                 imagenUrl: 'https://ejemplo.com/imagen4.jpg',
                 estrellas: 5,
                 nombre: 'Producto genial 4',
                 precio: 69900,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-home-5',
+                id: 5,
                 imagenUrl: 'https://ejemplo.com/imagen5.jpg',
                 estrellas: 4,
                 nombre: 'Producto genial 5',
                 precio: 60000,
-                linkDetalle: 'https://ejemplo.com/producto'
             }
         ];
 
@@ -321,44 +316,39 @@ export class CatalogoDeProductosController {
     getDestacadosClarinete(): DestacadoCardResponseDTO[] {
         const mockDataDestacadosClarinete: DestacadoCardResponseDTO[] = [
             {
-                id: 'id-destacado-clarinete-1',
+                id: 1,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-buffet.jpg',
                 estrellas: 5,
                 nombre: 'Clarinete Buffet Crampon R13',
                 precio: 250000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-clarinete-2',
+                id: 2,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-yamaha.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Yamaha YCL-650',
                 precio: 200000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-clarinete-3',
+                id: 3,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-selmer.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Selmer Paris',
                 precio: 240000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-clarinete-4',
+                id: 4,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-backun.jpg',
                 estrellas: 5,
                 nombre: 'Clarinete Backun Alpha',
                 precio: 210000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-destacado-clarinete-5',
+                id: 5,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-leblanc.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Leblanc Serenade',
                 precio: 220000,
-                linkDetalle: 'https://ejemplo.com/producto'
             }
         ];
         return mockDataDestacadosClarinete.map(convierteADestacadoCardResponseDTO);
@@ -409,44 +399,39 @@ export class CatalogoDeProductosController {
         const mockDataProductosRelacionados: DestacadoCardResponseDTO[] = [
 
             {
-                id: 'id-relacionado-1',
+                id: 1,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
                 estrellas: 4,
                 nombre: 'Producto Relacionado 1',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-relacionado-2',
+                id: 2,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
                 estrellas: 4,
                 nombre: 'Producto Relacionado 2',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-relacionado-3',
+                id: 3,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
                 estrellas: 4,
                 nombre: 'Producto Relacionado 4',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-relacionado-4',
+                id: 4,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
                 estrellas: 4,
                 nombre: 'Producto Relacionado 4',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-relacionado-5',
+                id: 5,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-1.jpg',
                 estrellas: 4,
                 nombre: 'Producto Relacionado 1',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
 
 
@@ -464,44 +449,39 @@ export class CatalogoDeProductosController {
     getProductosSimilares(): DestacadoCardResponseDTO[] {
         const mockDataProductosSimilares: DestacadoCardResponseDTO[] = [
             {
-                id: 'id-similar-1',
+                id: 1,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Similar 1',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-similar-2',
+                id: 2,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Similar 2',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-similar-3',
+                id: 3,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Similar 3',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-similar-4',
+                id: 4,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Similar 4',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
             {
-                id: 'id-similar-5',
+                id: 5,
                 imagenUrl: 'https://ejemplo.com/imagen-clarinete-similar-1.jpg',
                 estrellas: 4,
                 nombre: 'Clarinete Similar 5',
                 precio: 230000,
-                linkDetalle: 'https://ejemplo.com/producto'
             },
 
         ];
