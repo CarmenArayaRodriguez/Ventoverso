@@ -11,6 +11,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
 import { CarritoModule } from './modules/carrito.module';
+import { ProductosDestacadosModule } from './modules/productos-destacados.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -71,6 +72,18 @@ async function bootstrap() {
     include: [ProductoModule],
   });
   SwaggerModule.setup('docs/producto', app, productoDocument);
+
+  //CONFIGURACION SWAGGER Productos destacados
+  const productosDestacadosSwaggerConfig = new DocumentBuilder()
+    .setTitle('API de Productos Destacados')
+    .setDescription('API para productos destacados')
+    .setVersion('1.0')
+    .build();
+  const productosDestacadosDocument = SwaggerModule.createDocument(app, productosDestacadosSwaggerConfig, {
+    include: [ProductosDestacadosModule],
+  });
+  SwaggerModule.setup('docs/productos-destacados', app, productosDestacadosDocument);
+
 
   //CONFIGURACION SWAGGER Catalogo de Subcategoría
   const catalogoSubcategoriaOptions = new DocumentBuilder()

@@ -4,6 +4,7 @@ import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { CrearProductoDTO } from '../dto/crear-producto.dto';
 import { ActualizarProductoDTO } from '../dto/actualizar-producto.dto';
+import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 
 @ApiTags('productos')
 @Controller('productos')
@@ -109,5 +110,6 @@ export class ProductoController {
             }
         }
     }
+
 }
 
