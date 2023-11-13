@@ -20,6 +20,7 @@ import { CarritoModule } from './modules/carrito.module';
 import { ProductosDestacadosModule } from './modules/productos-destacados.module';
 import { VentoNews } from './entities/vento-news.entity';
 import { VentoNewsModule } from './modules/vento-news.module';
+import { ProductosRelacionadosModule } from './modules/productos-relacionados.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -30,7 +31,7 @@ import { VentoNewsModule } from './modules/vento-news.module';
     password: 'Fechita1',
     database: 'ventoverso',
     entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews]
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, ProductoModule, ProductosDestacadosModule, VentoNewsModule, ServicioAlClienteModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, VentoNewsModule, ServicioAlClienteModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
 

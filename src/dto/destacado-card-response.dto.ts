@@ -11,7 +11,7 @@ export class DestacadoCardResponseDTO {
     @IsNotEmpty()
     imagenUrl: string;
 
-    @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 4 })
+    @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 5 })
     @IsNumber()
     estrellas: number;
 

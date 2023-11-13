@@ -13,6 +13,7 @@ import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.modu
 import { CarritoModule } from './modules/carrito.module';
 import { ProductosDestacadosModule } from './modules/productos-destacados.module';
 import { VentoNewsModule } from './modules/vento-news.module';
+import { ProductosRelacionadosModule } from './modules/productos-relacionados.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -95,6 +96,17 @@ async function bootstrap() {
     include: [ProductosDestacadosModule],
   });
   SwaggerModule.setup('docs/productos-destacados', app, productosDestacadosDocument);
+
+  //CONFIGURACION SWAGGER Productos relacionados
+  const productosRelacionadosSwaggerConfig = new DocumentBuilder()
+    .setTitle('API de Productos Relacionados')
+    .setDescription('API para productos relacionados')
+    .setVersion('1.0')
+    .build();
+  const productosRelacionadosDocument = SwaggerModule.createDocument(app, productosRelacionadosSwaggerConfig, {
+    include: [ProductosRelacionadosModule],
+  });
+  SwaggerModule.setup('docs/productos-relacionados', app, productosRelacionadosDocument);
 
 
   //CONFIGURACION SWAGGER Catalogo de Subcategoría
