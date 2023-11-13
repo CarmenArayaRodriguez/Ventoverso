@@ -85,6 +85,7 @@ table comentByn {
   id_articulo integer [ref: > articuloByn.id]
   publicacion_date date
   contenido varchar(250)
+  imagen varchar(250)
 
 }
 

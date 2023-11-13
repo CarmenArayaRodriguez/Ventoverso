@@ -78,19 +78,13 @@ CREATE TABLE `carrito` (
   `creacion_date` date
 );
 
-CREATE TABLE `productoCarrito` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_carrito` integer,
-  `id_producto` integer,
-  `cantidad` integer
-);
-
 CREATE TABLE `comentByn` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
   `id_articulo` integer,
   `publicacion_date` date,
-  `contenido` varchar(250)
+  `contenido` varchar(250),
+  `imagen` varchar(250)
 );
 
 CREATE TABLE `articuloByn` (
@@ -99,8 +93,7 @@ CREATE TABLE `articuloByn` (
   `titulo` varchar(50),
   `contenido` varchar(300),
   `publicacion_date` date,
-  `autor` varchar(100),
-  `imagen` varchar(255)
+  `autor` varchar(100)
 );
 
 CREATE TABLE `carrusel` (
@@ -189,10 +182,6 @@ ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_marcas`) REFERENCES `marcas` 
 
 ALTER TABLE `carrito` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
-ALTER TABLE `productoCarrito` ADD FOREIGN KEY (`id_carrito`) REFERENCES `carrito` (`id`);
-
-ALTER TABLE `productoCarrito` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
 ALTER TABLE `comentByn` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
 ALTER TABLE `comentByn` ADD FOREIGN KEY (`id_articulo`) REFERENCES `articuloByn` (`id`);
@@ -216,4 +205,3 @@ ALTER TABLE `pago` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
 ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`id`);
 
 ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
