@@ -1,14 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class ActualizarProductoCarritoDTO {
-    @ApiProperty({ example: 1 })
+
+    @ApiProperty({ description: 'ID único del carrito', example: 0 })
+    @IsNotEmpty()
     @IsNumber()
-    // @Min(1)
+    carritoId: number;
+
+    @ApiProperty({ description: 'ID único del producto', example: 0 })
+    @IsNotEmpty()
+    @IsNumber()
+    productoId: number;
+
+    @ApiProperty({ description: 'Nueva cantidad del producto en el carrito', example: 0 })
+    @IsNotEmpty()
+    @IsNumber()
     cantidad: number;
 
-    @ApiProperty({ example: 1000 })
-    @IsNumber()
-    // @Min(1000)
-    precio: number;
 }

@@ -5,5 +5,5 @@ export class CrearCarritoDTO {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    userId: string;
+    rutCliente: string;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ProductoCarrito } from '../carrito-de-compras/entities/producto-carrito.entity';
-import { Carrito } from '../carrito-de-compras/entities/carrito.entity';
+import { ProductoCarrito } from '../entities/producto-carrito.entity';
+import { Carrito } from '../entities/carrito.entity';
 import { CrearCarritoDTO } from '../dto/crear-carrito.dto';
 import { AgregarProductoCarritoRequestDTO } from '../dto/agregar-producto-carrito-request.dto';
 import { ActualizarProductoCarritoDTO } from '../dto/actualizar-producto-carrito.dto';

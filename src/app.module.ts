@@ -14,6 +14,9 @@ import { ImagenProducto } from './entities/imagen.entity';
 import { Marca } from './entities/marca.entity';
 import { Subcategoria } from './entities/subcategoria.entity';
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
+import { Carrito } from './entities/carrito.entity';
+import { ProductoCarrito } from './entities/producto-carrito.entity';
+import { CarritoModule } from './modules/carrito.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -23,8 +26,8 @@ import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.modu
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria]
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito]
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, ProductoModule, ServicioAlClienteModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
 

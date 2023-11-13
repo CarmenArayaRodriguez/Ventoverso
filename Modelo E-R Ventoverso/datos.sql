@@ -232,8 +232,6 @@ VALUES
     (3, 2), -- Producto 3 en Carrusel 2 (Novedades)
     (4, 3); -- Producto 4 en Carrusel 3 (Destacados)
 
-
-
     /* INSERT TABLA carrito */
 INSERT INTO carrito (rut_cliente, status_carrito, creacion_date) 
 VALUES
