@@ -1,52 +1,88 @@
-// import { Injectable, NotFoundException } from '@nestjs/common';
-// import { Carrito } from '../carrito-de-compras/entities/carrito.entity';
-// import { ProductoCarrito } from '../carrito-de-compras/entities/producto-carrito.entity';
-// // Importa los repositorios y DTOs necesarios
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Carrito } from 'src/entities/carrito.entity';
+import { ProductoCarrito } from 'src/entities/producto-carrito.entity';
+import { AgregarProductoCarritoRequestDTO } from 'src/dto/agregar-producto-carrito-request.dto';
+import { ActualizarProductoCarritoDTO } from 'src/dto/actualizar-producto-carrito.dto';
 
-// @Injectable()
-// export class CarritoDeComprasService {
-//     constructor(
-//         private carritoRepository: CarritoRepository, // Asume que tienes este repositorio
-//         private productoCarritoRepository: ProductoCarritoRepository // Y este también
-//     ) { }
+@Injectable()
+export class CarritoService {
+    constructor(
+        @InjectRepository(Carrito)
+        private carritoRepository: Repository<Carrito>,
+        @InjectRepository(ProductoCarrito)
+        private productoCarritoRepository: Repository<ProductoCarrito>
+    ) { }
 
-//     async crearCarrito(userId: string): Promise<Carrito> {
-//         const carrito = new Carrito();
-//         carrito.userId = userId;
-//         return this.carritoRepository.save(carrito);
-//     }
 
-//     async agregarProducto(carritoId: string, productoId: string, cantidad: number): Promise<ProductoCarrito> {
-//         const carrito = await this.carritoRepository.findOne(carritoId);
-//         if (!carrito) {
-//             throw new NotFoundException(`Carrito no encontrado con ID: ${carritoId}`);
-//         }
+    async crearCarrito(rutCliente: string): Promise<Carrito> {
+        console.log('crearCarrito - rutCliente:', rutCliente);
+        const nuevoCarrito = this.carritoRepository.create({
+            rutCliente,
+            statusCarrito: 'activo',
+            creacionDate: new Date()
+        });
+        const carritoGuardado = await this.carritoRepository.save(nuevoCarrito);
+        console.log('crearCarrito - carritoGuardado:', carritoGuardado);
+        return carritoGuardado;
+    }
 
-//         let productoCarrito = await this.productoCarritoRepository.findOne({ where: { carrito, productoId } });
-//         if (productoCarrito) {
-//             productoCarrito.cantidad += cantidad;
-//         } else {
-//             productoCarrito = new ProductoCarrito();
-//             productoCarrito.carrito = carrito;
-//             productoCarrito.productoId = productoId;
-//             productoCarrito.cantidad = cantidad;
-//         }
-//         return this.productoCarritoRepository.save(productoCarrito);
-//     }
+    async agregarProductoAlCarrito(
+        agregarProductoDTO: AgregarProductoCarritoRequestDTO,
+    ): Promise<ProductoCarrito> {
+        let carrito = await this.carritoRepository.findOne({ where: { id: agregarProductoDTO.carritoId } });
 
-//     async actualizarProducto(carritoId: string, productoId: string, cantidad: number): Promise<ProductoCarrito> {
-//         const productoCarrito = await this.productoCarritoRepository.findOne({ where: { carritoId, productoId } });
-//         if (!productoCarrito) {
-//             throw new NotFoundException(`Producto no encontrado en el carrito con ID: ${carritoId}`);
-//         }
-//         productoCarrito.cantidad = cantidad;
-//         return this.productoCarritoRepository.save(productoCarrito);
-//     }
+        if (!carrito) {
+            carrito = await this.crearCarrito(agregarProductoDTO.rutCliente);
+        }
 
-//     async eliminarProducto(carritoId: string, productoId: string): Promise<void> {
-//         const resultado = await this.productoCarritoRepository.delete({ carritoId, productoId });
-//         if (resultado.affected === 0) {
-//             throw new NotFoundException(`Producto no encontrado en el carrito con ID: ${carritoId}`);
-//         }
-//     }
-// }
+        const productoCarrito = this.productoCarritoRepository.create({
+            carritoId: carrito.id,
+            productoId: agregarProductoDTO.productoId,
+            cantidad: agregarProductoDTO.cantidad
+        });
+
+        return this.productoCarritoRepository.save(productoCarrito);
+    }
+
+    async actualizarProductoEnCarrito(actualizarCantidadDTO: ActualizarProductoCarritoDTO): Promise<ProductoCarrito> {
+        const { carritoId, productoId, cantidad } = actualizarCantidadDTO;
+
+        const productoCarrito = await this.productoCarritoRepository.findOne({ where: { carritoId: carritoId, productoId: productoId } });
+        if (!productoCarrito) {
+            throw new NotFoundException('Producto no encontrado en el carrito');
+        }
+
+        productoCarrito.cantidad = cantidad;
+        return this.productoCarritoRepository.save(productoCarrito);
+    }
+
+
+    async eliminarProductoDelCarrito(idCarrito: number, idProducto: number): Promise<void> {
+        console.log(`Intentando eliminar producto. ID del Carrito: ${idCarrito}, ID del Producto: ${idProducto}`);
+        const resultado = await this.productoCarritoRepository.delete({
+            carritoId: idCarrito,
+            productoId: idProducto
+        });
+        console.log('Resultado de la eliminación:', resultado);
+
+        if (resultado.affected === 0) {
+            throw new NotFoundException('Producto no encontrado en el carrito');
+        }
+    }
+
+
+    async eliminarCarrito(idCarrito: number): Promise<void> {
+        console.log(`Intentando eliminar carrito con ID: ${idCarrito}`);
+        const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
+        if (!carrito) {
+            console.log('Carrito no encontrado');
+            throw new NotFoundException('Carrito no encontrado');
+        }
+
+        await this.productoCarritoRepository.delete({ carritoId: idCarrito });
+        await this.carritoRepository.delete({ id: idCarrito });
+        console.log(`Carrito con ID: ${idCarrito} eliminado`);
+    }
+}

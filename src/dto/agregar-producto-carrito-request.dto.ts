@@ -2,18 +2,28 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsNotEmpty, IsNumber, Min } from 'class-validator';
 
 export class AgregarProductoCarritoRequestDTO {
-    @ApiProperty({ description: 'ID único del carrito', example: 'carrito123' })
-    @IsString()
-    @IsNotEmpty()
-    carritoId: string;
 
-    @ApiProperty({ description: 'ID único del producto', example: 'producto123' })
-    @IsString()
+    @ApiProperty({ description: 'Rut del cliente', example: "string" })
     @IsNotEmpty()
-    productoId: string;
+    @IsString()
+    rutCliente: string;
 
-    @ApiProperty({ description: 'Cantidad del producto a agregar', example: 2 })
+    @ApiProperty({ description: 'ID único del carrito', example: 0 })
+    @IsNotEmpty()
     @IsNumber()
-    @Min(1)
+    carritoId: number;
+
+    @ApiProperty({ description: 'ID único del producto', example: 0 })
+    @IsNotEmpty()
+    @IsNumber()
+    productoId: number;
+
+
+    @ApiProperty({ description: 'Cantidad del producto a agregar', example: 0 })
+    @IsNumber()
     cantidad: number;
+
+    constructor() {
+        console.log('DTO AgregarProductoCarritoRequestDTO creado');
+    }
 }

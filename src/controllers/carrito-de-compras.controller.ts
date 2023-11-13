@@ -91,7 +91,7 @@ export class CarritoDeComprasController {
         const mockActualizarCarrito = {
             id: '21e141fc-ba68-4fa5-9ea3-da5a2e3ac173',
             cantidad: actualizarProductoDto.cantidad,
-            precio: actualizarProductoDto.precio,
+
         };
 
         return mockActualizarCarrito;

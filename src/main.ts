@@ -10,8 +10,10 @@ import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 import { ValidationPipe } from '@nestjs/common';
 import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
+import { CarritoModule } from './modules/carrito.module';
 
 async function bootstrap() {
+  console.log('Iniciando la aplicación...');
   const app = await NestFactory.create(AppModule);
 
   //CONFIGURACION SWAGGER Blog y Noticias
@@ -35,6 +37,18 @@ async function bootstrap() {
     include: [CarritoDeComprasModule],
   });
   SwaggerModule.setup('docs/carrito-de-compras', app, carritoDeComprasDocument);
+
+  //CONFIGURACION SWAGGER Carrito 
+  const carritoOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Carrito API')
+    .setDescription('API para el Carrito')
+    .setVersion('1.0')
+    .build();
+  const carritoDocument = SwaggerModule.createDocument(app, carritoOptions, {
+    include: [CarritoModule],
+  });
+  SwaggerModule.setup('docs/carrito', app, carritoDocument);
+
 
   //CONFIGURACION SWAGGER Catalogo de Productos
   const catalogoDeProductosOptions = new DocumentBuilder()
@@ -105,6 +119,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
+  console.log('Aplicación iniciada');
 }
 bootstrap();
 

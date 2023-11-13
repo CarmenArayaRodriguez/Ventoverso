@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
@@ -45,9 +45,10 @@ export class ProductoController {
         status: 400,
         description: 'Datos inválidos para la creación del producto.',
     })
-    async crearProducto(@Body() crearProductoDto: CrearProductoDTO): Promise<ProductoDetalleResponseDTO> {
+    async crearProducto(@Body() crearProductoDto: CrearProductoDTO): Promise<{ message: string }> {
         try {
-            return await this.productoService.crearProducto(crearProductoDto);
+            const productoCreado = await this.productoService.crearProducto(crearProductoDto);
+            return { message: 'Producto creado exitosamente' };
         } catch (error) {
             throw new HttpException('Error al crear producto', HttpStatus.BAD_REQUEST);
         }
@@ -72,15 +73,16 @@ export class ProductoController {
     async actualizarProducto(
         @Param('id') id: number,
         @Body() actualizarProductoDto: ActualizarProductoDTO
-    ): Promise<ProductoDetalleResponseDTO> {
+    ): Promise<{ message: string }> {
         try {
-            const productoActualizado = await this.productoService.actualizarProducto(id, actualizarProductoDto);
-            if (!productoActualizado) {
-                throw new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
-            }
-            return productoActualizado;
+            await this.productoService.actualizarProducto(id, actualizarProductoDto);
+            return { message: 'Producto actualizado con éxito' };
         } catch (error) {
-            throw new HttpException('Error al actualizar producto', HttpStatus.BAD_REQUEST);
+            if (error instanceof NotFoundException) {
+                throw new NotFoundException('Producto no encontrado');
+            } else {
+                throw new HttpException('Error al actualizar producto', HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
@@ -94,18 +96,16 @@ export class ProductoController {
         status: 404,
         description: 'Producto no encontrado.',
     })
-    @ApiResponse({
-        status: 200,
-        description: 'El producto ha sido eliminado correctamente.',
-    })
-    async eliminarProducto(@Param('id') id: number): Promise<void> {
+
+    async eliminarProducto(@Param('id') id: number): Promise<{ message: string }> {
         try {
             await this.productoService.eliminarProducto(id);
+            return { message: 'El producto ha sido eliminado correctamente' };
         } catch (error) {
             if (error instanceof NotFoundException) {
-                throw new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
+                throw new NotFoundException('Producto no encontrado');
             } else {
-                throw new HttpException('Error al eliminar producto', HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new InternalServerErrorException('Error al eliminar producto');
             }
         }
     }
