@@ -31,28 +31,26 @@ export class BlogYNoticiasController {
     getHomeCards(): CardResponseDTO[] {
         return [
             {
-                id: uuidv4(),
+                id: 1,
                 titulo: 'Tarjeta 1',
-                imagenUrl: 'https://ejemplo.com/imagen1.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/imagen1.jpg',
+
             },
             {
-                id: uuidv4(),
+                id: 2,
                 titulo: 'Tarjeta 2',
-                imagenUrl: 'https://ejemplo.com/imagen2.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/imagen2.jpg',
+
             },
             {
-                id: uuidv4(),
+                id: 3,
                 titulo: 'Tarjeta 3',
-                imagenUrl: 'https://ejemplo.com/imagen3.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/imagen3.jpg',
             },
             {
-                id: uuidv4(),
+                id: 4,
                 titulo: 'Tarjeta 4',
-                imagenUrl: 'https://ejemplo.com/imagen4.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/imagen4.jpg',
             },
         ];
     }
@@ -105,28 +103,24 @@ export class BlogYNoticiasController {
     getClarinetesPosts(): CardResponseDTO[] {
         return [
             {
-                id: uuidv4(),
+                id: 1,
                 titulo: 'Clarinetista Famoso 1',
-                imagenUrl: 'https://ejemplo.com/clarinete1.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/clarinete1.jpg',
             },
             {
-                id: uuidv4(),
+                id: 2,
                 titulo: 'Orquesta con Clarinete 2',
-                imagenUrl: 'https://ejemplo.com/clarinete2.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/clarinete2.jpg',
             },
             {
-                id: uuidv4(),
+                id: 3,
                 titulo: 'Música Clásica con Clarinete 3',
-                imagenUrl: 'https://ejemplo.com/clarinete3.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/clarinete3.jpg',
             },
             {
-                id: uuidv4(),
+                id: 4,
                 titulo: 'El Clarinete en Jazz 4',
-                imagenUrl: 'https://ejemplo.com/clarinete4.jpg',
-                linkDetalle: 'https://ejemplo.com/publicacion'
+                imagen: 'https://ejemplo.com/clarinete4.jpg',
             },
         ];
     }

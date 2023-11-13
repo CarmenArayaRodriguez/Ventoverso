@@ -244,3 +244,10 @@ VALUES
     (1, 1, 2), 
     (1, 2, 1),  
     (2, 3, 3);  
+
+/*INSERT TABLA ArticuloByn*/
+INSERT INTO articuloByn (rut_cliente, titulo, contenido, publicacion_date, autor, imagen)
+VALUES 
+('12227463', 'El Clarinete en la Música Clásica', 'Un artículo detallado sobre el uso del clarinete en la música clásica.', '2023-03-15', 'Juan Pérez', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer'),
+('11222356', 'Innovaciones en Clarinetes', 'Explorando las últimas innovaciones en el diseño y fabricación de clarinetes.', '2023-03-20', 'Felipe Contreras', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer'),
+('14333565', 'El Clarinete en el Jazz', 'Un análisis del papel del clarinete en el desarrollo del jazz.', '2023-03-25', 'Antonio Rojas', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');

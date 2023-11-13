@@ -99,7 +99,8 @@ CREATE TABLE `articuloByn` (
   `titulo` varchar(50),
   `contenido` varchar(300),
   `publicacion_date` date,
-  `autor` varchar(100)
+  `autor` varchar(100),
+  `imagen` varchar(255)
 );
 
 CREATE TABLE `carrusel` (

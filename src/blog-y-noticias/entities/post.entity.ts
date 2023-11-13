@@ -1,12 +1,11 @@
 import { CategoriaBlog } from "../enums/categoria-blog.enum";
 
 export class BlogPost {
-    id: string;
-    imagenUrl: string;
+    id: number;
+    imagen: string;
     titulo: string;
     contenido: string;
     fechaPublicacion: Date;
     autorId: string;
     categoria: CategoriaBlog;
-    linkDetalle: string
 }
