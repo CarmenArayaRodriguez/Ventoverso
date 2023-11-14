@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MoreThanOrEqual, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Producto } from '../entities/producto.entity';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { ProductoMapper } from 'src/mappers/producto.mapper';
@@ -141,27 +141,6 @@ export class ProductoService {
             throw new InternalServerErrorException('Error al eliminar producto');
         }
     }
-
-    // async obtenerProductosDestacados(): Promise<DestacadoCardResponseDTO[]> {
-    //     console.log("Iniciando obtenerProductosDestacados");
-    //     const productosDestacados = await this.productoRepository.find({
-    //         where: { estrellas: 5 },
-    //         take: 5
-    //     });
-
-    //     console.log("Productos destacados encontrados:", productosDestacados);
-
-    //     return productosDestacados.map(producto => {
-    //         const resultado = {
-    //             id: producto.id.toString(),
-    //             imagenUrl: producto.imagenes.length > 0 ? producto.imagenes[0].imagen : '',
-    //             estrellas: producto.estrellas,
-    //             nombre: producto.nombre,
-    //             precio: producto.precio,
-    //         };
-    //         console.log("Resultado mapeado:", resultado);
-    //         return resultado;
-    //     });
 
     async obtenerProductosDestacados(): Promise<DestacadoCardResponseDTO[]> {
         try {
