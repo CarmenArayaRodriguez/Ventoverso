@@ -245,3 +245,29 @@ VALUES
 ('12227463', 'El Clarinete en la Música Clásica', 'Un artículo detallado sobre el uso del clarinete en la música clásica.', '2023-03-15', 'Juan Pérez', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer'),
 ('11222356', 'Innovaciones en Clarinetes', 'Explorando las últimas innovaciones en el diseño y fabricación de clarinetes.', '2023-03-20', 'Felipe Contreras', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer'),
 ('14333565', 'El Clarinete en el Jazz', 'Un análisis del papel del clarinete en el desarrollo del jazz.', '2023-03-25', 'Antonio Rojas', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+
+/*INSERT TABLA Calificacion*/
+INSERT INTO `calificacion` (`id_producto`, `rut_cliente`, `caracteristicas`, `sonido`, `fabricacion`) VALUES
+(1, '12227463', 5, 4, 5),
+(2, '11222356', 4, 4, 3),
+(3, '13554351', 3, 3, 2),
+(4, '14333565', 5, 5, 5),
+(5, '19265589', 2, 3, 3),
+(1, '11222356', 4, 5, 4),
+(2, '13554351', 3, 2, 3),
+(3, '14333565', 4, 4, 4),
+(4, '12227463', 5, 5, 5),
+(5, '11222356', 3, 3, 3);
+
+/*INSERT TABLA Comentario*/
+INSERT INTO `comentario` (`id_producto`, `rut_cliente`, `titulo`, `comentario`, `estrellas`, `fecha`, `megusta`, `nomegusta`, `denuncias`) VALUES
+(1, '12227463', 'Excelente clarinete', 'Muy satisfecho con la compra, calidad de sonido excepcional.', 5, '2023-04-10', 10, 1, 0),
+(2, '11222356', 'Buen instrumento', 'Buena relación calidad-precio.', 4, '2023-04-11', 5, 2, 0),
+(3, '13554351', 'Regular', 'Esperaba más por el precio.', 3, '2023-04-12', 2, 5, 1),
+(4, '14333565', '¡Impresionante!', 'Superó mis expectativas.', 5, '2023-04-13', 15, 0, 0),
+(5, '19265589', 'No está mal', 'El clarinete es decente, pero he tenido mejores.', 3, '2023-04-14', 3, 4, 0),
+(1, '11222356', 'Excelente', 'El mejor clarinete que he tenido.', 5, '2023-04-15', 8, 1, 0),
+(2, '13554351', 'No es lo que esperaba', 'Tiene un buen sonido, pero la fabricación es deficiente.', 2, '2023-04-16', 1, 6, 2),
+(3, '14333565', 'Muy bueno', 'Satisfecho con la compra, lo recomendaría.', 4, '2023-04-17', 4, 3, 0),
+(4, '12227463', 'Perfecto para profesionales', 'Como músico profesional, lo recomiendo totalmente.', 5, '2023-04-18', 12, 1, 0),
+(5, '11222356', 'Calidad media', 'No está mal, pero hay mejores en el mercado.', 3, '2023-04-19', 2, 4, 1);
