@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { ProductosDestacadosService } from "src/services/productos-destacados.service";
 import { DestacadoCardResponseDTO } from "src/dto/destacado-card-response.dto";
 
-@Controller()
+@Controller('productos-destacados')
 export class ProductosDestacadosController {
     constructor(private productosDestacadosService: ProductosDestacadosService) { }
 

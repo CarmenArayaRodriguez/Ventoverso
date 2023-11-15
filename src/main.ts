@@ -155,6 +155,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs/servicio-al-cliente', app, servicioAlClienteDocument);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
   await app.listen(3000);
   console.log('Aplicación iniciada');
 }
