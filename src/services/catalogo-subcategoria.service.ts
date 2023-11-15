@@ -25,7 +25,8 @@ export class CatalogoSubcategoriaService {
 
         const productos = await this.productoRepository.find({
             where: { subcategoria: subcategoriaObj },
-            relations: ['imagenes']
+            relations: ['imagenes'],
+            take: 16
         });
         console.log("Productos encontrados:", productos);
         if (!productos || productos.length === 0) {
