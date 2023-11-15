@@ -11,6 +11,7 @@ import { Subcategoria } from '../entities/subcategoria.entity';
 import { Marca } from '../entities/marca.entity';
 import { ImagenProducto } from 'src/entities/imagen.entity';
 import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
+import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
 @Injectable()
 export class ProductoService {
     constructor(
@@ -171,6 +172,18 @@ export class ProductoService {
         }
     }
 
+    async obtenerProductosPorCategoria(idCategoria: number): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
+        const productos = await this.productoRepository.find({
+            where: { categoria: { id: idCategoria } },
+            relations: ['categoria', 'subcategoria', 'marca', 'imagenes'],
+        });
+
+        if (!productos || productos.length === 0) {
+            throw new NotFoundException(`No se encontraron productos para la categoría con ID ${idCategoria}`);
+        }
+
+        return productos.map(producto => ProductoMapper.toCatalogoSubcategoriaDto(producto));
+    }
 }
 
 

@@ -30,24 +30,18 @@ VALUES ('ACCESORIOS', 'Accesorios para instrumentos de viento.');
 
 /* INSERT TABLA SUBCATEGORIA */
 
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Clarinete Sib', 'Sistema Aleman.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Clarinete Sib', 'Sistema Bhoem.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Clarinete Mib', 'Sistema Aleman.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Clarinete Mib', 'Sistema Bhoem.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Clarinete La', 'Sistema Aleman.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Clarinete La', 'Sistema Bhoem.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Otros Clarinetes', 'Sistema Aleman.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Otros Clarinetes', 'Sistema Bhoem.', 1);
-INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`)
-VALUES ('Campanas y Barriletes', 'Campanas y barriletes.', 1);
+INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`, `imagen`)
+VALUES ('Clarinete Sib', 'Sistema Aleman.', 1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`, `imagen`)
+VALUES ('Clarinete La', 'Sistema Aleman.', 1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`, `imagen`)
+VALUES ('Clarinete Mib', 'Sistema Aleman.', 1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`, `imagen`)
+VALUES ('Campanas y barriles', 'Campanas y barriles', 1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`, `imagen`)
+VALUES ('Cañas Clarinete', 'Cañas Clarinete', 1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
+INSERT INTO `subcategoria` (`nombre`, `descripcion`, `id_categoria`, `imagen`)
+VALUES ('Accesorios Clarinete', 'Campanas y barriletes.', 1, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
 
 /* SELECT * FROM `subcategoria` WHERE `id_categoria` = 1; Busuqeda de los campos de una subcategoria de una categoria determinada.*/
 

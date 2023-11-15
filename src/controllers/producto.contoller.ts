@@ -4,6 +4,8 @@ import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { CrearProductoDTO } from '../dto/crear-producto.dto';
 import { ActualizarProductoDTO } from '../dto/actualizar-producto.dto';
+import { ProductoMapper } from 'src/mappers/producto.mapper';
+import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
 
 
 @ApiTags('productos')
@@ -113,6 +115,22 @@ export class ProductoController {
             }
         }
     }
+
+    @Get('/categoria/:idCategoria')
+    @ApiOperation({ summary: 'Obtener productos por categoría' })
+    @ApiResponse({
+        status: 200,
+        description: 'Productos de la categoría obtenidos exitosamente.',
+        type: [ProductoCatalogoSubcategoriaResponseDTO]
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'Categoría no encontrada.',
+    })
+    async obtenerProductosPorCategoria(@Param('idCategoria') idCategoria: number): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
+        return await this.productoService.obtenerProductosPorCategoria(idCategoria);
+    }
+
 
 }
 
