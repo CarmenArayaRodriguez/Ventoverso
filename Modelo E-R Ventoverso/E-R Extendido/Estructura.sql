@@ -57,7 +57,8 @@ CREATE TABLE `subcategoria` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(250),
   `descripcion` varchar(250),
-  `id_categoria` integer
+  `id_categoria` integer,
+  `imagen` varchar(250)
 );
 
 CREATE TABLE `marcas` (
@@ -78,12 +79,19 @@ CREATE TABLE `carrito` (
   `creacion_date` date
 );
 
+CREATE TABLE `productoCarrito` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_carrito` integer,
+  `id_producto` integer,
+  `cantidad` integer
+);
+
 CREATE TABLE `comentByn` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
   `id_articulo` integer,
   `publicacion_date` date,
-  `contenido` varchar(250),
+  `contenido` varchar(250)
   
 );
 
@@ -93,7 +101,7 @@ CREATE TABLE `articuloByn` (
   `titulo` varchar(50),
   `contenido` varchar(300),
   `publicacion_date` date,
-  `autor` varchar(100)
+  `autor` varchar(100),
   `imagen` varchar(250)
 );
 

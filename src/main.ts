@@ -14,6 +14,8 @@ import { CarritoModule } from './modules/carrito.module';
 import { ProductosDestacadosModule } from './modules/productos-destacados.module';
 import { VentoNewsModule } from './modules/vento-news.module';
 import { ProductosRelacionadosModule } from './modules/productos-relacionados.module';
+import { SubcategoriaModule } from './modules/subcategoria.module';
+import { ProductosSimilaresModule } from './modules/productos-similares.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -108,6 +110,29 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/productos-relacionados', app, productosRelacionadosDocument);
 
+
+  //CONFIGURACION SWAGGER Productos similares
+  const productosSimilaresSwaggerConfig = new DocumentBuilder()
+    .setTitle('API de Productos Similares')
+    .setDescription('API para productos similares')
+    .setVersion('1.0')
+    .build();
+  const productosSimilaresDocument = SwaggerModule.createDocument(app, productosSimilaresSwaggerConfig, {
+    include: [ProductosSimilaresModule],
+  });
+  SwaggerModule.setup('docs/productos-similares', app, productosSimilaresDocument);
+
+
+  //CONFIGURACION SWAGGER Subcategoría
+  const SubcategoriaOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Subcategorías de Productos API')
+    .setDescription('API para subcategorías')
+    .setVersion('1.0')
+    .build();
+  const SubcategoriaDocument = SwaggerModule.createDocument(app, SubcategoriaOptions, {
+    include: [SubcategoriaModule],
+  });
+  SwaggerModule.setup('docs/subcategoria', app, SubcategoriaDocument);
 
   //CONFIGURACION SWAGGER Catalogo de Subcategoría
   const catalogoSubcategoriaOptions = new DocumentBuilder()
