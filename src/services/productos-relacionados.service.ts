@@ -16,6 +16,7 @@ export class ProductosRelacionadosService {
             .leftJoinAndSelect("producto.imagenes", "imagen")
             .where("producto.categoria.id = :idCategoria", { idCategoria })
             .andWhere("producto.estrellas = :estrellas", { estrellas: 5 })
+            .limit(5)
             .getMany();
 
         if (productosRelacionados.length === 0) {

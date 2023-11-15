@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VentoNews } from 'src/entities/vento-news.entity';
@@ -12,7 +12,7 @@ export class VentoNewsService {
     ) { }
 
     async obtenerArticulos(): Promise<CardResponseDTO[]> {
-        const articulos = await this.articuloBynRepository.find();
+        const articulos = await this.articuloBynRepository.find({ take: 4 });
 
         if (articulos.length === 0) {
             throw new NotFoundException('No se encontraron artículos');

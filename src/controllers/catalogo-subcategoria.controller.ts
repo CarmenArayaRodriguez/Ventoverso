@@ -18,6 +18,8 @@ export class CatalogoSubcategoriaController {
     @ApiResponse({
         status: 404,
         description: 'Subcategoría no encontrada.',
+        type: ProductoCatalogoSubcategoriaResponseDTO,
+        isArray: true
     })
 
     async getClarineteSibProductos(): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {

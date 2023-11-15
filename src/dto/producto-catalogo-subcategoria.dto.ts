@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsArray, IsNumber } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class ProductoCatalogoSubcategoriaResponseDTO {
     @ApiProperty({ description: 'ID del producto' })
-    id: string;
+    id: number;
 
-    @ApiProperty({ description: 'Imagen del producto', type: [String] })
-    @IsArray()
+    @ApiProperty({ description: 'URL de la imagen del producto', example: 'https://ejemplo.com/imagen.jpg' })
+    @IsString()
     @IsNotEmpty()
-    imagenes: string[];
+    imagenUrl: string;
+
 
     @ApiProperty({ description: 'Cantidad de estrellas del producto', example: 4 })
     @IsNumber()

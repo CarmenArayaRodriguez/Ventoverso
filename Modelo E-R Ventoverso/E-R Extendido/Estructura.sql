@@ -84,7 +84,7 @@ CREATE TABLE `comentByn` (
   `id_articulo` integer,
   `publicacion_date` date,
   `contenido` varchar(250),
-  `imagen` varchar(250)
+  
 );
 
 CREATE TABLE `articuloByn` (
@@ -94,6 +94,7 @@ CREATE TABLE `articuloByn` (
   `contenido` varchar(300),
   `publicacion_date` date,
   `autor` varchar(100)
+  `imagen` varchar(250)
 );
 
 CREATE TABLE `carrusel` (

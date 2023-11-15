@@ -13,7 +13,7 @@ export class CarritoController {
     @ApiOperation({ summary: 'Crear un nuevo carrito' })
     @ApiResponse({ status: 201, description: 'Carrito creado con éxito.' })
     @ApiResponse({ status: 400, description: 'Datos inválidos.' })
-    async crearCarrito(@Body() crearCarritoDTO: CrearCarritoDTO) {
+    async crearCarrito(@Param() crearCarritoDTO: CrearCarritoDTO) {
         console.log('crearCarrito Controller - rutCliente:', crearCarritoDTO.rutCliente);
         return this.carritoService.crearCarrito(crearCarritoDTO.rutCliente);
     }
