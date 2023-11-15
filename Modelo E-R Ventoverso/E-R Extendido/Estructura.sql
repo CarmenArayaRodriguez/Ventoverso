@@ -238,11 +238,11 @@ ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`i
 
 ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-ALTER TABLE `calificacion` FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
+ALTER TABLE `calificacion` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
 
-ALTER TABLE `calificacion` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
+ALTER TABLE `calificacion` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
 
-ALTER TABLE `comentario` FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
+ALTER TABLE `comentario` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
 
-ALTER TABLE `comentario` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
+ALTER TABLE `comentario` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
 
