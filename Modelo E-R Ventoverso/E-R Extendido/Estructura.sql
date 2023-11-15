@@ -169,6 +169,29 @@ CREATE TABLE `imagenProducto` (
   `imagen` varchar(250)
 );
 
+CREATE TABLE `calificacion` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` INT,
+  `rut_cliente` VARCHAR(10),
+  `caracteristicas` INT,
+  `sonido` INT,
+  `fabricacion` INT
+);
+
+CREATE TABLE `comentario` (
+  `id` INT PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` INT,
+  `rut_cliente` VARCHAR(10),
+  `titulo` VARCHAR(255),
+  `comentario` TEXT,
+  `estrellas` INT,
+  `fecha` DATE,
+  `megusta` INT DEFAULT 0,
+  `nomegusta` INT DEFAULT 0,
+  `denuncias` INT DEFAULT 0
+);
+
+
 ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
@@ -214,3 +237,12 @@ ALTER TABLE `pago` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
 ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`id`);
 
 ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+
+ALTER TABLE `calificacion` FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
+
+ALTER TABLE `calificacion` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
+
+ALTER TABLE `comentario` FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
+
+ALTER TABLE `comentario` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
+
