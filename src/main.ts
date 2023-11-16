@@ -16,6 +16,8 @@ import { VentoNewsModule } from './modules/vento-news.module';
 import { ProductosRelacionadosModule } from './modules/productos-relacionados.module';
 import { SubcategoriaModule } from './modules/subcategoria.module';
 import { ProductosSimilaresModule } from './modules/productos-similares.module';
+import { ComentariosModule } from './modules/comentarios.module';
+import { CalificacionesModule } from './modules/calificaciones.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -145,6 +147,27 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/catalogo-subcategoria', app, catalogoSubcategoriaDocument);
 
+  //CONFIGURACION SWAGGER Comentarios 
+  const comentariosOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Comentarios API')
+    .setDescription('API para los comentarios')
+    .setVersion('1.0')
+    .build();
+  const comentariosDocument = SwaggerModule.createDocument(app, comentariosOptions, {
+    include: [ComentariosModule],
+  });
+  SwaggerModule.setup('docs/comentarios', app, comentariosDocument);
+
+  //CONFIGURACION SWAGGER Calificaciones 
+  const calificacionesOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Calificaciones API')
+    .setDescription('API para las calificaciones')
+    .setVersion('1.0')
+    .build();
+  const calificacionesDocument = SwaggerModule.createDocument(app, calificacionesOptions, {
+    include: [CalificacionesModule],
+  });
+  SwaggerModule.setup('docs/calificaciones', app, calificacionesDocument);
 
   //CONFIGURACION SWAGGER Perfil de usuario
   const perfilDeUsuarioOptions = new DocumentBuilder()

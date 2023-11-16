@@ -23,6 +23,11 @@ import { VentoNewsModule } from './modules/vento-news.module';
 import { ProductosRelacionadosModule } from './modules/productos-relacionados.module';
 import { SubcategoriaModule } from './modules/subcategoria.module';
 import { ProductosSimilaresModule } from './modules/productos-similares.module';
+import { Comentario } from './entities/comentario.entity';
+import { ComentariosModule } from './modules/comentarios.module';
+import { Calificacion } from './entities/calificacion.entity';
+import { CalificacionesModule } from './modules/calificaciones.module';
+import { Cliente } from './entities/cliente.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -32,8 +37,12 @@ import { ProductosSimilaresModule } from './modules/productos-similares.module';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews]
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ServicioAlClienteModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente],
+
+    //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
+    // logging: true 
+
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
 

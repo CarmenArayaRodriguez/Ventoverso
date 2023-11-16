@@ -3,6 +3,8 @@ import { Categoria } from './categoria.entity';
 import { Subcategoria } from './subcategoria.entity';
 import { Marca } from './marca.entity';
 import { ImagenProducto } from './imagen.entity';
+import { Calificacion } from './calificacion.entity';
+import { Comentario } from './comentario.entity';
 
 @Entity('producto')
 export class Producto {
@@ -44,4 +46,10 @@ export class Producto {
 
     @OneToMany(() => ImagenProducto, imagenProducto => imagenProducto.producto)
     imagenes: ImagenProducto[];
+
+    @OneToMany(() => Calificacion, calificacion => calificacion.producto)
+    calificaciones: Calificacion[];
+
+    @OneToMany(() => Comentario, comentario => comentario.producto)
+    comentarios: Comentario[];
 }
