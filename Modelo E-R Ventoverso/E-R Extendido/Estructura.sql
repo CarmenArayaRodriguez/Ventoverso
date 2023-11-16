@@ -172,16 +172,17 @@ CREATE TABLE `imagenProducto` (
 CREATE TABLE `calificacion` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `id_producto` INT,
-  `rut_cliente` VARCHAR(10),
+  `nombreCliente` VARCHAR(255),
   `caracteristicas` INT,
   `sonido` INT,
-  `fabricacion` INT
+  `fabricacion` INT,
+  `id_comentario` INT
 );
 
 CREATE TABLE `comentario` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `id_producto` INT,
-  `rut_cliente` VARCHAR(10),
+  `nombreCliente` VARCHAR(255),
   `titulo` VARCHAR(255),
   `comentario` TEXT,
   `estrellas` INT,
@@ -189,6 +190,7 @@ CREATE TABLE `comentario` (
   `megusta` INT DEFAULT 0,
   `nomegusta` INT DEFAULT 0,
   `denuncias` INT DEFAULT 0
+  `id_calificacion` INT
 );
 
 
@@ -240,9 +242,8 @@ ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `product
 
 ALTER TABLE `calificacion` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
 
-ALTER TABLE `calificacion` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
+ALTER TABLE `calificacion` ADD FOREIGN KEY (`id_comentario`) REFERENCES `comentario`(`id`);
 
 ALTER TABLE `comentario` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
 
-ALTER TABLE `comentario` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente`(`rut_cliente`);
 

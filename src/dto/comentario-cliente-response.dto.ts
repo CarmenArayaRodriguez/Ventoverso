@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsString, IsNotEmpty, Min, Max, IsInt, IsObject, ValidateNested } from 'class-validator';
-import { v4 as uuidv4 } from 'uuid';
+import { IsString, IsNotEmpty, Min, Max, IsInt, IsObject, ValidateNested, isString } from 'class-validator';
 import { ReaccionesAComentarioDTO } from './reacciones-a-comentario.response.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { CalificacionPorCategoriaDTO } from './calificacion-por-categoria-response.dto';
@@ -8,16 +7,7 @@ import { CalificacionPorCategoriaDTO } from './calificacion-por-categoria-respon
 export class ComentarioClienteResponseDTO {
     @ApiProperty()
     @IsString()
-    productoId: string = uuidv4();
-
-    @ApiProperty()
-    @IsNotEmpty()
-    cliente: string = uuidv4();
-
-    @ApiProperty()
-    @IsString()
-    @IsNotEmpty()
-    fotoClienteUrl: string;
+    productoId: number;
 
     @ApiProperty()
     @IsString()
