@@ -110,7 +110,8 @@ CREATE TABLE `carrusel` (
   `nombre` varchar(50),
   `descripcion` varchar(250),
   `fechainicio` date,
-  `fechafin` date
+  `fechafin` date,
+  `imagenUrl` VARCHAR(250) NULL
 );
 
 CREATE TABLE `carruselProducto` (
