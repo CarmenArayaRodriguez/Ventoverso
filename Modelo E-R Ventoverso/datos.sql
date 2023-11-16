@@ -208,11 +208,11 @@ VALUES
 
 
 /* INSERT TABLA carrusel */
-INSERT INTO `carrusel` (`nombre`, `descripcion`, `fechainicio`, `fechafin`)
+INSERT INTO `carrusel` (`nombre`, `descripcion`, `fechainicio`, `fechafin`, `imagenUrl`)
 VALUES
-    ('Carrusel de Ofertas', 'Descubre nuestras mejores ofertas en instrumentos', '2023-11-01', '2023-11-30'),
-    ('Carrusel de Novedades', 'Explora los últimos lanzamientos en instrumentos', '2023-11-01', '2023-11-30'),
-    ('Carrusel de Destacados', 'Los instrumentos más populares del mes', '2023-11-01', '2023-11-30');
+    ('Carrusel de Ofertas', 'Descubre nuestras mejores ofertas en instrumentos', '2023-11-01', '2023-11-30', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer'),
+    ('Carrusel de Novedades', 'Explora los últimos lanzamientos en instrumentos', '2023-11-01', '2023-11-30', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer'),
+    ('Carrusel de Destacados', 'Los instrumentos más populares del mes', '2023-11-01', '2023-11-30', 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquSMq_TNsCVsaer');
 
 
 

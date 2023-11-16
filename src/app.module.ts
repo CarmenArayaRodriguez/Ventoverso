@@ -28,6 +28,8 @@ import { ComentariosModule } from './modules/comentarios.module';
 import { Calificacion } from './entities/calificacion.entity';
 import { CalificacionesModule } from './modules/calificaciones.module';
 import { Cliente } from './entities/cliente.entity';
+import { Carrusel } from './entities/carrusel.entity';
+import { CarruselModule } from './modules/carrusel.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -37,12 +39,12 @@ import { Cliente } from './entities/cliente.entity';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel],
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true 
 
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
 

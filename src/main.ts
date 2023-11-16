@@ -18,6 +18,7 @@ import { SubcategoriaModule } from './modules/subcategoria.module';
 import { ProductosSimilaresModule } from './modules/productos-similares.module';
 import { ComentariosModule } from './modules/comentarios.module';
 import { CalificacionesModule } from './modules/calificaciones.module';
+import { CarruselModule } from './modules/carrusel.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -168,6 +169,17 @@ async function bootstrap() {
     include: [CalificacionesModule],
   });
   SwaggerModule.setup('docs/calificaciones', app, calificacionesDocument);
+
+  //CONFIGURACION SWAGGER Carrusel 
+  const carruselOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Carrusel API')
+    .setDescription('API para carrusel')
+    .setVersion('1.0')
+    .build();
+  const carruselDocument = SwaggerModule.createDocument(app, carruselOptions, {
+    include: [CarruselModule],
+  });
+  SwaggerModule.setup('docs/carrusel', app, carruselDocument);
 
   //CONFIGURACION SWAGGER Perfil de usuario
   const perfilDeUsuarioOptions = new DocumentBuilder()

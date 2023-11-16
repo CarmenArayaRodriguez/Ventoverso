@@ -99,25 +99,22 @@ export class CatalogoDeProductosController {
     obtenerItemsCarrusel(): CarruselItemResponseDTO[] {
         const mockDataCarrusel: CarruselItemResponseDTO[] = [
             {
-                id: 'carousel-id-1',
+                id: 1,
                 titulo: 'Nueva Promoción de Verano',
                 descripcion: 'Disfruta de nuestros descuentos de verano en toda la tienda.',
                 imagenUrl: 'https://ejemplo.com/imagen-carousel1.jpg',
-                linkDetalle: 'https://ejemplo.com/promocion-verano'
             },
             {
-                id: 'carousel-id-2',
+                id: 1,
                 titulo: 'Lanzamiento Exclusivo: Producto X',
                 descripcion: 'Conoce el nuevo producto X, exclusivo en nuestra tienda.',
                 imagenUrl: 'https://ejemplo.com/imagen-carousel2.jpg',
-                linkDetalle: 'https://ejemplo.com/producto-x'
             },
             {
-                id: 'carousel-id-3',
+                id: 1,
                 titulo: '¡Participa en nuestro Gran Concurso de Invierno!',
                 descripcion: 'Compra cualquier producto y entra en el sorteo de un fabuloso premio. No te pierdas esta oportunidad.',
                 imagenUrl: 'https://ejemplo.com/imagen-carousel-concurso.jpg',
-                linkDetalle: 'https://ejemplo.com/concurso-invierno'
             }
         ];
 
@@ -126,7 +123,6 @@ export class CatalogoDeProductosController {
             titulo: item.titulo,
             descripcion: item.descripcion,
             imagenUrl: item.imagenUrl,
-            linkDetalle: item.linkDetalle
         }));
     }
 
