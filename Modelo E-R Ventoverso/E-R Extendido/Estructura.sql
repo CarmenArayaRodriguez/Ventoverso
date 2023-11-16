@@ -190,7 +190,7 @@ CREATE TABLE `comentario` (
   `fecha` DATE,
   `megusta` INT DEFAULT 0,
   `nomegusta` INT DEFAULT 0,
-  `denuncias` INT DEFAULT 0
+  `denuncias` INT DEFAULT 0,
   `id_calificacion` INT
 );
 
