@@ -57,6 +57,7 @@ id integer [increment,pk]
 nombre varchar(250)
 descripcion varchar(250)
 id_categoria integer [ref: - categoria.id]
+imagen varchar(250)
 }
 
 table marcas {
@@ -79,15 +80,20 @@ table carrito {
  creacion_date date
 }
 
+table productoCarrito {
+ id integer [increment,pk]
+ id_carrito integer [ref: > carrito.id]
+ id_producto integer [ref: > producto.id]
+ cantidad integer
+}
+
 table comentByn {
   id integer [increment,pk]
   rut_cliente varchar(10) [ref: > cliente.rut_cliente]
   id_articulo integer [ref: > articuloByn.id]
   publicacion_date date
   contenido varchar(250)
-  imagen varchar(250)
-
-}
+  }
 
 table articuloByn {
 id integer [increment,pk]
@@ -96,6 +102,7 @@ titulo varchar(50)
 contenido varchar(300)
 publicacion_date date
 autor varchar(100)
+imagen varchar(250)
 }
 // Almacena articulos creados por el cliente o el equipo (por definir) que proporciona información sobre productos, servicios, ofertas, novedades o cualquier otro tema relacionado con el comercio electrónico y ques seran comentadas por clientes registrados.
 
@@ -105,6 +112,7 @@ nombre varchar(50) // Nombre que describe el carrusel
 descripcion varchar(250)
 fechainicio date
 fechafin date
+imagenUrl varchar(250)
 }
 
 table carruselProducto {
@@ -165,4 +173,28 @@ table imagenProducto {
 id integer [increment,pk]
 id_producto integer [ref: > producto.id]
 imagen varchar (250)
+}
+
+table calificacion {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+nombreCliente varchar (250)
+caracteristicas integer(200)
+sonido integer(200)
+fabricacion integer(200)
+id_comentario integer
+}
+
+table comentario {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+titulo varchar(255)
+comentario text
+estrellas integer (255)
+fecha date
+megusta int [default:0]
+nomegusta int [default:0]
+denuncias int [default:0]
+id_calificacion integer [ref: - calificacion.id]
+
 }
