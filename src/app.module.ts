@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { ProductoModule } from './modules/producto.module';
 import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
-import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
+// import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
 import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
 import { BlogYNoticiasModule } from './modules/blog-y-noticias.module';
 import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
@@ -30,6 +30,8 @@ import { CalificacionesModule } from './modules/calificaciones.module';
 import { Cliente } from './entities/cliente.entity';
 import { Carrusel } from './entities/carrusel.entity';
 import { CarruselModule } from './modules/carrusel.module';
+import { Compra } from './entities/compra.entity';
+import { ComprasModule } from './modules/compras.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -39,12 +41,12 @@ import { CarruselModule } from './modules/carrusel.module';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra],
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true 
 
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoDeComprasModule, CarritoModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule],
   controllers: [AppController],
   providers: [],
 

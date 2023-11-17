@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { BlogYNoticiasModule } from './modules/blog-y-noticias.module';
-import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
+// import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
 import { ProductoModule } from './modules/producto.module';
 import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
 import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
@@ -19,6 +19,7 @@ import { ProductosSimilaresModule } from './modules/productos-similares.module';
 import { ComentariosModule } from './modules/comentarios.module';
 import { CalificacionesModule } from './modules/calificaciones.module';
 import { CarruselModule } from './modules/carrusel.module';
+import { ComprasModule } from './modules/compras.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -47,15 +48,15 @@ async function bootstrap() {
   SwaggerModule.setup('docs/vento-news', app, VentoNewsDocument);
 
   //CONFIGURACION SWAGGER Carrito de Compras 
-  const carritoDeComprasOptions = new DocumentBuilder()
-    .setTitle('Ventoverso Carrito de compras API')
-    .setDescription('API para el módulo de Carrito de compras')
-    .setVersion('1.0')
-    .build();
-  const carritoDeComprasDocument = SwaggerModule.createDocument(app, carritoDeComprasOptions, {
-    include: [CarritoDeComprasModule],
-  });
-  SwaggerModule.setup('docs/carrito-de-compras', app, carritoDeComprasDocument);
+  // const carritoDeComprasOptions = new DocumentBuilder()
+  //   .setTitle('Ventoverso Carrito de compras API')
+  //   .setDescription('API para el módulo de Carrito de compras')
+  //   .setVersion('1.0')
+  //   .build();
+  // const carritoDeComprasDocument = SwaggerModule.createDocument(app, carritoDeComprasOptions, {
+  //   include: [CarritoDeComprasModule],
+  // });
+  // SwaggerModule.setup('docs/carrito-de-compras', app, carritoDeComprasDocument);
 
   //CONFIGURACION SWAGGER Carrito 
   const carritoOptions = new DocumentBuilder()
@@ -180,6 +181,17 @@ async function bootstrap() {
     include: [CarruselModule],
   });
   SwaggerModule.setup('docs/carrusel', app, carruselDocument);
+
+  //CONFIGURACION SWAGGER Compras 
+  const comprasOptions = new DocumentBuilder()
+    .setTitle('Ventoverso Compras API')
+    .setDescription('API para compras')
+    .setVersion('1.0')
+    .build();
+  const comprasDocument = SwaggerModule.createDocument(app, comprasOptions, {
+    include: [ComprasModule],
+  });
+  SwaggerModule.setup('docs/compras', app, comprasDocument);
 
   //CONFIGURACION SWAGGER Perfil de usuario
   const perfilDeUsuarioOptions = new DocumentBuilder()

@@ -194,6 +194,19 @@ CREATE TABLE `comentario` (
   `id_calificacion` INT
 );
 
+CREATE TABLE compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rut_cliente VARCHAR(10) NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    total INT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado VARCHAR(50) DEFAULT 'pendiente',
+    FOREIGN KEY (rut_cliente) REFERENCES cliente(rut_cliente),
+    FOREIGN KEY (id_producto) REFERENCES producto(id)
+);
+
+
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
