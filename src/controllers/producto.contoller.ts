@@ -18,6 +18,7 @@ export class ProductoController {
     @ApiResponse({
         status: 200,
         description: 'Detalles del producto encontrado.',
+        type: [ProductoDetalleResponseDTO]
 
     })
 

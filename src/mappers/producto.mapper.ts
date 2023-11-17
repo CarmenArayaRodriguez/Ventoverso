@@ -7,7 +7,7 @@ export class ProductoMapper {
 
     static toDto(producto: Producto): ProductoDetalleResponseDTO {
         const dto = new ProductoDetalleResponseDTO();
-        dto.id = producto.id.toString();
+        dto.id = producto.id;
         dto.estrellas = producto.estrellas || 0;
         dto.nombre = producto.nombre;
         dto.marca = producto.marca?.marca;

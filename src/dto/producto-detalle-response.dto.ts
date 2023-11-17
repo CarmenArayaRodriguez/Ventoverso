@@ -3,7 +3,7 @@ import { IsString, IsNotEmpty, IsArray, IsNumber, Min } from 'class-validator';
 
 export class ProductoDetalleResponseDTO {
     @ApiProperty({ description: 'ID del producto' })
-    id: string;
+    id: number;
 
     @ApiProperty({ description: 'Nombre del producto' })
     @IsString()
