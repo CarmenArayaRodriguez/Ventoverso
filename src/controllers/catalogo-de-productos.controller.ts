@@ -351,7 +351,7 @@ export class CatalogoDeProductosController {
     }
 
     private detalleClarineteSibMockData: ProductoDetalleResponseDTO = {
-        id: 'clarinete-sib-1',
+        id: 1,
         nombre: 'Clarinete Sib Modelo 1',
         marca: 'Marca A',
         modelo: 'Modelo 1',
