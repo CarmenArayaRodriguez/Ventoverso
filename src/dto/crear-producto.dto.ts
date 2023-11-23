@@ -49,7 +49,7 @@ export class CrearProductoDTO {
 
     @ApiProperty({ description: 'URLs de las imágenes del producto', type: [String], required: false })
     @IsArray()
-    @IsUrl({}, { each: true })
+    // @IsUrl({}, { each: true })
     @IsOptional()
     imagenes?: string[];
 

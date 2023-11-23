@@ -1,3 +1,4 @@
+import * as express from 'express';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -20,10 +21,14 @@ import { ComentariosModule } from './modules/comentarios.module';
 import { CalificacionesModule } from './modules/calificaciones.module';
 import { CarruselModule } from './modules/carrusel.module';
 import { ComprasModule } from './modules/compras.module';
+import { ImagenesModule } from './modules/imagenes.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
   const app = await NestFactory.create(AppModule);
+  app.use(express.json({ limit: '50mb' })); // Aumentar límite para JSON
+  app.use(express.urlencoded({ limit: '50mb', extended: true })); // Aumentar límite para datos de formulario
+  // app.use('/imagenes', express.static('imagenes')); //Configuración para servir archivos estáticos
 
   //CONFIGURACION SWAGGER Blog y Noticias
   const blogYNoticiasOptions = new DocumentBuilder()
@@ -91,6 +96,17 @@ async function bootstrap() {
     include: [ProductoModule],
   });
   SwaggerModule.setup('docs/producto', app, productoDocument);
+
+  //CONFIGURACION SWAGGER Imágenes
+  const imagenesSwaggerConfig = new DocumentBuilder()
+    .setTitle('API de Imágenes')
+    .setDescription('API para la gestión de imágenes en Ventoverso')
+    .setVersion('1.0')
+    .build();
+  const imagenesDocument = SwaggerModule.createDocument(app, imagenesSwaggerConfig, {
+    include: [ImagenesModule],
+  });
+  SwaggerModule.setup('docs/imagenes', app, imagenesDocument);
 
   //CONFIGURACION SWAGGER Productos destacados
   const productosDestacadosSwaggerConfig = new DocumentBuilder()

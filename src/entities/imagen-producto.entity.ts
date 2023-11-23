@@ -12,4 +12,7 @@ export class ImagenProducto {
 
     @Column()
     imagen: string;
+
+    @Column({ name: 'id_producto' })
+    idProducto: number;
 }

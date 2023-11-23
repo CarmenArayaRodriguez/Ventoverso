@@ -9,7 +9,7 @@ import { ActualizarProductoDTO } from 'src/dto/actualizar-producto.dto';
 import { Categoria } from '../entities/categoria.entity';
 import { Subcategoria } from '../entities/subcategoria.entity';
 import { Marca } from '../entities/marca.entity';
-import { ImagenProducto } from 'src/entities/imagen.entity';
+import { ImagenProducto } from 'src/entities/imagen-producto.entity';
 import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
 @Injectable()

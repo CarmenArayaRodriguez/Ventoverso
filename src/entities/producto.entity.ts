@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { Categoria } from './categoria.entity';
 import { Subcategoria } from './subcategoria.entity';
 import { Marca } from './marca.entity';
-import { ImagenProducto } from './imagen.entity';
+import { ImagenProducto } from './imagen-producto.entity';
 import { Calificacion } from './calificacion.entity';
 import { Comentario } from './comentario.entity';
 
