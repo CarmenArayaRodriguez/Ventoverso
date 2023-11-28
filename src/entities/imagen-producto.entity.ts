@@ -10,6 +10,9 @@ export class ImagenProducto {
     @JoinColumn({ name: 'id_producto' })
     producto: Producto;
 
+    @Column({ name: 'nombre_imagen' })
+    nombreImagen: string;
+
     @Column()
     imagen: string;
 

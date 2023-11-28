@@ -167,7 +167,8 @@ CREATE TABLE `pago` (
 CREATE TABLE `imagenProducto` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
-  `imagen` varchar(250)
+  `imagen` varchar(250),
+  `nombre_imagen` varchar(250)
 );
 
 CREATE TABLE `calificacion` (

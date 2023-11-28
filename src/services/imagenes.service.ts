@@ -20,7 +20,7 @@ export class ImagenesService {
             throw new Error('Error al escribir el archivo');
         }
     }
-    //Tensformar un archivo a Base64
+    //Transformar un archivo a Base64
     async leerArchivo(nombreArchivo: string): Promise<string> {
         try {
             console.log(`Leyendo archivo: imagenes/${nombreArchivo}`);

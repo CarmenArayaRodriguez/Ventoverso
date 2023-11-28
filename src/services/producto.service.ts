@@ -12,6 +12,8 @@ import { Marca } from '../entities/marca.entity';
 import { ImagenProducto } from 'src/entities/imagen-producto.entity';
 import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
+import { promises as fs } from 'fs';
+
 @Injectable()
 export class ProductoService {
     constructor(
@@ -56,14 +58,23 @@ export class ProductoService {
             await this.productoRepository.manager.transaction(async entityManager => {
                 productoGuardado = await entityManager.save(nuevoProducto);
 
+                if (crearProductoDto.imagenes) {
+                    for (const imagen of crearProductoDto.imagenes) {
+                        const nombreImagen = imagen.nombre || `${Date.now()}-imagen.png`;
+                        const ruta = `../front-ventoverso/public/imagenes-producto/${nombreImagen}`;
 
+                        console.log('Guardando imagen en:', ruta);
 
-                for (const url of crearProductoDto.imagenes || []) {
-                    const imagenProducto = new ImagenProducto();
-                    imagenProducto.imagen = url;
-                    imagenProducto.producto = productoGuardado;
-                    await entityManager.save(imagenProducto);
+                        await fs.writeFile(ruta, imagen.base64, 'base64');
+
+                        const imagenProducto = new ImagenProducto();
+                        imagenProducto.imagen = ruta;
+                        imagenProducto.nombreImagen = nombreImagen;
+                        imagenProducto.producto = productoGuardado;
+                        await entityManager.save(imagenProducto);
+                    }
                 }
+
             });
 
 
@@ -97,26 +108,21 @@ export class ProductoService {
         producto = this.productoRepository.merge(producto, actualizarProductoInfo);
         await this.productoRepository.save(producto);
 
-        if (imagenes) {
-
-            await this.imagenProductoRepository.remove(producto.imagenes);
-
-            const imagenesEntidad = imagenes.map(url => {
+        if (imagenes && imagenes.length > 0) {
+            for (const imagenDto of imagenes) {
                 const imagenProducto = new ImagenProducto();
-                imagenProducto.imagen = url;
+                const nombreImagen = `${Date.now()}-${imagenDto.nombre}`;
+                const rutaImagen = `imagenes/${nombreImagen}`;
+                await fs.writeFile(rutaImagen, imagenDto.base64, 'base64');
+                imagenProducto.imagen = rutaImagen;
+                imagenProducto.nombreImagen = nombreImagen;
                 imagenProducto.producto = producto;
-                return imagenProducto;
-            });
-            await this.imagenProductoRepository.save(imagenesEntidad);
-
+                await this.imagenProductoRepository.save(imagenProducto);
+            }
             producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
-        }
 
-        if (!producto.imagenes) {
-            producto.imagenes = [];
+            return ProductoMapper.toDto(producto);
         }
-
-        return ProductoMapper.toDto(producto);
     }
 
     async eliminarProducto(id: number): Promise<void> {
