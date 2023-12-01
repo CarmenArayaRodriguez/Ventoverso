@@ -61,11 +61,12 @@ export class ProductoService {
                 if (crearProductoDto.imagenes) {
                     for (const imagen of crearProductoDto.imagenes) {
                         const nombreImagen = imagen.nombre || `${Date.now()}-imagen.png`;
-                        const ruta = `../front-ventoverso/public/imagenes-producto/${nombreImagen}`;
+                        const base64Data = imagen.base64.split(';base64,').pop();
+                        const ruta = `/imagenes-producto/${nombreImagen}`;
 
                         console.log('Guardando imagen en:', ruta);
-
-                        await fs.writeFile(ruta, imagen.base64, 'base64');
+                        const buffer = Buffer.from(base64Data, 'base64');
+                        await fs.writeFile('../front-ventoverso/public' + ruta, buffer);
 
                         const imagenProducto = new ImagenProducto();
                         imagenProducto.imagen = ruta;
