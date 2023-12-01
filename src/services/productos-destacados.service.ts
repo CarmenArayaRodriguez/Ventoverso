@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Producto } from 'src/entities/producto.entity';
-import { ImagenProducto } from 'src/entities/imagen.entity';
+import { ImagenProducto } from 'src/entities/imagen-producto.entity';
 import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 
 @Injectable()

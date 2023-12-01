@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Carrusel } from 'src/entities/carrusel.entity';
-import { ImagenProducto } from 'src/entities/imagen.entity';
+import { ImagenProducto } from 'src/entities/imagen-producto.entity';
 
 @Injectable()
 export class CarruselService {

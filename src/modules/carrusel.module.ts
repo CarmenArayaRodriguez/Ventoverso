@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarruselController } from 'src/controllers/carrusel.controller';
 import { CarruselService } from 'src/services/carrusel.service';
 import { Carrusel } from 'src/entities/carrusel.entity';
-import { ImagenProducto } from '../entities/imagen.entity';
+import { ImagenProducto } from '../entities/imagen-producto.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Carrusel, ImagenProducto])],
