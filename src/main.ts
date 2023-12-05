@@ -22,6 +22,7 @@ import { CalificacionesModule } from './modules/calificaciones.module';
 import { CarruselModule } from './modules/carrusel.module';
 import { ComprasModule } from './modules/compras.module';
 import { ImagenesModule } from './modules/imagenes.module';
+import { AutenticacionModule } from './modules/autenticacion.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -219,6 +220,18 @@ async function bootstrap() {
     include: [PerfilDeUsuarioModule],
   });
   SwaggerModule.setup('docs/perfil-de-usuario', app, perfilDeUsuarioDocument);
+
+  //CONFIGURACION SWAGGER login
+  const loginOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para el login')
+    .setVersion('1.0')
+    .build();
+  const loginDocument = SwaggerModule.createDocument(app, loginOptions, {
+    include: [AutenticacionModule],
+  });
+  SwaggerModule.setup('docs/login', app, loginDocument);
+
 
   //CONFIGURACION SWAGGER Reserva de Citas
   const reservasDeCitaOptions = new DocumentBuilder()
