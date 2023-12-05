@@ -41,8 +41,8 @@ import { AutenticacionModule } from './modules/autenticacion.module';
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: 'Fechita1',
-    database: 'ventoverso',
+    password: 'clave123',
+    database: 'Fechita1',
     entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra],
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)

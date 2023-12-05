@@ -92,7 +92,6 @@ CREATE TABLE `comentByn` (
   `id_articulo` integer,
   `publicacion_date` date,
   `contenido` varchar(250)
-  
 );
 
 CREATE TABLE `articuloByn` (
@@ -111,7 +110,7 @@ CREATE TABLE `carrusel` (
   `descripcion` varchar(250),
   `fechainicio` date,
   `fechafin` date,
-  `imagenUrl` VARCHAR(250) NULL
+  `imagenUrl` varchar(250)
 );
 
 CREATE TABLE `carruselProducto` (
@@ -172,42 +171,56 @@ CREATE TABLE `imagenProducto` (
 );
 
 CREATE TABLE `calificacion` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `id_producto` INT,
-  `nombreCliente` VARCHAR(255),
-  `caracteristicas` INT,
-  `sonido` INT,
-  `fabricacion` INT,
-  `id_comentario` INT
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` integer,
+  `nombreCliente` varchar(250),
+  `caracteristicas` integer(200),
+  `sonido` integer(200),
+  `fabricacion` integer(200),
+  `id_comentario` integer
 );
 
 CREATE TABLE `comentario` (
-  `id` INT PRIMARY KEY AUTO_INCREMENT,
-  `id_producto` INT,
-  `nombreCliente` VARCHAR(255),
-  `titulo` VARCHAR(255),
-  `comentario` TEXT,
-  `estrellas` INT,
-  `fecha` DATE,
-  `megusta` INT DEFAULT 0,
-  `nomegusta` INT DEFAULT 0,
-  `denuncias` INT DEFAULT 0,
-  `id_calificacion` INT
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` integer,
+  `nombreCliente` varchar(250),
+  `titulo` varchar(255),
+  `comentario` text,
+  `estrellas` integer(255),
+  `fecha` date,
+  `megusta` int DEFAULT 0,
+  `nomegusta` int DEFAULT 0,
+  `denuncias` int DEFAULT 0,
+  `id_calificacion` integer
 );
 
-CREATE TABLE compra (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    rut_cliente VARCHAR(10) NOT NULL,
-    id_producto INT NOT NULL,
-    cantidad INT NOT NULL,
-    total INT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    estado VARCHAR(50) DEFAULT 'pendiente',
-    FOREIGN KEY (rut_cliente) REFERENCES cliente(rut_cliente),
-    FOREIGN KEY (id_producto) REFERENCES producto(id)
+CREATE TABLE `compra` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` integer,
+  `rut_cliente` varchar(10),
+  `cantidad` int NOT NULL,
+  `total` int NOT NULL,
+  `fecha` timestamp DEFAULT (current_timestamp()),
+  `estado` int(50) DEFAULT 0
 );
 
-
+CREATE TABLE `detalle_producto` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` integer,
+  `clave` varchar(255),
+  `sistema` varchar(255),
+  `cantLlaves` varchar(255),
+  `materialLlave` varchar(255),
+  `materialCuerpo` varchar(255),
+  `incluyeBoquilla` boolean,
+  `cantBarriles` varchar(255),
+  `largoBarril` varchar(255),
+  `reposaPulgar` boolean,
+  `cantAnillos` varchar(255),
+  `incluyeCanas` boolean,
+  `incluyeMaleta` boolean,
+  `origen` varchar(255)
+);
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
@@ -230,6 +243,10 @@ ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categ
 ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_marcas`) REFERENCES `marcas` (`id`);
 
 ALTER TABLE `carrito` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+
+ALTER TABLE `productoCarrito` ADD FOREIGN KEY (`id_carrito`) REFERENCES `carrito` (`id`);
+
+ALTER TABLE `productoCarrito` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
 ALTER TABLE `comentByn` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
@@ -255,10 +272,14 @@ ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`i
 
 ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-ALTER TABLE `calificacion` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
+ALTER TABLE `calificacion` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-ALTER TABLE `calificacion` ADD FOREIGN KEY (`id_comentario`) REFERENCES `comentario`(`id`);
+ALTER TABLE `comentario` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-ALTER TABLE `comentario` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`);
+ALTER TABLE `comentario` ADD FOREIGN KEY (`id_calificacion`) REFERENCES `calificacion` (`id`);
 
+ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
+ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+
+ALTER TABLE `detalle_producto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
