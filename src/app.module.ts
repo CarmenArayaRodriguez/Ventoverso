@@ -33,6 +33,7 @@ import { CarruselModule } from './modules/carrusel.module';
 import { Compra } from './entities/compra.entity';
 import { ComprasModule } from './modules/compras.module';
 import { ImagenesModule } from './modules/imagenes.module';
+import { AutenticacionModule } from './modules/autenticacion.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -47,7 +48,7 @@ import { ImagenesModule } from './modules/imagenes.module';
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true 
 
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule],
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule],
   controllers: [AppController],
   providers: [],
 
