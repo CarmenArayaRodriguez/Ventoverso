@@ -1,4 +1,4 @@
-table cliente {
+ table cliente {
 	rut_cliente varchar(10) [pk]
 	dv_cliente char
 	nombre varchar(50)
@@ -130,7 +130,6 @@ FechaFin    date   //fecha termino producto destacado
 }
 
 
-
 table metodoEnvio {
 id integer [increment,pk]
 nombre varchar(20)
@@ -173,6 +172,7 @@ table imagenProducto {
 id integer [increment,pk]
 id_producto integer [ref: > producto.id]
 imagen varchar (250)
+nombre_imagen varchar (250)
 }
 
 table calificacion {
@@ -188,6 +188,7 @@ id_comentario integer
 table comentario {
 id integer [increment,pk]
 id_producto integer [ref: > producto.id]
+nombreCliente varchar (250)
 titulo varchar(255)
 comentario text
 estrellas integer (255)
@@ -197,4 +198,33 @@ nomegusta int [default:0]
 denuncias int [default:0]
 id_calificacion integer [ref: - calificacion.id]
 
+}
+
+table compra {
+id integer [increment,pk]
+id_producto integer [ref: < producto.id]
+rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+cantidad int [not null]
+total int [not null]
+fecha timestamp [default: `current_timestamp()`]
+estado int (50) [default:0]
+
+}
+
+table detalle_producto {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+clave varchar(255)
+sistema varchar(255)
+cantLlaves varchar(255)
+materialLlave varchar(255)
+materialCuerpo varchar(255)
+incluyeBoquilla boolean
+cantBarriles varchar(255)
+largoBarril varchar(255)
+reposaPulgar boolean
+cantAnillos varchar(255)
+incluyeCanas boolean
+incluyeMaleta boolean
+origen varchar(255)
 }
