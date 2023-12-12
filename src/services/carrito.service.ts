@@ -85,4 +85,16 @@ export class CarritoService {
         await this.carritoRepository.delete({ id: idCarrito });
         console.log(`Carrito con ID: ${idCarrito} eliminado`);
     }
+
+    async obtenerCarritoPorCliente(rutCliente: string): Promise<Carrito> {
+        const carrito = await this.carritoRepository.findOne({
+            where: { rutCliente },
+        });
+
+        if (!carrito) {
+            throw new NotFoundException('Carrito no encontrado para el cliente.');
+        }
+
+        return carrito;
+    }
 }

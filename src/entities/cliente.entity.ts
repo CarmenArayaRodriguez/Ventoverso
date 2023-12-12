@@ -34,4 +34,7 @@ export class Cliente {
 
     @Column({ type: 'varchar', length: 20 })
     telefono: string;
+
+    @Column("simple-array")
+    roles: string[];
 }
