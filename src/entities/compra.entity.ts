@@ -1,6 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Cliente } from './cliente.entity';
 import { Producto } from './producto.entity';
+import { MetodoPago } from './metodo-de-pago.entity';
+import { MetodoEnvio } from './metodo-de-envio.entity';
 
 @Entity('compra')
 export class Compra {
@@ -21,7 +23,32 @@ export class Compra {
     @Column('int')
     total: number;
 
+    // @Column('varchar', { length: 255 })
+    // direccionEnvio: string;
+
+    // @Column('varchar', { length: 100 })
+    // metodoPago: string;
+    @Column('varchar', { length: 255 })
+    direccion: string;
+
+    @Column('varchar', { length: 255 })
+    comuna: string;
+
+    @Column('varchar', { length: 255 })
+    ciudad: string;
+
+    @Column('varchar', { length: 255 })
+    region: string;
+
     @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
     fecha: Date;
+
+    @ManyToOne(() => MetodoPago)
+    @JoinColumn({ name: 'id_metodo_pago' })
+    metodoPago: MetodoPago;
+
+    @ManyToOne(() => MetodoEnvio)
+    @JoinColumn({ name: 'id_metodo_envio' })
+    metodoEnvio: MetodoEnvio;
 
 }
