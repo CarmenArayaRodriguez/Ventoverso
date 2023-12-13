@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
@@ -6,6 +6,9 @@ import { CrearProductoDTO } from '../dto/crear-producto.dto';
 import { ActualizarProductoDTO } from '../dto/actualizar-producto.dto';
 import { ProductoMapper } from 'src/mappers/producto.mapper';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
+import { JWTGuard } from 'src/jwt.guard';
+import { RolesGuard } from 'src/roles.guard';
+import { Roles } from 'src/roles.decorador';
 
 
 @ApiTags('productos')
@@ -42,6 +45,8 @@ export class ProductoController {
     }
 
     @Post()
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('ADMINISTRADOR')
     @ApiOperation({ summary: 'Crear un nuevo producto' })
     @ApiResponse({
         status: 201,
@@ -62,6 +67,8 @@ export class ProductoController {
     }
 
     @Put(':id')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('ADMINISTRADOR')
     @ApiOperation({ summary: 'Actualizar un producto' })
     @ApiResponse({
         status: 200,
@@ -94,6 +101,8 @@ export class ProductoController {
     }
 
     @Delete(':id')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('ADMINISTRADOR')
     @ApiOperation({ summary: 'Eliminar un producto' })
     @ApiResponse({
         status: 200,

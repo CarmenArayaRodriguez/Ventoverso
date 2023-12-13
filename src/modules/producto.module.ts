@@ -8,10 +8,11 @@ import { Categoria } from 'src/entities/categoria.entity';
 import { Subcategoria } from 'src/entities/subcategoria.entity';
 import { Marca } from 'src/entities/marca.entity';
 import { ImagenProducto } from '../entities/imagen-producto.entity';
+import { AutenticacionModule } from './autenticacion.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Producto, Categoria, Subcategoria, Marca, ImagenProducto]),
+    TypeOrmModule.forFeature([Producto, Categoria, Subcategoria, Marca, ImagenProducto,]), AutenticacionModule
   ],
   controllers: [ProductoController],
   providers: [ProductoService]

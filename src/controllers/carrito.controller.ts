@@ -1,10 +1,13 @@
-import { Controller, Post, Get, Patch, Delete, Param, Body, Res, HttpStatus, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Param, Body, Res, HttpStatus, InternalServerErrorException, NotFoundException, UseGuards } from '@nestjs/common';
 import { CarritoService } from 'src/services/carrito.service';
 import { CrearCarritoDTO } from '../dto/crear-carrito.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AgregarProductoCarritoRequestDTO } from 'src/dto/agregar-producto-carrito-request.dto';
 import { ActualizarProductoCarritoDTO } from 'src/dto/actualizar-producto-carrito.dto';
+import { JWTGuard } from 'src/jwt.guard';
+import { Request } from '@nestjs/common';
 import { CarritoConProductosResponseDTO } from 'src/dto/carrito-con-productos-response.dto';
+
 
 @Controller('carrito')
 export class CarritoController {
@@ -88,4 +91,12 @@ export class CarritoController {
             }
         }
     }
+
+    @Get('/carrito')
+    @UseGuards(JWTGuard)
+    async obtenerCarrito(@Request() req) {
+        const rutCliente = req.user.rutCliente;
+        return this.carritoService.obtenerCarritoPorCliente(rutCliente);
+    }
+
 }

@@ -47,6 +47,7 @@ import { MetodoEnvio } from './entities/metodo-de-envio.entity';
     database: 'ventoverso',
     entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio],
 
+
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true
 
