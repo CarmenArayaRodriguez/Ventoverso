@@ -62,13 +62,6 @@ export class CarritoService {
         };
     }
 
-    // private obtenerDescuento(carrito: Carrito): any {
-    //     // Implementa aquí la lógica para obtener el descuento aplicado al carrito.
-    //     // Por ahora, puedes devolver un objeto con un descuento ficticio o nulo.
-    //     return {
-    //         // Detalles del descuento
-    //     };
-    // }
     private obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
         const cuponAplicado = carrito.cupon;
         if (cuponAplicado === 'DESC10') {
@@ -86,7 +79,7 @@ export class CarritoService {
             };
         }
 
-        // Devolver un descuento nulo o cero si no hay cupón aplicado
+
         return {
             montoDescuento: 0,
             nuevoSubtotal: carrito.subtotal,
@@ -214,14 +207,13 @@ export class CarritoService {
 
         try {
             const descuento = await this.aplicarDescuentoAlCarrito(carrito.subtotal, cupon);
-            carrito.cupon = cupon; // Guardar el cupón aplicado
-            // Actualizar el carrito con el nuevo subtotal y total
+            carrito.cupon = cupon;
             carrito.subtotal = descuento.nuevoSubtotal;
             await this.carritoRepository.save(carrito);
 
             return carrito;
         } catch (error) {
-            // Manejar el error (p.ej., cupón no válido)
+
             throw error;
         }
     }

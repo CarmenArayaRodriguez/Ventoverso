@@ -67,10 +67,8 @@ export class ComprasService {
             producto: producto,
             cantidad: datosCompra.cantidad,
             total: total,
-            direccion: datosCompra.direccionEnvio.direccion,
-            comuna: datosCompra.direccionEnvio.comuna,
-            ciudad: datosCompra.direccionEnvio.ciudad,
-            region: datosCompra.direccionEnvio.region,
+            calle_numero: datosCompra.calle_numero,
+            depto_casa_oficina: datosCompra.depto_casa_oficina,
         });
         console.log('Compra a guardar:', compra);
         await this.comprasRepository.save(compra);
@@ -81,6 +79,8 @@ export class ComprasService {
     }
 
     async confirmarCompra(rutCliente: string, datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
+        console.log(datosCompra);
+
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: rutCliente } });
         if (!cliente) {
             throw new NotFoundException('Cliente no encontrado');
@@ -101,7 +101,7 @@ export class ComprasService {
             throw new NotFoundException('Método de pago no encontrado');
         }
         const nombreMetodoPago = metodoPago.nombreMetodoPago;
-        const direccionEnvio = DireccionEnvioDto || `${cliente.direccion}, ${cliente.comuna}, ${cliente.ciudad}, ${cliente.region}`;
+        // const direccionEnvio = DireccionEnvioDto || `${cliente.direccion}, ${cliente.comuna}, ${cliente.ciudad}, ${cliente.region}`;
 
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
@@ -118,7 +118,8 @@ export class ComprasService {
                 total: productoCarrito.precio * productoCarrito.cantidad,
                 metodoPago: metodoPago,
                 metodoEnvio: metodoEnvio,
-
+                calle_numero: datosCompra.calle_numero,
+                depto_casa_oficina: datosCompra.depto_casa_oficina,
 
             });
 

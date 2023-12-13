@@ -26,10 +26,12 @@ export class ComprasController {
     })
     @UsePipes(new ValidationPipe({ whitelist: true }))
     async confirmarCompra(
+
         @Body() datosCompra: CrearCompraDto,
 
         @Body('rutCliente') rutCliente: string
     ): Promise<CrearCompraResponseDto> {
+        console.log('Datos recibidos:', datosCompra);
         try {
             return await this.comprasService.confirmarCompra(rutCliente, datosCompra);
         } catch (e) {

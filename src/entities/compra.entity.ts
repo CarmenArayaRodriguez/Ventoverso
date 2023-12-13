@@ -23,23 +23,6 @@ export class Compra {
     @Column('int')
     total: number;
 
-    // @Column('varchar', { length: 255 })
-    // direccionEnvio: string;
-
-    // @Column('varchar', { length: 100 })
-    // metodoPago: string;
-    @Column('varchar', { length: 255 })
-    direccion: string;
-
-    @Column('varchar', { length: 255 })
-    comuna: string;
-
-    @Column('varchar', { length: 255 })
-    ciudad: string;
-
-    @Column('varchar', { length: 255 })
-    region: string;
-
     @Column('timestamp', { default: () => 'CURRENT_TIMESTAMP' })
     fecha: Date;
 
@@ -51,4 +34,9 @@ export class Compra {
     @JoinColumn({ name: 'id_metodo_envio' })
     metodoEnvio: MetodoEnvio;
 
+    @Column('varchar', { length: 255 })
+    calle_numero: string;
+
+    @Column('varchar', { length: 255, nullable: true })
+    depto_casa_oficina: string;
 }
