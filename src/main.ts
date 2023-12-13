@@ -8,7 +8,7 @@ import { ProductoModule } from './modules/producto.module';
 import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
 import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
 import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
 import { CarritoModule } from './modules/carrito.module';
@@ -27,6 +27,7 @@ import { AutenticacionModule } from './modules/autenticacion.module';
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
   const app = await NestFactory.create(AppModule);
+  // app.useLogger(new Logger());
   app.use(express.json({ limit: '50mb' })); // Aumentar límite para JSON
   app.use(express.urlencoded({ limit: '50mb', extended: true })); // Aumentar límite para datos de formulario
   app.use('/imagenes-producto', express.static('../front-ventoverso/public/imagenes-producto')); //Configuración para servir archivos estáticos

@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber } from 'class-validator';
 
 export class ProductoEnCarritoResponseDTO {
-    @ApiProperty({ description: 'ID único del producto', example: 'producto123' })
+    @ApiProperty({ description: 'ID único del producto', example: 123 })
     @IsString()
-    productoId: string;
+    productoId: number;
 
     @ApiProperty({ description: 'Marca del producto' })
     @IsString()
@@ -22,7 +22,7 @@ export class ProductoEnCarritoResponseDTO {
     @IsNumber()
     cantidad: number;
 
-    @ApiProperty({ description: 'URL de la imagen del producto', example: 'https://ejemplo.com/imagen.jpg' })
+    @ApiProperty({ description: 'Imagen del producto', example: 'imagen.jpg' })
     @IsString()
     imagenUrl: string;
 }
