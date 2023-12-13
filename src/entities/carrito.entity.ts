@@ -15,6 +15,12 @@ export class Carrito {
     @Column({ name: "creacion_date" })
     creacionDate: Date;
 
+    @Column('int')
+    subtotal: number;
+
+    @Column({ type: 'varchar', nullable: true })
+    cupon?: string;
+
     @OneToMany(() => ProductoCarrito, productoCarrito => productoCarrito.carrito)
     productos: ProductoCarrito[];
 }

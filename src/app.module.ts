@@ -34,6 +34,8 @@ import { Compra } from './entities/compra.entity';
 import { ComprasModule } from './modules/compras.module';
 import { ImagenesModule } from './modules/imagenes.module';
 import { AutenticacionModule } from './modules/autenticacion.module';
+import { MetodoPago } from './entities/metodo-de-pago.entity';
+import { MetodoEnvio } from './entities/metodo-de-envio.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -43,10 +45,11 @@ import { AutenticacionModule } from './modules/autenticacion.module';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio],
+
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
-    // logging: true 
+    // logging: true
 
   }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule],
   controllers: [AppController],

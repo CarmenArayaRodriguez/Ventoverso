@@ -5,11 +5,15 @@ import { ComprasService } from 'src/services/compras.service';
 import { ComprasController } from 'src/controllers/compras.controller';
 import { Producto } from 'src/entities/producto.entity';
 import { Cliente } from 'src/entities/cliente.entity';
+import { CarritoService } from 'src/services/carrito.service';
+import { CarritoModule } from './carrito.module';
+import { MetodoPago } from 'src/entities/metodo-de-pago.entity';
+import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente])],
+    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio]), CarritoModule],
     providers: [ComprasService],
     controllers: [ComprasController],
 })

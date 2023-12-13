@@ -32,7 +32,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ProductoEnCarritoResponseDTO } from "./producto-en-carrito-response.dto";
 import { ResumenCompraResponseDTO } from "./resumen-compra-response.dto";
 import { DatosCompradorRequestDTO } from './datos-comprador-request.dto';
-import { DatosEnvioDTO } from './datos-envío.dto';
+import { DatosEnvioDTO } from './datos-envio.dto';
 import { DatosPagoDTO } from './datos-pago.dto';
 
 export class CheckoutResponseDTO {

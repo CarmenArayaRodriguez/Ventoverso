@@ -6,6 +6,8 @@ import { AgregarProductoCarritoRequestDTO } from 'src/dto/agregar-producto-carri
 import { ActualizarProductoCarritoDTO } from 'src/dto/actualizar-producto-carrito.dto';
 import { JWTGuard } from 'src/jwt.guard';
 import { Request } from '@nestjs/common';
+import { CarritoConProductosResponseDTO } from 'src/dto/carrito-con-productos-response.dto';
+
 
 @Controller('carrito')
 export class CarritoController {
@@ -44,6 +46,12 @@ export class CarritoController {
         return this.carritoService.actualizarProductoEnCarrito(actualizarCantidadDTO);
     }
 
+    @Get('/:rutCliente')
+    @ApiOperation({ summary: 'Ver los productos en el carrito' })
+    @ApiResponse({ status: 200, description: 'Carrito recuperado con éxito.', type: CarritoConProductosResponseDTO })
+    async verCarrito(@Param('rutCliente') rutCliente: string): Promise<CarritoConProductosResponseDTO> {
+        return await this.carritoService.verCarrito(rutCliente);
+    }
 
     @Delete(':idCarrito/producto/:idProducto')
     @ApiOperation({ summary: 'Eliminar un producto del carrito' })

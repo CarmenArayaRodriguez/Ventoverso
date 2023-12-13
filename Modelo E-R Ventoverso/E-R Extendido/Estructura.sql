@@ -76,7 +76,9 @@ CREATE TABLE `carrito` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
   `status_carrito` varchar(50),
-  `creacion_date` date
+  `creacion_date` date,
+  `subtotal` integer,
+  `cupon` varchar (255) NULL
 );
 
 CREATE TABLE `productoCarrito` (
