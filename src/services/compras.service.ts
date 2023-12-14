@@ -12,6 +12,8 @@ import { DatosEnvioDTO } from 'src/dto/datos-envio.dto';
 import { MetodoPago } from 'src/entities/metodo-de-pago.entity';
 import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 import { DireccionEnvioDto } from 'src/dto/direccion-envio.dto';
+import { Carrito } from 'src/entities/carrito.entity';
+import { DetalleCompra } from 'src/entities/detalle-compra.entity';
 
 @Injectable()
 export class ComprasService {
@@ -26,7 +28,9 @@ export class ComprasService {
         @InjectRepository(MetodoPago)
         private metodoPagoRepository: Repository<MetodoPago>,
         @InjectRepository(MetodoEnvio)
-        private metodoEnvioRepository: Repository<MetodoEnvio>
+        private metodoEnvioRepository: Repository<MetodoEnvio>,
+        @InjectRepository(DetalleCompra)
+        private detalleCompraRepository: Repository<DetalleCompra>
     ) { }
 
     async crearCompra(datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
@@ -64,11 +68,12 @@ export class ComprasService {
 
         const compra = this.comprasRepository.create({
             cliente: cliente,
-            producto: producto,
-            cantidad: datosCompra.cantidad,
             total: total,
             calle_numero: datosCompra.calle_numero,
             depto_casa_oficina: datosCompra.depto_casa_oficina,
+            ciudad: datosCompra.ciudad,
+            comuna: datosCompra.comuna,
+            region: datosCompra.region,
         });
         console.log('Compra a guardar:', compra);
         await this.comprasRepository.save(compra);
@@ -79,11 +84,21 @@ export class ComprasService {
     }
 
     async confirmarCompra(rutCliente: string, datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
-        console.log(datosCompra);
+        console.log('Datos de compra:', datosCompra);
 
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: rutCliente } });
         if (!cliente) {
             throw new NotFoundException('Cliente no encontrado');
+        }
+
+        const metodoPago = await this.metodoPagoRepository.findOne({ where: { id: datosCompra.metodoPagoId } });
+        if (!metodoPago) {
+            throw new NotFoundException('Método de pago no encontrado');
+        }
+
+        const metodoEnvio = await this.metodoEnvioRepository.findOne({ where: { id: datosCompra.idMetodoEnvio } });
+        if (!metodoEnvio) {
+            throw new NotFoundException('Método de envío no encontrado');
         }
 
         const carrito = await this.carritoService.verCarrito(rutCliente);
@@ -91,40 +106,50 @@ export class ComprasService {
             throw new NotFoundException('Carrito no encontrado o vacío');
         }
 
-        const totalCompra = carrito.resumen.totalCompra;
-
-        const metodoPago = await this.metodoPagoRepository.findOne({
-            where: { id: datosCompra.metodoPagoId }
-        });;
-
-        if (!metodoPago) {
-            throw new NotFoundException('Método de pago no encontrado');
+        let totalCompra = 0;
+        for (const productoCarrito of carrito.productos) {
+            const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
+            if (!producto) {
+                throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
+            }
+            totalCompra += productoCarrito.cantidad * producto.precio;
         }
-        const nombreMetodoPago = metodoPago.nombreMetodoPago;
-        // const direccionEnvio = DireccionEnvioDto || `${cliente.direccion}, ${cliente.comuna}, ${cliente.ciudad}, ${cliente.region}`;
+        const compra = this.comprasRepository.create({
+            cliente: cliente,
+            total: totalCompra,
+            metodoPago: metodoPago,
+            metodoEnvio: metodoEnvio,
+            calle_numero: datosCompra.calle_numero,
+            depto_casa_oficina: datosCompra.depto_casa_oficina,
+            ciudad: datosCompra.ciudad,
+            comuna: datosCompra.comuna,
+            region: datosCompra.region,
+        });
+
+        await this.comprasRepository.save(compra);
+
 
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
-            const metodoEnvio = await this.metodoEnvioRepository.findOne({
-                where: { id: datosCompra.idMetodoEnvio }
-            });
-            const compra = this.comprasRepository.create({
-                cliente: cliente,
+            totalCompra += productoCarrito.cantidad * producto.precio;
+
+            const detalle = this.detalleCompraRepository.create({
+                compra: compra,
                 producto: producto,
                 cantidad: productoCarrito.cantidad,
-                total: productoCarrito.precio * productoCarrito.cantidad,
-                metodoPago: metodoPago,
-                metodoEnvio: metodoEnvio,
-                calle_numero: datosCompra.calle_numero,
-                depto_casa_oficina: datosCompra.depto_casa_oficina,
-
+                precio: productoCarrito.precio,
             });
 
-            await this.comprasRepository.save(compra);
+            await this.detalleCompraRepository.save(detalle);
         }
+
+        compra.total = totalCompra;
+        await this.comprasRepository.save(compra);
+
+        await this.carritoService.vaciarCarrito(rutCliente);
 
         return {
             mensaje: 'Compra realizada con éxito',
@@ -132,3 +157,5 @@ export class ComprasService {
     }
 
 }
+
+

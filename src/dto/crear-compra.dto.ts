@@ -18,8 +18,8 @@ export class CrearCompraDto {
     @IsInt()
     cantidad: number;
 
-    @ApiProperty({ description: 'Total de la compra' })
-    total: number;
+    // @ApiProperty({ description: 'Total de la compra' })
+    // total: number;
 
     @ApiProperty()
     @IsString()
@@ -31,6 +31,18 @@ export class CrearCompraDto {
     @IsOptional()
     @Column({ name: 'depto_casa_oficina', nullable: true })
     depto_casa_oficina?: string;
+
+    @ApiProperty()
+    @IsString()
+    ciudad: string;
+
+    @ApiProperty()
+    @IsString()
+    comuna: string;
+
+    @ApiProperty()
+    @IsString()
+    region: string;
 
     @ApiProperty({ description: 'ID del método de pago', example: 1 })
     metodoPagoId: number;

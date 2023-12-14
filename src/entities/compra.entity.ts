@@ -13,12 +13,12 @@ export class Compra {
     @JoinColumn({ name: 'rut_cliente' })
     cliente: Cliente;
 
-    @ManyToOne(() => Producto)
-    @JoinColumn({ name: 'id_producto' })
-    producto: Producto;
+    // @ManyToOne(() => Producto)
+    // @JoinColumn({ name: 'id_producto' })
+    // producto: Producto;
 
-    @Column('int')
-    cantidad: number;
+    // @Column('int')
+    // cantidad: number;
 
     @Column('int')
     total: number;
@@ -39,4 +39,14 @@ export class Compra {
 
     @Column('varchar', { length: 255, nullable: true })
     depto_casa_oficina: string;
+
+
+    @Column('varchar', { length: 255 })
+    ciudad: string;
+
+    @Column('varchar', { length: 255 })
+    comuna: string;
+
+    @Column('varchar', { length: 255 })
+    region: string;
 }

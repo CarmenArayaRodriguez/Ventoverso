@@ -9,11 +9,12 @@ import { CarritoService } from 'src/services/carrito.service';
 import { CarritoModule } from './carrito.module';
 import { MetodoPago } from 'src/entities/metodo-de-pago.entity';
 import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
+import { DetalleCompra } from 'src/entities/detalle-compra.entity';
 
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio]), CarritoModule],
+    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio, DetalleCompra]), CarritoModule],
     providers: [ComprasService],
     controllers: [ComprasController],
 })
