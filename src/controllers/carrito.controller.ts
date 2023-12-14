@@ -7,6 +7,8 @@ import { ActualizarProductoCarritoDTO } from 'src/dto/actualizar-producto-carrit
 import { JWTGuard } from 'src/jwt.guard';
 import { Request } from '@nestjs/common';
 import { CarritoConProductosResponseDTO } from 'src/dto/carrito-con-productos-response.dto';
+import { RolesGuard } from 'src/roles.guard';
+import { Roles } from 'src/roles.decorador';
 
 
 @Controller('carrito')
@@ -14,6 +16,8 @@ export class CarritoController {
     constructor(private readonly carritoService: CarritoService) { }
 
     @Post()
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
     @ApiOperation({ summary: 'Crear un nuevo carrito' })
     @ApiResponse({ status: 201, description: 'Carrito creado con éxito.' })
     @ApiResponse({ status: 400, description: 'Datos inválidos.' })
@@ -23,12 +27,16 @@ export class CarritoController {
     }
 
     @Post('/producto')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
     @ApiOperation({ summary: 'Agregar un producto al carrito' })
     @ApiResponse({ status: 201, description: 'Producto agregado al carrito.' })
     @ApiResponse({ status: 404, description: 'Carrito no encontrado.' })
     async agregarProducto(
         @Body() agregarProductoDTO: AgregarProductoCarritoRequestDTO,
+        @Request() req
     ) {
+        console.log('Usuario autenticado:', req.user);
         console.log('Solicitud para agregar producto recibida:');
         console.log(agregarProductoDTO);
         return this.carritoService.agregarProductoAlCarrito(agregarProductoDTO);
@@ -47,6 +55,8 @@ export class CarritoController {
     }
 
     @Get('/:rutCliente')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
     @ApiOperation({ summary: 'Ver los productos en el carrito' })
     @ApiResponse({ status: 200, description: 'Carrito recuperado con éxito.', type: CarritoConProductosResponseDTO })
     async verCarrito(@Param('rutCliente') rutCliente: string): Promise<CarritoConProductosResponseDTO> {
@@ -54,6 +64,8 @@ export class CarritoController {
     }
 
     @Delete(':idCarrito/producto/:idProducto')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
     @ApiOperation({ summary: 'Eliminar un producto del carrito' })
     @ApiResponse({ status: 200, description: 'Producto eliminado del carrito.' })
     @ApiResponse({ status: 404, description: 'Producto o carrito no encontrado.' })
@@ -75,6 +87,8 @@ export class CarritoController {
     }
 
     @Delete(':idCarrito')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
     @ApiOperation({ summary: 'Eliminar un carrito completo' })
     @ApiResponse({ status: 200, description: 'Carrito eliminado con éxito.' })
     @ApiResponse({ status: 404, description: 'Carrito no encontrado.' })
@@ -93,7 +107,8 @@ export class CarritoController {
     }
 
     @Get('/carrito')
-    @UseGuards(JWTGuard)
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
     async obtenerCarrito(@Request() req) {
         const rutCliente = req.user.rutCliente;
         return this.carritoService.obtenerCarritoPorCliente(rutCliente);

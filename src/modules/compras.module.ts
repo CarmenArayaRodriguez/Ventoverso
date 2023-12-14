@@ -10,11 +10,13 @@ import { CarritoModule } from './carrito.module';
 import { MetodoPago } from 'src/entities/metodo-de-pago.entity';
 import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 import { DetalleCompra } from 'src/entities/detalle-compra.entity';
+import { JwtService } from '@nestjs/jwt';
+import { AutenticacionModule } from './autenticacion.module';
 
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio, DetalleCompra]), CarritoModule],
+    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio, DetalleCompra]), CarritoModule, AutenticacionModule],
     providers: [ComprasService],
     controllers: [ComprasController],
 })
