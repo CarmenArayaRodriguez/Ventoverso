@@ -37,6 +37,7 @@ export class AutenticacionService {
     }
 
     async validarUsuario(email: string, password: string): Promise<string> {
+        console.log('validarUsuario llamado con email:', email);
         const usuario = await this.clientesRepository.findOne({ where: { email } });
 
         if (!usuario) {
@@ -48,15 +49,21 @@ export class AutenticacionService {
             throw new UnauthorizedException("Clave incorrecta");
         }
 
+        const rutCompleto = `${usuario.rut_cliente}-${usuario.dv_cliente}`;
+
         const payload = {
-            rutCliente: usuario.rut_cliente,
+            idCliente: usuario.rut_cliente,
+            rutCompleto: rutCompleto,
             nombre: usuario.nombre,
             apellido: usuario.apellido,
             correo: usuario.email,
             roles: usuario.roles,
         };
-
+        console.log('Payload a firmar:', payload);
         return this.jwtService.signAsync(payload);
+    } catch(error) {
+        console.error('Error en validarUsuario:', error);
+        throw error;
     }
 
     async actualizarRolesUsuario(rut_cliente: string, nuevosRoles: string[]): Promise<Cliente> {

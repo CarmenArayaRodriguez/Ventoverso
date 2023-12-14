@@ -10,7 +10,7 @@ export class JWTGuard implements CanActivate {
         const token = request.headers.authorization;
         console.log('Token recibido en JWTGuard:', token);
         if (!token) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Token no proporcionado");
         }
         try {
             const payload = await this.jwtService.verifyAsync(token.replace('Bearer ', ''), { secret: "aB3!fGh1#kLmN5^pQrSt7*wxYz0&Zj" });
@@ -18,7 +18,7 @@ export class JWTGuard implements CanActivate {
             request['INFO'] = payload;
         } catch (e) {
             console.log('Error en JWTGuard:', e.message);
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Token inválido o expirado");
         }
         return true;
     }
