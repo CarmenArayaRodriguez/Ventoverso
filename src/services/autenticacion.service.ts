@@ -13,23 +13,9 @@ export class AutenticacionService {
         private jwtService: JwtService,
     ) { }
 
-    // async validarUsuario(email: string, password: string): Promise<string> {
-    //     const usuario = await this.clientesRepository.findOne({ where: { email } });
-
-    //     if (!usuario) {
-    //         throw new UnauthorizedException("Usuario no encontrado");
-    //     }
-
-    //     if (usuario.password !== password) {
-    //         throw new UnauthorizedException("Clave incorrecta");
-    //     }
 
     async registrarUsuario(datosRegistro): Promise<Cliente> {
         const usuarioNuevo = new Cliente();
-
-        // usuarioNuevo.password = await bcrypt.hash(datosRegistro.password, 10);
-
-        // const usuarioGuardado = await this.clientesRepository.save(usuarioNuevo);
 
         usuarioNuevo.rut_cliente = datosRegistro.rut_cliente;
         usuarioNuevo.dv_cliente = datosRegistro.dv_cliente;

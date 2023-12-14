@@ -36,6 +36,7 @@ import { ImagenesModule } from './modules/imagenes.module';
 import { AutenticacionModule } from './modules/autenticacion.module';
 import { MetodoPago } from './entities/metodo-de-pago.entity';
 import { MetodoEnvio } from './entities/metodo-de-envio.entity';
+import { DetalleCompra } from './entities/detalle-compra.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -45,7 +46,7 @@ import { MetodoEnvio } from './entities/metodo-de-envio.entity';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra],
 
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)

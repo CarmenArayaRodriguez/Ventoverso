@@ -76,7 +76,8 @@ CREATE TABLE `carrito` (
   `rut_cliente` varchar(10),
   `status_carrito` varchar(50),
   `creacion_date` date,
-  `subtotal` integer
+  `subtotal` integer,
+  `cupon` varchar (255) NULL
 );
 
 CREATE TABLE `productoCarrito` (
@@ -196,13 +197,14 @@ CREATE TABLE `comentario` (
 
 CREATE TABLE `compra` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_producto` integer,
   `rut_cliente` varchar(10),
   `id_direccionEnvio` integer,
-  `cantidad` int NOT NULL,
   `total` int NOT NULL,
   `fecha` timestamp DEFAULT (current_timestamp()),
   `estado` int(50) DEFAULT 0
+  `ciudad` varchar(255),
+  `comuna` varchar(255),
+  `region` varchar(255)
 );
 
 CREATE TABLE `detalle_producto` (
@@ -230,6 +232,17 @@ CREATE TABLE `direccionEnvio` (
   `ciudad` varchar(255),
   `comuna` varchar(255),
   `region` varchar(255)
+);
+
+
+CREATE TABLE `detalleCompra` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `id_compra` INT NOT NULL,
+    `id_producto` INT NOT NULL,
+    `cantidad` INT NOT NULL,
+    `precio` INT NOT NULL,
+    FOREIGN KEY (`id_compra`) REFERENCES `compra`(`id`),
+    FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`)
 );
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);

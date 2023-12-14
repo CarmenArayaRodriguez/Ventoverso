@@ -243,4 +243,17 @@ export class CarritoService {
 
         return carrito;
     }
+
+    async vaciarCarrito(rutCliente: string): Promise<void> {
+
+        const itemsCarrito = await this.carritoRepository.find({
+            where: { rutCliente: rutCliente }
+        });
+
+
+        if (itemsCarrito.length > 0) {
+            await this.carritoRepository.remove(itemsCarrito);
+        }
+    }
+
 }
