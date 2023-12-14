@@ -23,6 +23,8 @@ import { CarruselModule } from './modules/carrusel.module';
 import { ComprasModule } from './modules/compras.module';
 import { ImagenesModule } from './modules/imagenes.module';
 import { AutenticacionModule } from './modules/autenticacion.module';
+import { CategoriaModule } from './modules/categoria.module';
+import { MarcaModule } from './modules/marca.module';
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
@@ -233,6 +235,28 @@ async function bootstrap() {
   });
   SwaggerModule.setup('docs/login', app, loginDocument);
 
+  //CONFIGURACION SWAGGER lista de categorias y subcategorias
+  const categoriaOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para lista de categorias y subcategorias')
+    .setVersion('1.0')
+    .build();
+  const categoriaDocument = SwaggerModule.createDocument(app, categoriaOptions, {
+    include: [CategoriaModule],
+  });
+  SwaggerModule.setup('docs/categoria', app, categoriaDocument);
+
+
+  //CONFIGURACION SWAGGER lista de marcas
+  const marcaOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para lista de marcas')
+    .setVersion('1.0')
+    .build();
+  const marcaDocument = SwaggerModule.createDocument(app, marcaOptions, {
+    include: [MarcaModule],
+  });
+  SwaggerModule.setup('docs/marca', app, marcaDocument);
 
   //CONFIGURACION SWAGGER Reserva de Citas
   const reservasDeCitaOptions = new DocumentBuilder()
