@@ -1,19 +1,18 @@
 create database ventoverso;
 
 use ventoverso;
-
 CREATE TABLE `cliente` (
   `rut_cliente` varchar(10) PRIMARY KEY,
-  `dv_cliente` char,
-  `nombre` varchar(50),
-  `apellido` varchar(50),
-  `email` varchar(50),
-  `direccion` varchar(50),
-  `ciudad` varchar(50),
-  `comuna` varchar(50),
-  `region` varchar(50),
-  `password` varchar(20),
-  `telefono` varchar(20)
+  `nombre` varchar(255),
+  `apellido` varchar(255),
+  `email` varchar(255),
+  `direccion` varchar(255),
+  `ciudad` varchar(255),
+  `comuna` varchar(255),
+  `region` varchar(255),
+  `password` varchar(255),
+  `telefono` varchar(255),
+  `roles` varchar(255)
 );
 
 CREATE TABLE `pedido` (
@@ -77,8 +76,7 @@ CREATE TABLE `carrito` (
   `rut_cliente` varchar(10),
   `status_carrito` varchar(50),
   `creacion_date` date,
-  `subtotal` integer,
-  `cupon` varchar (255) NULL
+  `subtotal` integer
 );
 
 CREATE TABLE `productoCarrito` (
@@ -200,6 +198,7 @@ CREATE TABLE `compra` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
   `rut_cliente` varchar(10),
+  `id_direccionEnvio` integer,
   `cantidad` int NOT NULL,
   `total` int NOT NULL,
   `fecha` timestamp DEFAULT (current_timestamp()),
@@ -222,6 +221,15 @@ CREATE TABLE `detalle_producto` (
   `incluyeCanas` boolean,
   `incluyeMaleta` boolean,
   `origen` varchar(255)
+);
+
+CREATE TABLE `direccionEnvio` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `rut_cliente` varchar(10),
+  `direccion` varchar(255),
+  `ciudad` varchar(255),
+  `comuna` varchar(255),
+  `region` varchar(255)
 );
 
 ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
@@ -284,4 +292,8 @@ ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
+ALTER TABLE `compra` ADD FOREIGN KEY (`id_direccionEnvio`) REFERENCES `direccionEnvio` (`id`);
+
 ALTER TABLE `detalle_producto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);

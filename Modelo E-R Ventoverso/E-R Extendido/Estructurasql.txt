@@ -1,202 +1,244 @@
-CREATE TABLE `cliente` (
-  `rut_cliente` varchar(10) PRIMARY KEY,
-  `dv_cliente` char,
-  `nombre` varchar(50),
-  `apellido` varchar(50),
-  `email` varchar(50),
-  `direccion` varchar(50),
-  `ciudad` varchar(50),
-  `comuna` varchar(50),
-  `region` varchar(50),
-  `password` varchar(20),
-  `telefono` varchar(20)
-);
+table cliente {
+	rut_cliente varchar(10) [pk]
+	nombre varchar(255)
+	apellido varchar(255)
+	email varchar(255)
+	direccion varchar(255)
+	ciudad varchar(255)
+	comuna varchar(255)
+	region varchar(255)
+	password varchar(255)
+	telefono varchar(255)
+  roles varchar(255)
+	
+}
 
-CREATE TABLE `pedido` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `id_producto` integer,
-  `estado` varchar(10),
-  `sub_total` integer,
-  `total` integer,
-  `direccionEnvio` varchar(50),
-  `cantidad` integer,
-  `fecha` date
-);
+table pedido {
+  id integer [increment,pk]
+  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+  id_producto integer [ref: > producto.id]
+  estado varchar(10)
+  sub_total integer
+  total integer
+  direccionEnvio varchar(50)
+  cantidad integer
+  fecha date
+ 
+  
+}
+table producto {
+  id integer [increment,pk]
+  id_categoria integer [ref: > categoria.id]
+  id_subcategoria integer [ref: - subcategoria.id]
+  id_marcas integer [ref: > marcas.id]
+  nombre varchar(100)
+  modelo varchar (255)
+  descripcion varchar(300)
+  caracteristicasPrincipales varchar(255)
+  precio integer
+  stock integer
+  estrellas integer
+  
+}
 
-CREATE TABLE `producto` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_categoria` integer,
-  `id_subcategoria` integer,
-  `id_marcas` integer,
-  `nombre` varchar(100),
-  `modelo` varchar(255),
-  `descripcion` varchar(300),
-  `caracteristicasPrincipales` varchar(255),
-  `precio` integer,
-  `stock` integer,
-  `estrellas` integer
-);
+table detallePedido {
+id_producto integer [ref: > producto.id]
+id_pedido integer [ ref: > pedido.id]
+}
 
-CREATE TABLE `detallePedido` (
-  `id_producto` integer,
-  `id_pedido` integer
-);
+table categoria {
+id integer [increment,pk]
+nombre varchar(100) //nombre categoria
+descripcion varchar(250)
+}
 
-CREATE TABLE `categoria` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100),
-  `descripcion` varchar(250)
-);
+table subcategoria {
+id integer [increment,pk]
+nombre varchar(250)
+descripcion varchar(250)
+id_categoria integer [ref: - categoria.id]
+imagen varchar(250)
+}
 
-CREATE TABLE `subcategoria` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(250),
-  `descripcion` varchar(250),
-  `id_categoria` integer
-);
+table marcas {
+id integer [increment,pk]
+marca varchar(100)
+detalle varchar(300)
+}
 
-CREATE TABLE `marcas` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `marca` varchar(100),
-  `detalle` varchar(300)
-);
 
-CREATE TABLE `categoriaMarcas` (
-  `id_categoria` integer,
-  `id_marcas` integer
-);
+table categoriaMarcas {
+id_categoria integer [ ref: > categoria.id ]
+id_marcas integer [ref: > marcas.id]
 
-CREATE TABLE `carrito` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `status_carrito` varchar(50),
-  `creacion_date` date
-);
+}
 
-CREATE TABLE `comentByn` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `id_articulo` integer,
-  `publicacion_date` date,
-  `contenido` varchar(250)
-);
+table carrito {
+ id integer [increment,pk]
+ rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+ status_carrito varchar(50)
+ creacion_date date
+ subtotal integer
+}
 
-CREATE TABLE `articuloByn` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `titulo` varchar(50),
-  `contenido` varchar(300),
-  `publicacion_date` date,
-  `autor` varchar(100)
-);
+table productoCarrito {
+ id integer [increment,pk]
+ id_carrito integer [ref: > carrito.id]
+ id_producto integer [ref: > producto.id]
+ cantidad integer
+}
 
-CREATE TABLE `carrusel` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(50),
-  `descripcion` varchar(250),
-  `fechainicio` date,
-  `fechafin` date
-);
+table comentByn {
+  id integer [increment,pk]
+  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+  id_articulo integer [ref: > articuloByn.id]
+  publicacion_date date
+  contenido varchar(250)
+  }
 
-CREATE TABLE `carruselProducto` (
-  `id_producto` integer,
-  `id_carrusel` integer
-);
+table articuloByn {
+id integer [increment,pk]
+rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+titulo varchar(50)
+contenido varchar(300)
+publicacion_date date
+autor varchar(100)
+imagen varchar(250)
+}
+// Almacena articulos creados por el cliente o el equipo (por definir) que proporciona información sobre productos, servicios, ofertas, novedades o cualquier otro tema relacionado con el comercio electrónico y ques seran comentadas por clientes registrados.
 
-CREATE TABLE `producto_destacado` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_producto` integer,
-  `valoracion` varchar(50),
-  `descuento` integer,
-  `FechaInicio` date,
-  `FechaFin` date
-);
+table carrusel {
+id integer [increment,pk]
+nombre varchar(50) // Nombre que describe el carrusel
+descripcion varchar(250)
+fechainicio date
+fechafin date
+imagenUrl varchar(250)
+}
 
-CREATE TABLE `metodoEnvio` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(20),
-  `descripcion` varchar(50),
-  `costo_envio` integer
-);
+table carruselProducto {
+id_producto integer [ref: > producto.id]
+id_carrusel integer [ref: > carrusel.id]
+}
 
-CREATE TABLE `regionEnvio` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100),
-  `codigo_postal` integer
-);
+table producto_destacado {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+valoracion varchar(50)
+descuento integer
+FechaInicio date   //fecha inicio producto destacado        
+FechaFin    date   //fecha termino producto destacado
+}
 
-CREATE TABLE `envio` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_pedido` integer,
-  `id_metodoEnvio` integer,
-  `id_regionEnvio` integer,
-  `fc_envio` date
-);
 
-CREATE TABLE `metodoPago` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre_metodo_pago` varchar(50),
-  `detalle_metodo_pago` varchar(50)
-);
+table metodoEnvio {
+id integer [increment,pk]
+nombre varchar(20)
+descripcion varchar(50)
+costo_envio integer
+}
 
-CREATE TABLE `pago` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_pedido` integer,
-  `id_metodoPago` integer,
-  `fcPago` date,
-  `estado` varchar(20),
-  `monto` integer
-);
 
-CREATE TABLE `imagenProducto` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_producto` integer,
-  `imagen` varchar(250)
-);
+table regionEnvio {
+id integer [increment,pk]
+nombre varchar(100)
+codigo_postal integer
+}
 
-ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+table envio {
+id integer [increment,pk]
+id_pedido integer [ref: - pedido.id]
+id_metodoEnvio integer [ref: - metodoEnvio.id]
+id_regionEnvio integer [ref: > regionEnvio.id]
+fc_envio date
+}
 
-ALTER TABLE `pedido` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+table metodoPago {
+id integer [increment,pk]
+nombre_metodo_pago varchar(50)
+detalle_metodo_pago varchar(50)
+}
 
-ALTER TABLE `producto` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
 
-ALTER TABLE `producto` ADD FOREIGN KEY (`id_subcategoria`) REFERENCES `subcategoria` (`id`);
+table pago {
+id integer [increment,pk]
+id_pedido integer [ref: - pedido.id]
+id_metodoPago integer [ref: - metodoPago.id]
+fcPago date
+estado varchar(20)
+monto integer
 
-ALTER TABLE `producto` ADD FOREIGN KEY (`id_marcas`) REFERENCES `marcas` (`id`);
+}
+table imagenProducto {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+imagen varchar (250)
+nombre_imagen varchar (250)
+}
 
-ALTER TABLE `detallePedido` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+table calificacion {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+nombreCliente varchar (250)
+caracteristicas integer(200)
+sonido integer(200)
+fabricacion integer(200)
+id_comentario integer
+}
 
-ALTER TABLE `detallePedido` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
+table comentario {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+nombreCliente varchar (250)
+titulo varchar(255)
+comentario text
+estrellas integer (255)
+fecha date
+megusta int [default:0]
+nomegusta int [default:0]
+denuncias int [default:0]
+id_calificacion integer [ref: - calificacion.id]
 
-ALTER TABLE `subcategoria` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
+}
 
-ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
+table compra {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+id_direccionEnvio integer [ref: > direccionEnvio.id] // Nueva referencia a la tabla direccionEnvio
+cantidad int [not null]
+total int [not null]
+fecha timestamp [default: `current_timestamp()`]
+estado int (50) [default:0]
 
-ALTER TABLE `categoriaMarcas` ADD FOREIGN KEY (`id_marcas`) REFERENCES `marcas` (`id`);
+}
 
-ALTER TABLE `carrito` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+table detalle_producto {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+clave varchar(255)
+sistema varchar(255)
+cantLlaves varchar(255)
+materialLlave varchar(255)
+materialCuerpo varchar(255)
+incluyeBoquilla boolean
+cantBarriles varchar(255)
+largoBarril varchar(255)
+reposaPulgar boolean
+cantAnillos varchar(255)
+incluyeCanas boolean
+incluyeMaleta boolean
+origen varchar(255)
 
-ALTER TABLE `comentByn` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+}
+table direccionEnvio {
+  id integer [increment, pk]
+  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+  direccion varchar(255)
+  ciudad varchar(255)
+  comuna varchar(255)
+  region varchar(255)
+  
+}
 
-ALTER TABLE `comentByn` ADD FOREIGN KEY (`id_articulo`) REFERENCES `articuloByn` (`id`);
 
-ALTER TABLE `articuloByn` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
-
-ALTER TABLE `carruselProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
-ALTER TABLE `carruselProducto` ADD FOREIGN KEY (`id_carrusel`) REFERENCES `carrusel` (`id`);
-
-ALTER TABLE `producto_destacado` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
-ALTER TABLE `envio` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
-
-ALTER TABLE `envio` ADD FOREIGN KEY (`id_metodoEnvio`) REFERENCES `metodoEnvio` (`id`);
-
-ALTER TABLE `envio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
-
-ALTER TABLE `pago` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
-
-ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`id`);
-
-ALTER TABLE `imagenProducto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
