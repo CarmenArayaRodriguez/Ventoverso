@@ -37,6 +37,8 @@ import { AutenticacionModule } from './modules/autenticacion.module';
 import { MetodoPago } from './entities/metodo-de-pago.entity';
 import { MetodoEnvio } from './entities/metodo-de-envio.entity';
 import { DetalleCompra } from './entities/detalle-compra.entity';
+import { CategoriaModule } from './modules/categoria.module';
+import { MarcaModule } from './modules/marca.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -52,7 +54,7 @@ import { DetalleCompra } from './entities/detalle-compra.entity';
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true
 
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule],
+  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule],
   controllers: [AppController],
   providers: [],
 
