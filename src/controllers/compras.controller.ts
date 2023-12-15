@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpStatus, HttpException, ValidationPipe, UsePipes, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Post, HttpStatus, HttpException, ValidationPipe, UsePipes, UseGuards, Request, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { ComprasService } from 'src/services/compras.service';
 import { CrearCompraDto } from 'src/dto/crear-compra.dto';
@@ -33,15 +33,30 @@ export class ComprasController {
     async confirmarCompra(
         @Request() req,
         @Body() datosCompra: CrearCompraDto,
-
     ): Promise<CrearCompraResponseDto> {
+        console.log('Info Usuario en Controlador:', req.user);
+        if (!req.user) {
+            throw new UnauthorizedException('Usuario no autenticado');
+        }
         const rutCliente = req.user.rutCliente;
         console.log('Datos recibidos:', datosCompra);
         try {
             return await this.comprasService.confirmarCompra(rutCliente, datosCompra);
         } catch (e) {
-            console.error(e);
-            throw new HttpException(e.response || 'Error al confirmar la compra', e.status || HttpStatus.BAD_REQUEST);
+
+            console.error('Error al confirmar la compra:', e);
+            if (e instanceof NotFoundException) {
+                throw new HttpException({
+                    status: HttpStatus.NOT_FOUND,
+                    error: e.message,
+                }, HttpStatus.NOT_FOUND);
+            } else {
+
+                throw new HttpException({
+                    status: HttpStatus.INTERNAL_SERVER_ERROR,
+                    error: 'Error interno del servidor',
+                }, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 }
