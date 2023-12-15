@@ -5,9 +5,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ImagenDTO } from './imagen-producto.dto';
 
 export class ActualizarProductoDTO extends PartialType(CrearProductoDTO) {
-    @ApiProperty({ description: 'URLs de las imágenes del producto', type: [String], required: false })
+    @ApiProperty({ description: 'Datos de las imágenes del producto', type: [ImagenDTO], required: false })
     @IsArray()
-    @IsUrl({}, { each: true })
     @IsOptional()
     imagenes?: ImagenDTO[];
 }

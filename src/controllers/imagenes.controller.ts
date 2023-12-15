@@ -20,7 +20,7 @@ export class ImagenesController {
         return resultado;
     }
     //Transforma archivo a base 64
-    @Get('imagenes/:nombreArchivo')
+    @Get('../front-ventoverso/public/imagenes-producto/:nombreArchivo')
     async leerArchivo(@Param('nombreArchivo') nombreArchivo: string, @Res() res: Response) {
         const cadenaBase64 = await this.imagenesService.leerArchivo(nombreArchivo);
         res.setHeader('Content-Type', 'text/plain');
