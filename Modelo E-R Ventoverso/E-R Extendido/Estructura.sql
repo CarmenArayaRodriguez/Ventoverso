@@ -218,7 +218,7 @@ CREATE TABLE `detalle_producto` (
   `incluyeBoquilla` boolean,
   `cantBarriles` varchar(255),
   `largoBarril` varchar(255),
-  `reposaPulgar` boolean,
+  `reposaPulgar` varchar(255), //Debe ser texto
   `cantAnillos` varchar(255),
   `incluyeCanas` boolean,
   `incluyeMaleta` boolean,
