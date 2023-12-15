@@ -109,6 +109,7 @@ export class CarritoService {
         if (!carrito) {
             carrito = await this.crearCarrito(agregarProductoDTO.rutCliente);
         }
+        console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
 
         const productoCarrito = this.productoCarritoRepository.create({
             carritoId: carrito.id,
@@ -155,6 +156,8 @@ export class CarritoService {
             where: { rutCliente: rutCliente },
             relations: ['productos']
         });
+        console.log(`Carrito para cliente ${rutCliente}:`, carrito);
+
 
         if (!carrito) {
             throw new NotFoundException('Carrito no encontrado');

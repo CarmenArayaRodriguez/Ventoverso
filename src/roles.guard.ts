@@ -7,24 +7,28 @@ export class RolesGuard implements CanActivate {
     constructor(private reflector: Reflector) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        const requeridos = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [context.getHandler(), context.getClass()]);
-        console.log('Roles requeridos en RolesGuard:', requeridos);
-        const request = context.switchToHttp().getRequest();
-        const infoUsuario = request['INFO'];
-        console.log('Info Usuario en RolesGuard:', infoUsuario);
+        const rolesRequeridos = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
+            context.getHandler(),
+            context.getClass(),
+        ]);
+        console.log('Roles requeridos en RolesGuard:', rolesRequeridos);
 
-        if (!infoUsuario || !infoUsuario.roles) {
+        const request = context.switchToHttp().getRequest();
+        const usuario = request.user;
+        console.log('Info Usuario en RolesGuard:', usuario);
+
+        if (!usuario || !usuario.roles) {
             console.log('No se encontraron roles en RolesGuard');
             throw new UnauthorizedException();
         }
 
-        const rolesUsuario = infoUsuario.roles;
+        const rolesUsuario = usuario.roles;
         console.log('Roles del Usuario en RolesGuard:', rolesUsuario);
 
-        const autorizado = requeridos.some(rol => rolesUsuario.includes(rol));
-        console.log('Es autorizado en RolesGuard:', autorizado);
+        const esAutorizado = rolesRequeridos.some(rol => rolesUsuario.includes(rol));
+        console.log('Es autorizado en RolesGuard:', esAutorizado);
 
-        if (!autorizado) {
+        if (!esAutorizado) {
             throw new UnauthorizedException("No tiene permisos para acceder a este recurso");
         }
 

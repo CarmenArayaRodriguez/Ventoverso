@@ -15,7 +15,7 @@ export class JWTGuard implements CanActivate {
         try {
             const payload = await this.jwtService.verifyAsync(token.replace('Bearer ', ''), { secret: "aB3!fGh1#kLmN5^pQrSt7*wxYz0&Zj" });
             console.log('Payload decodificado en JWTGuard:', payload);
-            request['INFO'] = payload;
+            request.user = payload;
         } catch (e) {
             console.log('Error en JWTGuard:', e.message);
             throw new UnauthorizedException("Token inválido o expirado");

@@ -102,17 +102,29 @@ export class ComprasService {
         }
 
         const carrito = await this.carritoService.verCarrito(rutCliente);
+        console.log(`Carrito encontrado:`, carrito);
         if (!carrito || carrito.productos.length === 0) {
+            console.error('Carrito no encontrado o vacío');
             throw new NotFoundException('Carrito no encontrado o vacío');
         }
 
         let totalCompra = 0;
+
+        let productosTicket = [];
+
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
+            console.log(`Producto en carrito:`, producto);
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
             totalCompra += productoCarrito.cantidad * producto.precio;
+
+            productosTicket.push({
+                nombre: producto.nombre,
+                cantidad: productoCarrito.cantidad,
+                precio: producto.precio
+            });
         }
         const compra = this.comprasRepository.create({
             cliente: cliente,
@@ -142,17 +154,30 @@ export class ComprasService {
                 cantidad: productoCarrito.cantidad,
                 precio: productoCarrito.precio,
             });
-
+            console.log(`Detalle a guardar:`, detalle);
             await this.detalleCompraRepository.save(detalle);
         }
 
         compra.total = totalCompra;
         await this.comprasRepository.save(compra);
 
+        const ticket = {
+            idPedido: compra.id,
+            total: totalCompra,
+            productos: productosTicket
+        };
+
         await this.carritoService.vaciarCarrito(rutCliente);
 
         return {
             mensaje: 'Compra realizada con éxito',
+            idPedido: compra.id,
+            total: totalCompra,
+            productos: productosTicket.map(pt => ({
+                nombre: pt.nombre,
+                cantidad: pt.cantidad,
+                precio: pt.precio
+            }))
         };
     }
 
