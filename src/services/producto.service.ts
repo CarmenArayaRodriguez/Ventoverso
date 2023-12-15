@@ -60,7 +60,7 @@ export class ProductoService {
 
                 if (crearProductoDto.imagenes) {
                     for (const imagen of crearProductoDto.imagenes) {
-                        const nombreImagen = imagen.nombre || `${Date.now()}-imagen.png`;
+                        const nombreImagen = `${Date.now()}-${imagen.nombre}`;
                         const base64Data = imagen.base64.split(';base64,').pop();
                         const ruta = `/imagenes-producto/${nombreImagen}`;
 
@@ -98,31 +98,52 @@ export class ProductoService {
     }
 
     async actualizarProducto(id: number, actualizarProductoDto: ActualizarProductoDTO): Promise<ProductoDetalleResponseDTO> {
+        console.log('Iniciando actualización de producto. ID:', id, 'Datos:', actualizarProductoDto);
 
-        let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
+        try {
+            let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
+            console.log('Producto encontrado para actualizar:', producto);
 
-        if (!producto) {
-            throw new NotFoundException(`Producto con ID ${id} no encontrado`);
-        }
-
-        const { imagenes, ...actualizarProductoInfo } = actualizarProductoDto;
-        producto = this.productoRepository.merge(producto, actualizarProductoInfo);
-        await this.productoRepository.save(producto);
-
-        if (imagenes && imagenes.length > 0) {
-            for (const imagenDto of imagenes) {
-                const imagenProducto = new ImagenProducto();
-                const nombreImagen = `${Date.now()}-${imagenDto.nombre}`;
-                const rutaImagen = `imagenes/${nombreImagen}`;
-                await fs.writeFile(rutaImagen, imagenDto.base64, 'base64');
-                imagenProducto.imagen = rutaImagen;
-                imagenProducto.nombreImagen = nombreImagen;
-                imagenProducto.producto = producto;
-                await this.imagenProductoRepository.save(imagenProducto);
+            if (!producto) {
+                throw new NotFoundException(`Producto con ID ${id} no encontrado`);
             }
-            producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
 
+
+            const { imagenes, ...actualizarProductoInfo } = actualizarProductoDto;
+            producto = this.productoRepository.merge(producto, actualizarProductoInfo);
+            await this.productoRepository.save(producto);
+            console.log('Producto actualizado:', producto);
+
+
+            if (imagenes && imagenes.length > 0) {
+
+
+                for (const imagenDto of imagenes) {
+                    console.log('Procesando imagen:', imagenDto.nombre);
+
+
+                    const nombreImagen = `${Date.now()}-${imagenDto.nombre}`;
+                    const rutaImagen = `../front-ventoverso/public/imagenes-producto/${nombreImagen}`;
+                    await fs.writeFile(rutaImagen, imagenDto.base64, 'base64');
+
+                    const imagenProducto = new ImagenProducto();
+                    imagenProducto.imagen = rutaImagen;
+                    imagenProducto.nombreImagen = nombreImagen;
+                    imagenProducto.producto = producto;
+                    await this.imagenProductoRepository.save(imagenProducto);
+                    console.log('Imagen guardada:', imagenProducto);
+                }
+
+
+                producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
+            }
+
+            console.log('Producto después de actualizar imágenes:', producto);
+            console.log('Producto actualizado y guardado con éxito');
             return ProductoMapper.toDto(producto);
+        } catch (error) {
+            console.error('Error al actualizar producto. ID:', id, 'Error:', error);
+            throw new InternalServerErrorException('Error al actualizar producto');
         }
     }
 

@@ -13,7 +13,7 @@ export class ImagenesService {
     ) { }
     async escribirArchivoBase64(nombreArchivo: string, texto: string): Promise<string> {
         try {
-            await fs.writeFile(`imagenes/${nombreArchivo}`, texto, 'base64');
+            await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, texto, 'base64');
             return 'Archivo escrito exitosamente.';
         } catch (error) {
             console.error('Error al escribir el archivo:', error);
@@ -23,8 +23,8 @@ export class ImagenesService {
     //Transformar un archivo a Base64
     async leerArchivo(nombreArchivo: string): Promise<string> {
         try {
-            console.log(`Leyendo archivo: imagenes/${nombreArchivo}`);
-            const buffer = await fs.readFile(`imagenes/${nombreArchivo}`);
+            console.log(`Leyendo archivo: ../front-ventoverso/public/imagenes-producto/${nombreArchivo}`);
+            const buffer = await fs.readFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`);
             const contenido = buffer.toString('base64');
             return contenido;
         } catch (error) {
@@ -42,7 +42,7 @@ export class ImagenesService {
         }
         try {
             const buffer = Buffer.from(datosBase64, 'base64');
-            await fs.writeFile(`imagenes/${nombreArchivo}`, buffer);
+            await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, buffer);
             return `Archivo ${nombreArchivo} guardado desde base64`;
         } catch (error) {
             console.error('Error al guardar imagen desde base64:', error);
@@ -53,7 +53,7 @@ export class ImagenesService {
     // Guardar imagen desde un archivo binario
     async guardarImagenBinaria(nombreArchivo: string, bufferArchivo: Buffer): Promise<string> {
         try {
-            await fs.writeFile(`imagenes/${nombreArchivo}`, bufferArchivo);
+            await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, bufferArchivo);
             return `Archivo ${nombreArchivo} guardado desde binario`;
         } catch (error) {
             console.error('Error al guardar imagen desde binario:', error);

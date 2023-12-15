@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
@@ -9,6 +9,7 @@ import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalo
 import { JWTGuard } from 'src/jwt.guard';
 import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorador';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @ApiTags('productos')
@@ -86,12 +87,18 @@ export class ProductoController {
 
     async actualizarProducto(
         @Param('id') id: number,
-        @Body() actualizarProductoDto: ActualizarProductoDTO
+        @Body() actualizarProductoDto: ActualizarProductoDTO,
     ): Promise<{ message: string }> {
+        console.log('DTO recibido:', actualizarProductoDto);
         try {
+            console.log('Datos recibidos para actualizar:', actualizarProductoDto);
+
             await this.productoService.actualizarProducto(id, actualizarProductoDto);
+
+            console.log('Producto actualizado con éxito');
             return { message: 'Producto actualizado con éxito' };
         } catch (error) {
+            console.error('Error al actualizar producto:', error);
             if (error instanceof NotFoundException) {
                 throw new NotFoundException('Producto no encontrado');
             } else {
