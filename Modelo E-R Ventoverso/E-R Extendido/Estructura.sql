@@ -201,7 +201,7 @@ CREATE TABLE `compra` (
   `id_direccionEnvio` integer,
   `total` int NOT NULL,
   `fecha` timestamp DEFAULT (current_timestamp()),
-  `estado` int(50) DEFAULT 0
+  `estado` int(50) DEFAULT 0,
   `ciudad` varchar(255),
   `comuna` varchar(255),
   `region` varchar(255)

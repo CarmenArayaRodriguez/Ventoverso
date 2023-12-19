@@ -1,10 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { Categoria } from './categoria.entity';
 import { Subcategoria } from './subcategoria.entity';
 import { Marca } from './marca.entity';
 import { ImagenProducto } from './imagen-producto.entity';
 import { Calificacion } from './calificacion.entity';
 import { Comentario } from './comentario.entity';
+import { DetalleProducto } from './detalle-producto.entity';
 
 @Entity('producto')
 export class Producto {
@@ -32,8 +33,11 @@ export class Producto {
     @Column('text')
     descripcion: string;
 
-    @Column('varchar', { length: 255 })
-    caracteristicasPrincipales: string;
+    @OneToOne(() => DetalleProducto, detalleProducto => detalleProducto.producto)
+    detalleProducto: DetalleProducto;
+
+    // @Column('varchar', { length: 255 })
+    // caracteristicasPrincipales: string;
 
     @Column('int')
     precio: number;

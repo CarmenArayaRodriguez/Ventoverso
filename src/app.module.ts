@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
+// import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { ProductoModule } from './modules/producto.module';
 import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 // import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
@@ -39,6 +39,7 @@ import { MetodoEnvio } from './entities/metodo-de-envio.entity';
 import { DetalleCompra } from './entities/detalle-compra.entity';
 import { CategoriaModule } from './modules/categoria.module';
 import { MarcaModule } from './modules/marca.module';
+import { DetalleProducto } from './entities/detalle-producto.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -48,13 +49,13 @@ import { MarcaModule } from './modules/marca.module';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto],
 
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true
 
-  }), CatalogoDeProductosModule, CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule],
+  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule],
   controllers: [AppController],
   providers: [],
 

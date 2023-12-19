@@ -4,6 +4,7 @@ import { promises as fs } from 'fs';
 import { ImagenProducto } from 'src/entities/imagen-producto.entity';
 import { Producto } from 'src/entities/producto.entity';
 import { Repository } from 'typeorm';
+import * as path from 'path';
 
 @Injectable()
 export class ImagenesService {
@@ -23,8 +24,9 @@ export class ImagenesService {
     //Transformar un archivo a Base64
     async leerArchivo(nombreArchivo: string): Promise<string> {
         try {
-            console.log(`Leyendo archivo: ../front-ventoverso/public/imagenes-producto/${nombreArchivo}`);
-            const buffer = await fs.readFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`);
+            const rutaCompleta = path.join(__dirname, '../../', nombreArchivo);
+            console.log(`Leyendo archivo: ${rutaCompleta}`);
+            const buffer = await fs.readFile(rutaCompleta);
             const contenido = buffer.toString('base64');
             return contenido;
         } catch (error) {

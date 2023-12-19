@@ -9,7 +9,7 @@ import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
 import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
 import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
+// import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
 import { CarritoModule } from './modules/carrito.module';
 import { ProductosDestacadosModule } from './modules/productos-destacados.module';
@@ -79,16 +79,16 @@ async function bootstrap() {
   SwaggerModule.setup('docs/carrito', app, carritoDocument);
 
 
-  //CONFIGURACION SWAGGER Catalogo de Productos
-  const catalogoDeProductosOptions = new DocumentBuilder()
-    .setTitle('Ventoverso Catálogo de productos API')
-    .setDescription('API para el módulo de Catálogo de productos')
-    .setVersion('1.0')
-    .build();
-  const catalogoDeProductosDocument = SwaggerModule.createDocument(app, catalogoDeProductosOptions, {
-    include: [CatalogoDeProductosModule],
-  });
-  SwaggerModule.setup('docs/catalogo-de-productos', app, catalogoDeProductosDocument);
+  // //CONFIGURACION SWAGGER Catalogo de Productos
+  // const catalogoDeProductosOptions = new DocumentBuilder()
+  //   .setTitle('Ventoverso Catálogo de productos API')
+  //   .setDescription('API para el módulo de Catálogo de productos')
+  //   .setVersion('1.0')
+  //   .build();
+  // const catalogoDeProductosDocument = SwaggerModule.createDocument(app, catalogoDeProductosOptions, {
+  //   include: [CatalogoDeProductosModule],
+  // });
+  // SwaggerModule.setup('docs/catalogo-de-productos', app, catalogoDeProductosDocument);
 
   //CONFIGURACION SWAGGER Producto
   const productoSwaggerConfig = new DocumentBuilder()
