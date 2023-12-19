@@ -115,36 +115,6 @@ export class CarritoController {
         return this.carritoService.obtenerCarritoPorCliente(rutCliente);
     }
 
-    // @Post('/:idCarrito/aplicar-cupon')
-    // @ApiOperation({ summary: 'Aplicar un cupón de descuento a un carrito' })
-    // @ApiResponse({ status: 200, description: 'Descuento aplicado con éxito', type: DescuentoResponseDTO })
-    // @ApiResponse({ status: 400, description: 'Datos inválidos' })
-    // async aplicarCupon(
-    //     @Param('idCarrito') idCarrito: number,
-    //     @Body('cupon') cupon: string
-    // ): Promise<DescuentoResponseDTO> {
-    //     const carrito = await this.carritoService.obtenerCarritoPorCliente(idCarrito);
-    //     return this.carritoService.aplicarDescuentoAlCarrito(carrito.subtotal, cupon);
-    // }
-    // @Post('/:idCarrito/aplicar-cupon')
-    // @ApiOperation({ summary: 'Aplicar un cupón de descuento a un carrito' })
-    // @ApiResponse({ status: 200, description: 'Descuento aplicado con éxito', type: DescuentoResponseDTO })
-    // @ApiResponse({ status: 400, description: 'Datos inválidos' })
-    // async aplicarCupon(
-    //     @Param('idCarrito') idCarrito: number,
-    //     @Body('cupon') cupon: string
-    // ): Promise<DescuentoResponseDTO> {
-    //     // Primero, obtenemos el carrito por su ID
-    //     const carrito = await this.carritoService.obtenerCarritoPorCliente(idCarrito);
-
-    //     // Verificamos que el carrito exista
-    //     if (!carrito) {
-    //         throw new NotFoundException('Carrito no encontrado');
-    //     }
-
-    //     // Luego, aplicamos el descuento utilizando el subtotal del carrito
-    //     return this.carritoService.aplicarDescuentoAlCarrito(carrito.subtotal, cupon);
-    // }
     @Post('/:idCarrito/aplicar-cupon')
     @ApiOperation({ summary: 'Aplicar un cupón de descuento a un carrito' })
     @ApiResponse({ status: 200, description: 'Descuento aplicado con éxito', type: DescuentoResponseDTO })
@@ -154,15 +124,13 @@ export class CarritoController {
         // @Body('cupon') cupon: string
         @Body() descuentoDto: DescuentoRequestDTO
     ): Promise<DescuentoResponseDTO> {
-        // Obtén el carrito usando un método adecuado para buscar por ID
+
         const carrito = await this.carritoService.obtenerCarritoPorID(idCarrito);
 
-        // Verificamos que el carrito exista
         if (!carrito) {
             throw new NotFoundException('Carrito no encontrado');
         }
 
-        // Luego, aplicamos el descuento utilizando el subtotal del carrito
         return this.carritoService.aplicarDescuentoAlCarrito(carrito.subtotal, descuentoDto.cupon);
     }
 
