@@ -8,15 +8,16 @@ export class CrearCompraDto {
     @IsNotEmpty()
     @IsString()
     rut_cliente: string;
-    @ApiProperty({ example: 1, description: 'ID producto' })
-    @IsNotEmpty()
-    @IsNumber()
-    id_producto: number;
 
-    @ApiProperty({ example: 2, description: 'Cantidad de producto' })
-    @IsNotEmpty()
-    @IsInt()
-    cantidad: number;
+    // @ApiProperty({ example: 1, description: 'ID producto' })
+    // @IsNotEmpty()
+    // @IsNumber()
+    // id_producto: number;
+
+    // @ApiProperty({ example: 2, description: 'Cantidad de producto' })
+    // @IsNotEmpty()
+    // @IsInt()
+    // cantidad: number;
 
     // @ApiProperty({ description: 'Total de la compra' })
     // total: number;
