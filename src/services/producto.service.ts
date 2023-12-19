@@ -13,6 +13,10 @@ import { ImagenProducto } from 'src/entities/imagen-producto.entity';
 import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
 import { promises as fs } from 'fs';
+import { DetalleProductoDto } from 'src/dto/detalle-producto.dto';
+import { DetalleProducto } from 'src/entities/detalle-producto.entity';
+import { DetalleProductoMapper } from 'src/mappers/detalle-producto.mapper';
+import { ImagenesService } from './imagenes.service';
 
 @Injectable()
 export class ProductoService {
@@ -27,23 +31,60 @@ export class ProductoService {
         private marcaRepository: Repository<Marca>,
         @InjectRepository(ImagenProducto)
         private imagenProductoRepository: Repository<ImagenProducto>,
+        @InjectRepository(DetalleProducto)
+        private detalleProductoRepository: Repository<DetalleProducto>,
+        private readonly imagenesService: ImagenesService
     ) { }
 
     async obtenerDetalleProducto(id: number): Promise<ProductoDetalleResponseDTO> {
+        console.log(`Buscando producto con ID: ${id}`);
         const producto = await this.productoRepository.findOne({
             where: { id },
-            relations: ['categoria', 'marca', 'imagenes'],
+            relations: ['categoria', 'marca', 'imagenes', 'detalleProducto'],
         });
 
         if (!producto) {
             throw new NotFoundException('Producto no encontrado');
         }
+        console.log('Producto encontrado:', producto);
 
-        return ProductoMapper.toDto(producto);
+        const productoDTO = ProductoMapper.toDto(producto);
+
+
+        if (producto.imagenes && producto.imagenes.length > 0) {
+            productoDTO.imagenes = await Promise.all(producto.imagenes.map(async imagenProducto => {
+                try {
+                    const base64Data = await this.imagenesService.leerArchivo(imagenProducto.imagen);
+                    return {
+                        nombre: imagenProducto.nombreImagen,
+                        base64: base64Data
+                    };
+                } catch (error) {
+                    console.error('Error al leer y convertir archivo de imagen:', error);
+                    return {
+                        nombre: imagenProducto.nombreImagen,
+                        base64: 'Imagen no disponible'
+                    };
+                }
+            }));
+        } else {
+            productoDTO.imagenes = [];
+        }
+
+
+        if (producto.detalleProducto) {
+            productoDTO.detalle = DetalleProductoMapper.toDto(producto.detalleProducto);
+        } else {
+            productoDTO.detalle = null;
+        }
+
+        return productoDTO;
     }
 
-
     async crearProducto(crearProductoDto: CrearProductoDTO): Promise<ProductoDetalleResponseDTO> {
+        let productoGuardado;
+
+
         try {
             const nuevoProducto = await ProductoMapper.toEntity(
                 crearProductoDto,
@@ -51,76 +92,94 @@ export class ProductoService {
                 this.subcategoriaRepository,
                 this.marcaRepository
             );
+            productoGuardado = await this.productoRepository.save(nuevoProducto);
+        } catch (error) {
+            console.error('Error al guardar el producto:', error);
+            throw new InternalServerErrorException('No se pudo guardar el producto');
+        }
 
-            let productoGuardado;
+
+        if (crearProductoDto.detalles) {
+            try {
+                const detallesProducto = new DetalleProducto();
+                Object.assign(detallesProducto, crearProductoDto.detalles);
+                detallesProducto.producto = productoGuardado;
+                await this.detalleProductoRepository.save(detallesProducto);
+            } catch (error) {
+                console.error('Error al guardar los detalles del producto:', error);
+                throw new InternalServerErrorException('No se pudieron guardar los detalles del producto');
+            }
+        }
 
 
-            await this.productoRepository.manager.transaction(async entityManager => {
-                productoGuardado = await entityManager.save(nuevoProducto);
+        if (crearProductoDto.imagenes) {
+            try {
+                for (const imagen of crearProductoDto.imagenes) {
+                    const nombreImagen = `${Date.now()}-${imagen.nombre}`;
+                    const base64Data = imagen.base64.split(';base64,').pop();
+                    const ruta = `/imagenes-producto/${nombreImagen}`;
 
-                if (crearProductoDto.imagenes) {
-                    for (const imagen of crearProductoDto.imagenes) {
-                        const nombreImagen = `${Date.now()}-${imagen.nombre}`;
-                        const base64Data = imagen.base64.split(';base64,').pop();
-                        const ruta = `/imagenes-producto/${nombreImagen}`;
+                    console.log('Guardando imagen en:', ruta);
+                    const buffer = Buffer.from(base64Data, 'base64');
+                    await fs.writeFile('../front-ventoverso/public' + ruta, buffer);
 
-                        console.log('Guardando imagen en:', ruta);
-                        const buffer = Buffer.from(base64Data, 'base64');
-                        await fs.writeFile('../front-ventoverso/public' + ruta, buffer);
-
-                        const imagenProducto = new ImagenProducto();
-                        imagenProducto.imagen = ruta;
-                        imagenProducto.nombreImagen = nombreImagen;
-                        imagenProducto.producto = productoGuardado;
-                        await entityManager.save(imagenProducto);
-                    }
+                    const imagenProducto = new ImagenProducto();
+                    imagenProducto.imagen = ruta;
+                    imagenProducto.nombreImagen = nombreImagen;
+                    imagenProducto.producto = productoGuardado;
+                    await this.imagenProductoRepository.save(imagenProducto);
                 }
+            } catch (error) {
+                console.error('Error al guardar imágenes:', error);
+                throw new InternalServerErrorException('No se pudieron guardar las imágenes');
+            }
+        }
 
-            });
-
-
+        try {
             const productoCompleto = await this.productoRepository.findOne({
                 where: { id: productoGuardado.id },
-                relations: ['imagenes']
+                relations: ['categoria', 'marca', 'imagenes', 'detalleProducto']
             });
-
 
             if (!productoCompleto) {
                 throw new NotFoundException(`Producto con ID ${productoGuardado.id} no encontrado`);
             }
 
-
             return ProductoMapper.toDto(productoCompleto);
         } catch (error) {
-            console.error('Error al crear producto:', error);
-            throw new InternalServerErrorException('No se pudo crear el producto');
+            console.error('Error al recuperar el producto completo:', error);
+            throw new InternalServerErrorException('No se pudo recuperar el producto completo');
         }
     }
+
 
     async actualizarProducto(id: number, actualizarProductoDto: ActualizarProductoDTO): Promise<ProductoDetalleResponseDTO> {
         console.log('Iniciando actualización de producto. ID:', id, 'Datos:', actualizarProductoDto);
 
         try {
-            let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
+            let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes', 'detalleProducto'] });
             console.log('Producto encontrado para actualizar:', producto);
 
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${id} no encontrado`);
             }
 
-
-            const { imagenes, ...actualizarProductoInfo } = actualizarProductoDto;
+            const { imagenes, detalles, ...actualizarProductoInfo } = actualizarProductoDto;
             producto = this.productoRepository.merge(producto, actualizarProductoInfo);
             await this.productoRepository.save(producto);
-            console.log('Producto actualizado:', producto);
 
+
+            if (detalles && producto.detalleProducto) {
+                const detalleProducto = await this.detalleProductoRepository.findOne({ where: { producto: { id } } });
+                if (detalleProducto) {
+                    this.detalleProductoRepository.merge(detalleProducto, detalles);
+                    await this.detalleProductoRepository.save(detalleProducto);
+                }
+            }
 
             if (imagenes && imagenes.length > 0) {
-
-
                 for (const imagenDto of imagenes) {
                     console.log('Procesando imagen:', imagenDto.nombre);
-
 
                     const nombreImagen = `${Date.now()}-${imagenDto.nombre}`;
                     const rutaImagen = `../front-ventoverso/public/imagenes-producto/${nombreImagen}`;
@@ -133,18 +192,45 @@ export class ProductoService {
                     await this.imagenProductoRepository.save(imagenProducto);
                     console.log('Imagen guardada:', imagenProducto);
                 }
-
-
-                producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes'] });
             }
 
-            console.log('Producto después de actualizar imágenes:', producto);
-            console.log('Producto actualizado y guardado con éxito');
-            return ProductoMapper.toDto(producto);
+
+            const productoCompleto = await this.productoRepository.findOne({
+                where: { id },
+                relations: ['categoria', 'marca', 'imagenes', 'detalleProducto']
+            });
+
+            if (!productoCompleto) {
+                throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+            }
+
+            return ProductoMapper.toDto(productoCompleto);
         } catch (error) {
             console.error('Error al actualizar producto. ID:', id, 'Error:', error);
             throw new InternalServerErrorException('Error al actualizar producto');
         }
+    }
+
+    async actualizarDetalleProducto(id: number, detalleProductoDto: DetalleProductoDto): Promise<void> {
+
+        const producto = await this.productoRepository.findOne({ where: { id } });
+        if (!producto) {
+            throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+        }
+
+
+        const detalleProducto = await this.detalleProductoRepository.findOne({
+            where: { producto: producto },
+        });
+        if (!detalleProducto) {
+            throw new NotFoundException(`Detalle de producto para el producto ID ${id} no encontrado`);
+        }
+
+
+        const detalleActualizado = this.detalleProductoRepository.merge(detalleProducto, detalleProductoDto);
+
+
+        await this.detalleProductoRepository.save(detalleActualizado);
     }
 
     async eliminarProducto(id: number): Promise<void> {

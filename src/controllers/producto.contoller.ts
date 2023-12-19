@@ -10,6 +10,7 @@ import { JWTGuard } from 'src/jwt.guard';
 import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorador';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { DetalleProductoDto } from 'src/dto/detalle-producto.dto';
 
 
 @ApiTags('productos')
@@ -59,6 +60,7 @@ export class ProductoController {
         description: 'Datos inválidos para la creación del producto.',
     })
     async crearProducto(@Body() crearProductoDto: CrearProductoDTO): Promise<{ message: string }> {
+        console.log(crearProductoDto.detalles);
         try {
             const productoCreado = await this.productoService.crearProducto(crearProductoDto);
             return { message: 'Producto creado exitosamente' };

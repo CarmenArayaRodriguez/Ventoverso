@@ -7,7 +7,7 @@ export interface IProductoNuevo {
     imagenes: string[];
     precio: number;
     linkDetalle: string;
-    caracteristicasPrincipales: string;
+    // caracteristicasPrincipales: string;
     descripcion: string;
     categoria: string;
     subcategoria: string;

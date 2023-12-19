@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsUrl, IsArray, Min, Max } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsUrl, IsArray, Min, Max, ValidateNested } from 'class-validator';
 import { ImagenDTO } from './imagen-producto.dto';
+import { DetalleProductoDto } from './detalle-producto.dto';
+import { Type } from 'class-transformer';
 
 export class CrearProductoDTO {
     @ApiProperty({ description: 'ID de la categoría del producto' })
@@ -28,6 +30,12 @@ export class CrearProductoDTO {
     @IsNotEmpty()
     modelo: string;
 
+    @ApiProperty({ type: () => DetalleProductoDto, description: 'Detalles del producto' })
+    @ValidateNested()
+    @Type(() => DetalleProductoDto)
+    @IsOptional()
+    detalles?: DetalleProductoDto;
+
     @ApiProperty({ description: 'Descripción del producto' })
     @IsString()
     @IsNotEmpty()
@@ -43,10 +51,10 @@ export class CrearProductoDTO {
     @IsNotEmpty()
     stock: number;
 
-    @ApiProperty({ description: 'Características principales del producto', required: false })
-    @IsString()
-    @IsOptional()
-    caracteristicasPrincipales?: string;
+    // @ApiProperty({ description: 'Características principales del producto', required: false })
+    // @IsString()
+    // @IsOptional()
+    // caracteristicasPrincipales?: string;
 
     @ApiProperty({ description: 'Imágenes del producto', type: [ImagenDTO], required: false })
     imagenes?: ImagenDTO[];
@@ -57,5 +65,7 @@ export class CrearProductoDTO {
     @Min(0)
     @Max(5)
     estrellas?: number;
+
+
 }
 

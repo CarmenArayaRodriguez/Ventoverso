@@ -126,6 +126,7 @@ export class ComprasService {
                 precio: producto.precio
             });
         }
+        //Pasar estado
         const compra = this.comprasRepository.create({
             cliente: cliente,
             total: totalCompra,
