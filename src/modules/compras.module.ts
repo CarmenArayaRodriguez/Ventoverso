@@ -12,11 +12,12 @@ import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 import { DetalleCompra } from 'src/entities/detalle-compra.entity';
 import { JwtService } from '@nestjs/jwt';
 import { AutenticacionModule } from './autenticacion.module';
+import { EstadoCompra } from 'src/entities/estado-compra.entity';
 
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio, DetalleCompra]), CarritoModule, AutenticacionModule],
+    imports: [TypeOrmModule.forFeature([Compra, Producto, Cliente, MetodoPago, MetodoEnvio, DetalleCompra, EstadoCompra]), CarritoModule, AutenticacionModule],
     providers: [ComprasService],
     controllers: [ComprasController],
 })

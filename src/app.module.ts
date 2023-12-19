@@ -40,6 +40,7 @@ import { DetalleCompra } from './entities/detalle-compra.entity';
 import { CategoriaModule } from './modules/categoria.module';
 import { MarcaModule } from './modules/marca.module';
 import { DetalleProducto } from './entities/detalle-producto.entity';
+import { EstadoCompra } from './entities/estado-compra.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -47,9 +48,9 @@ import { DetalleProducto } from './entities/detalle-producto.entity';
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: 'clave123',
+    password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto, EstadoCompra],
 
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
