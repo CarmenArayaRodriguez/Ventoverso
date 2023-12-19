@@ -14,6 +14,7 @@ import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 import { DireccionEnvioDto } from 'src/dto/direccion-envio.dto';
 import { Carrito } from 'src/entities/carrito.entity';
 import { DetalleCompra } from 'src/entities/detalle-compra.entity';
+import { EstadoCompra } from 'src/entities/estado-compra.entity';
 
 @Injectable()
 export class ComprasService {
@@ -30,7 +31,9 @@ export class ComprasService {
         @InjectRepository(MetodoEnvio)
         private metodoEnvioRepository: Repository<MetodoEnvio>,
         @InjectRepository(DetalleCompra)
-        private detalleCompraRepository: Repository<DetalleCompra>
+        private detalleCompraRepository: Repository<DetalleCompra>,
+        @InjectRepository(EstadoCompra)
+        private estadoCompraRepository: Repository<EstadoCompra>
     ) { }
 
     async crearCompra(datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
@@ -109,7 +112,6 @@ export class ComprasService {
         }
 
         let totalCompra = 0;
-
         let productosTicket = [];
 
         for (const productoCarrito of carrito.productos) {
@@ -119,14 +121,13 @@ export class ComprasService {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
             totalCompra += productoCarrito.cantidad * producto.precio;
-
             productosTicket.push({
                 nombre: producto.nombre,
                 cantidad: productoCarrito.cantidad,
                 precio: producto.precio
             });
         }
-        //Pasar estado
+
         const compra = this.comprasRepository.create({
             cliente: cliente,
             total: totalCompra,
@@ -141,13 +142,11 @@ export class ComprasService {
 
         await this.comprasRepository.save(compra);
 
-
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
-            totalCompra += productoCarrito.cantidad * producto.precio;
 
             const detalle = this.detalleCompraRepository.create({
                 compra: compra,
@@ -159,16 +158,19 @@ export class ComprasService {
             await this.detalleCompraRepository.save(detalle);
         }
 
-        compra.total = totalCompra;
+        const estadoEntregado = await this.estadoCompraRepository.findOne({ where: { estado: 'Entregado' } });
+        console.log('Estado Entregado:', estadoEntregado);
+        if (!estadoEntregado) {
+            throw new NotFoundException('Estado de compra "Entregado" no encontrado');
+        }
+        console.log('Asignando estado a la compra', compra);
+        compra.estado = estadoEntregado;
+        console.log('Compra con estado asignado:', compra);
         await this.comprasRepository.save(compra);
-
-        const ticket = {
-            idPedido: compra.id,
-            total: totalCompra,
-            productos: productosTicket
-        };
+        console.log('Compra guardada con estado:', compra);
 
         await this.carritoService.vaciarCarrito(rutCliente);
+
 
         return {
             mensaje: 'Compra realizada con éxito',
@@ -181,6 +183,7 @@ export class ComprasService {
             }))
         };
     }
+
 
 }
 

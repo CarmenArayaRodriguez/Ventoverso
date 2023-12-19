@@ -3,6 +3,7 @@ import { Cliente } from './cliente.entity';
 import { Producto } from './producto.entity';
 import { MetodoPago } from './metodo-de-pago.entity';
 import { MetodoEnvio } from './metodo-de-envio.entity';
+import { EstadoCompra } from './estado-compra.entity';
 
 @Entity('compra')
 export class Compra {
@@ -49,4 +50,8 @@ export class Compra {
 
     @Column('varchar', { length: 255 })
     region: string;
+
+    @ManyToOne(type => EstadoCompra)
+    @JoinColumn({ name: 'id_estadoCompra' })
+    estado: EstadoCompra;
 }
