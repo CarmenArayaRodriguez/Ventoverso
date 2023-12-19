@@ -62,7 +62,7 @@ export class CarritoService {
         };
     }
 
-    private obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
+    public obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
         const cuponAplicado = carrito.cupon;
         if (cuponAplicado === 'DESC10') {
             const porcentajeDescuento = 0.10; // 10%
@@ -191,7 +191,7 @@ export class CarritoService {
     }
 
     async aplicarDescuentoAlCarrito(subtotal: number, cupon: string): Promise<DescuentoResponseDTO> {
-
+        console.log(`Aplicando descuento. Subtotal: ${subtotal}, Cupón: ${cupon}`);
         if (cupon !== 'DESC10') {
             throw new HttpException({
                 status: HttpStatus.BAD_REQUEST,
@@ -205,6 +205,8 @@ export class CarritoService {
         const nuevoIVA = nuevoSubtotal * 0.19; // IVA de 19%
         const nuevoTotal = nuevoSubtotal + nuevoIVA;
 
+        console.log(`Descuento aplicado. Nuevo subtotal: ${nuevoSubtotal}, Nuevo total: ${nuevoTotal}`);
+
         return {
             montoDescuento: montoDescuento,
             nuevoSubtotal: nuevoSubtotal,
@@ -212,26 +214,6 @@ export class CarritoService {
             nuevoTotal: nuevoTotal
         };
     }
-
-    async aplicarCuponAlCarrito(idCarrito: number, cupon: string): Promise<Carrito> {
-        const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
-        if (!carrito) {
-            throw new NotFoundException('Carrito no encontrado');
-        }
-
-        try {
-            const descuento = await this.aplicarDescuentoAlCarrito(carrito.subtotal, cupon);
-            carrito.cupon = cupon;
-            carrito.subtotal = descuento.nuevoSubtotal;
-            await this.carritoRepository.save(carrito);
-
-            return carrito;
-        } catch (error) {
-
-            throw error;
-        }
-    }
-
 
     async eliminarCarrito(idCarrito: number): Promise<void> {
         console.log(`Intentando eliminar carrito con ID: ${idCarrito}`);
@@ -253,6 +235,20 @@ export class CarritoService {
 
         if (!carrito) {
             throw new NotFoundException('Carrito no encontrado para el cliente.');
+        }
+
+        return carrito;
+    }
+
+
+    async obtenerCarritoPorID(idCarrito: number): Promise<Carrito> {
+        const carrito = await this.carritoRepository.findOne({
+            where: { id: idCarrito },
+            relations: ['productos']
+        });
+
+        if (!carrito) {
+            throw new NotFoundException(`Carrito con ID ${idCarrito} no encontrado`);
         }
 
         return carrito;
