@@ -47,7 +47,7 @@ import { DetalleProducto } from './entities/detalle-producto.entity';
     host: 'localhost',
     port: 3306,
     username: 'root',
-    password: 'clave123',
+    password: 'Fechita1',
     database: 'ventoverso',
     entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto],
 
