@@ -1,6 +1,7 @@
 create database ventoverso;
 
 use ventoverso;
+
 CREATE TABLE `cliente` (
   `rut_cliente` varchar(10) PRIMARY KEY,
   `nombre` varchar(255),
@@ -15,16 +16,55 @@ CREATE TABLE `cliente` (
   `roles` varchar(255)
 );
 
-CREATE TABLE `pedido` (
+CREATE TABLE `estadoCompra` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `estado` varchar(10)
+);
+
+CREATE TABLE `compra` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
   `id_producto` integer,
-  `estado` varchar(10),
-  `sub_total` integer,
-  `total` integer,
-  `direccionEnvio` varchar(50),
-  `cantidad` integer,
-  `fecha` date
+  `id_direccionEnvio` integer,
+  `id_estadoCompra` integer,
+  `total` int NOT NULL,
+  `fecha` timestamp DEFAULT (current_timestamp()),
+  `estado` varchar(255)
+);
+
+CREATE TABLE `detalleCompra` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_producto` integer,
+  `id_compra` integer,
+  `cantidad` int NOT NULL,
+  `precio` int NOT NULL
+);
+
+CREATE TABLE `direccionEnvio` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `rut_cliente` varchar(10),
+  `direccion` varchar(255),
+  `id_ciudad` integer,
+  `id_comuna` integer,
+  `id_regionEnvio` integer
+);
+
+CREATE TABLE `regionEnvio` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `nombre` varchar(100),
+  `codigo_postal` integer
+);
+
+CREATE TABLE `ciudad` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_regionEnvio` integer,
+  `nombre` varchar(255)
+);
+
+CREATE TABLE `comuna` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id_ciudad` integer,
+  `nombre` varchar(255)
 );
 
 CREATE TABLE `producto` (
@@ -39,11 +79,6 @@ CREATE TABLE `producto` (
   `precio` integer,
   `stock` integer,
   `estrellas` integer
-);
-
-CREATE TABLE `detallePedido` (
-  `id_producto` integer,
-  `id_pedido` integer
 );
 
 CREATE TABLE `categoria` (
@@ -77,7 +112,7 @@ CREATE TABLE `carrito` (
   `status_carrito` varchar(50),
   `creacion_date` date,
   `subtotal` integer,
-  `cupon` varchar (255) NULL
+  `cupon` varchar(255)
 );
 
 CREATE TABLE `productoCarrito` (
@@ -135,15 +170,9 @@ CREATE TABLE `metodoEnvio` (
   `costo_envio` integer
 );
 
-CREATE TABLE `regionEnvio` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `nombre` varchar(100),
-  `codigo_postal` integer
-);
-
 CREATE TABLE `envio` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_pedido` integer,
+  `id_compra` integer,
   `id_metodoEnvio` integer,
   `id_regionEnvio` integer,
   `fc_envio` date
@@ -157,7 +186,7 @@ CREATE TABLE `metodoPago` (
 
 CREATE TABLE `pago` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_pedido` integer,
+  `id_compra` integer,
   `id_metodoPago` integer,
   `fcPago` date,
   `estado` varchar(20),
@@ -195,18 +224,6 @@ CREATE TABLE `comentario` (
   `id_calificacion` integer
 );
 
-CREATE TABLE `compra` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `id_direccionEnvio` integer,
-  `total` int NOT NULL,
-  `fecha` timestamp DEFAULT (current_timestamp()),
-  `estado` int(50) DEFAULT 0,
-  `ciudad` varchar(255),
-  `comuna` varchar(255),
-  `region` varchar(255)
-);
-
 CREATE TABLE `detalle_producto` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `id_producto` integer,
@@ -218,46 +235,42 @@ CREATE TABLE `detalle_producto` (
   `incluyeBoquilla` boolean,
   `cantBarriles` varchar(255),
   `largoBarril` varchar(255),
-  `reposaPulgar` varchar(255), //Debe ser texto
+  `reposaPulgar` varchar(255),
   `cantAnillos` varchar(255),
   `incluyeCanas` boolean,
   `incluyeMaleta` boolean,
   `origen` varchar(255)
 );
 
-CREATE TABLE `direccionEnvio` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `direccion` varchar(255),
-  `ciudad` varchar(255),
-  `comuna` varchar(255),
-  `region` varchar(255)
-);
+ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
+ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-CREATE TABLE `detalleCompra` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `id_compra` INT NOT NULL,
-    `id_producto` INT NOT NULL,
-    `cantidad` INT NOT NULL,
-    `precio` INT NOT NULL,
-    FOREIGN KEY (`id_compra`) REFERENCES `compra`(`id`),
-    FOREIGN KEY (`id_producto`) REFERENCES `producto`(`id`)
-);
+ALTER TABLE `compra` ADD FOREIGN KEY (`id_direccionEnvio`) REFERENCES `direccionEnvio` (`id`);
 
-ALTER TABLE `pedido` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+ALTER TABLE `compra` ADD FOREIGN KEY (`id_estadoCompra`) REFERENCES `estadoCompra` (`id`);
 
-ALTER TABLE `pedido` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+ALTER TABLE `detalleCompra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+
+ALTER TABLE `detalleCompra` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
+
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id`);
+
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id`);
+
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+
+ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+
+ALTER TABLE `comuna` ADD FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id`);
 
 ALTER TABLE `producto` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
 
 ALTER TABLE `producto` ADD FOREIGN KEY (`id_subcategoria`) REFERENCES `subcategoria` (`id`);
 
 ALTER TABLE `producto` ADD FOREIGN KEY (`id_marcas`) REFERENCES `marcas` (`id`);
-
-ALTER TABLE `detallePedido` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
-ALTER TABLE `detallePedido` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
 
 ALTER TABLE `subcategoria` ADD FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
 
@@ -283,13 +296,13 @@ ALTER TABLE `carruselProducto` ADD FOREIGN KEY (`id_carrusel`) REFERENCES `carru
 
 ALTER TABLE `producto_destacado` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-ALTER TABLE `envio` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
+ALTER TABLE `envio` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
 
 ALTER TABLE `envio` ADD FOREIGN KEY (`id_metodoEnvio`) REFERENCES `metodoEnvio` (`id`);
 
 ALTER TABLE `envio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
 
-ALTER TABLE `pago` ADD FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id`);
+ALTER TABLE `pago` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
 
 ALTER TABLE `pago` ADD FOREIGN KEY (`id_metodoPago`) REFERENCES `metodoPago` (`id`);
 
@@ -301,12 +314,4 @@ ALTER TABLE `comentario` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (
 
 ALTER TABLE `comentario` ADD FOREIGN KEY (`id_calificacion`) REFERENCES `calificacion` (`id`);
 
-ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
-ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
-
-ALTER TABLE `compra` ADD FOREIGN KEY (`id_direccionEnvio`) REFERENCES `direccionEnvio` (`id`);
-
 ALTER TABLE `detalle_producto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
-
-ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);

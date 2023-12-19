@@ -13,19 +13,64 @@ table cliente {
 	
 }
 
-table pedido {
+table estadoCompra {
   id integer [increment,pk]
-  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-  id_producto integer [ref: > producto.id]
   estado varchar(10)
-  sub_total integer
-  total integer
-  direccionEnvio varchar(50)
-  cantidad integer
-  fecha date
- 
+    
+}
+
+table compra {
+id integer [increment,pk]
+rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+id_producto integer [ref: > producto.id]
+id_direccionEnvio integer [ref: > direccionEnvio.id] // Nueva referencia a la tabla direccionEnvio
+id_estadoCompra integer [ref: > estadoCompra.id]
+total int [not null]
+fecha timestamp [default: `current_timestamp()`]
+estado varchar (255)
+}
+
+table detalleCompra {
+id integer [increment,pk]
+id_producto integer [ref: > producto.id]
+id_compra integer [ ref: > compra.id]
+cantidad int [not null]
+precio int [not null]
+}
+
+
+
+table direccionEnvio {
+  id integer [increment, pk]
+  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+  direccion varchar (255)
+  id_ciudad integer [ref: > ciudad.id]
+  id_comuna integer [ref: > comuna.id]
+  id_regionEnvio integer [ref: > regionEnvio.id]
   
 }
+
+
+table regionEnvio {
+id integer [increment,pk]
+nombre varchar(100)
+codigo_postal integer
+}
+
+table ciudad {
+id integer [increment, pk]
+id_regionEnvio integer [ref: > regionEnvio.id]
+nombre varchar(255)
+  
+}
+
+table comuna {
+  id integer [increment, pk]
+  id_ciudad integer [ref: > ciudad.id]
+  nombre varchar(255)
+  }
+
+
 table producto {
   id integer [increment,pk]
   id_categoria integer [ref: > categoria.id]
@@ -41,10 +86,7 @@ table producto {
   
 }
 
-table detallePedido {
-id_producto integer [ref: > producto.id]
-id_pedido integer [ ref: > pedido.id]
-}
+
 
 table categoria {
 id integer [increment,pk]
@@ -79,6 +121,7 @@ table carrito {
  status_carrito varchar(50)
  creacion_date date
  subtotal integer
+ cupon varchar(255)
 }
 
 table productoCarrito {
@@ -139,15 +182,11 @@ costo_envio integer
 }
 
 
-table regionEnvio {
-id integer [increment,pk]
-nombre varchar(100)
-codigo_postal integer
-}
+
 
 table envio {
 id integer [increment,pk]
-id_pedido integer [ref: - pedido.id]
+id_compra integer [ref: - compra.id]
 id_metodoEnvio integer [ref: - metodoEnvio.id]
 id_regionEnvio integer [ref: > regionEnvio.id]
 fc_envio date
@@ -162,7 +201,7 @@ detalle_metodo_pago varchar(50)
 
 table pago {
 id integer [increment,pk]
-id_pedido integer [ref: - pedido.id]
+id_compra integer [ref: - compra.id]
 id_metodoPago integer [ref: - metodoPago.id]
 fcPago date
 estado varchar(20)
@@ -201,17 +240,7 @@ id_calificacion integer [ref: - calificacion.id]
 
 }
 
-table compra {
-id integer [increment,pk]
-id_producto integer [ref: > producto.id]
-rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-id_direccionEnvio integer [ref: > direccionEnvio.id] // Nueva referencia a la tabla direccionEnvio
-cantidad int [not null]
-total int [not null]
-fecha timestamp [default: `current_timestamp()`]
-estado int (50) [default:0]
 
-}
 
 table detalle_producto {
 id integer [increment,pk]
@@ -224,21 +253,10 @@ materialCuerpo varchar(255)
 incluyeBoquilla boolean
 cantBarriles varchar(255)
 largoBarril varchar(255)
-reposaPulgar boolean
+reposaPulgar varchar(255)
 cantAnillos varchar(255)
 incluyeCanas boolean
 incluyeMaleta boolean
 origen varchar(255)
 
 }
-table direccionEnvio {
-  id integer [increment, pk]
-  rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-  direccion varchar(255)
-  ciudad varchar(255)
-  comuna varchar(255)
-  region varchar(255)
-  
-}
-
-

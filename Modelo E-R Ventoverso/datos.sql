@@ -128,25 +128,21 @@ VALUES (6, 'https://drive.google.com/uc?export=download&id=1TwrPeTEf5OZVc1yJrquS
 
 /* INSERT TABLA metodoPago */
 
+
 INSERT INTO metodoPago (nombre_metodo_pago, detalle_metodo_pago)
-VALUES ('Tarjeta Credito', 'Visa, Mastercard, American Express');
-INSERT INTO metodoPago (nombre_metodo_pago, detalle_metodo_pago)
-VALUES ('Tarjeta Debito', 'Definida por el banco emisor');
-INSERT INTO metodoPago (nombre_metodo_pago, detalle_metodo_pago)
-VALUES ('PayPal', 'Servicio de pago en linea');
+VALUES ('WebPay', 'Servicio de pago en linea');
 INSERT INTO metodoPago (nombre_metodo_pago, detalle_metodo_pago)
 VALUES ('Transferencia Bancaria', 'Transferencia electronica mediante banco cliente');
 INSERT INTO metodoPago (nombre_metodo_pago, detalle_metodo_pago)
-VALUES ('Wallets Digital', 'Apple pay, Google Pay Samsung Pay');
-INSERT INTO metodoPago (nombre_metodo_pago, detalle_metodo_pago)
-VALUES ('Pago Movil', 'Aplicaciones moviles de empresas');
+VALUES ('Mercado Pago', 'Apple pay, Google Pay Samsung Pay');
+
 
 /* INSERT TABLA metodoEnvio */
 
 INSERT INTO metodoEnvio (nombre, descripcion, costo_envio)
-VALUES ('Envío Estándar', 'Entrega en 3-5 días hábiles', 5),
-       ('Envío Express', 'Entrega en 1-2 días hábiles', 10),
-       ('Recogida en Tienda', 'Recoge en nuestra tienda física', 0);
+VALUES ('Correos de Chile', 'Entrega en 2-5 días hábiles', 5990),
+       ('Envío Express', 'Entrega en 2-5 días hábiles', 5990);
+       
 
 
 /* INSERT TABLA regionEnvio */
@@ -179,18 +175,18 @@ VALUES
     (4, '3 estrellas', 5, '2023-11-09', '2023-11-16');
        
 
-/* INSERT TABLA pedido */
+/* INSERT TABLA estadoCompra */
 
-INSERT INTO `pedido` (`rut_cliente`, `id_producto`, `estado`, `sub_total`, `total`, `direccionEnvio`, `cantidad`, `fecha`)
+INSERT INTO `estadoCompra` (`estado`)
 VALUES
-    ('12227463', 1, 'Pendiente', 950000, 950000, 'Calle Principal 123', 2, '2023-11-03'),
-    ('11222356', 2, 'En Proceso', 890000, 890000, 'Avenida Secundaria 456', 1, '2023-11-04'),
-    ('13554351', 3, 'Enviado',1390000,1390000 , 'Plaza Central 789', 1, '2023-11-05'),
-    ('14333565', 4, 'Entregado', 1390000, 1390000, 'Boulevard Norte 234', 1, '2023-11-06');
+    ('Pendiente'),
+    ('En Proceso'),
+    ('Enviado'),
+    ('Entregado');
 
 
-/* INSERT TABLA detallePedido */
-INSERT INTO `detallePedido` (`id_producto`, `id_pedido`)
+/* INSERT TABLA detalleCompra */
+INSERT INTO `detalleCompra` (`id_producto`, `id_compra`)
 VALUES
     (1, 1),
     (2, 2),
@@ -198,7 +194,7 @@ VALUES
     (4, 4);
 
 
-INSERT INTO `pago` (`id_pedido`, `id_metodoPago`, `fcPago`, `estado`, `monto`)
+INSERT INTO `pago` (`id_compra`, `id_metodoPago`, `fcPago`, `estado`, `monto`)
 VALUES
     (1, 1, '2023-11-03', 'Aprobado', 950000),
     (2, 2, '2023-11-04', 'Aprobado', 890000),
