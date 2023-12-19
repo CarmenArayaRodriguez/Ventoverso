@@ -109,6 +109,20 @@ export class CarritoService {
         if (!carrito) {
             carrito = await this.crearCarrito(agregarProductoDTO.rutCliente);
         }
+
+        const producto = await this.productoRepository.findOne({ where: { id: agregarProductoDTO.productoId } });
+        if (!producto) {
+            throw new NotFoundException(`Producto con ID ${agregarProductoDTO.productoId} no encontrado`);
+        }
+
+
+        if (producto.stock < agregarProductoDTO.cantidad) {
+            throw new HttpException({
+                status: HttpStatus.BAD_REQUEST,
+                error: `Stock insuficiente para el producto: ${producto.nombre}. Disponibles: ${producto.stock}, solicitados: ${agregarProductoDTO.cantidad}`,
+            }, HttpStatus.BAD_REQUEST);
+        }
+
         console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
 
         const productoCarrito = this.productoCarritoRepository.create({
@@ -116,10 +130,7 @@ export class CarritoService {
             productoId: agregarProductoDTO.productoId,
             cantidad: agregarProductoDTO.cantidad
         });
-        const producto = await this.productoRepository.findOne({ where: { id: agregarProductoDTO.productoId } });
-        if (!producto) {
-            throw new NotFoundException(`Producto con ID ${agregarProductoDTO.productoId} no encontrado`);
-        }
+
         carrito.subtotal += producto.precio * agregarProductoDTO.cantidad;
         await this.carritoRepository.save(carrito);
 

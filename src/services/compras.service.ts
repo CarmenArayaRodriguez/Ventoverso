@@ -39,14 +39,14 @@ export class ComprasService {
     async crearCompra(datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
         console.log('Datos de Compra:', datosCompra);
         console.log('Iniciando método crearCompra');
-        const producto = await this.productosRepository.findOne({ where: { id: datosCompra.id_producto } });
-        console.log('Producto encontrado:', producto);
-        if (!producto) {
-            throw new HttpException({
-                status: HttpStatus.BAD_REQUEST,
-                error: 'Producto no encontrado con el ID proporcionado',
-            }, HttpStatus.BAD_REQUEST);
-        }
+        // const producto = await this.productosRepository.findOne({ where: { id: datosCompra.id_producto } });
+        // console.log('Producto encontrado:', producto);
+        // if (!producto) {
+        //     throw new HttpException({
+        //         status: HttpStatus.BAD_REQUEST,
+        //         error: 'Producto no encontrado con el ID proporcionado',
+        //     }, HttpStatus.BAD_REQUEST);
+        // }
 
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
         console.log('Cliente encontrado:', cliente);
@@ -59,9 +59,9 @@ export class ComprasService {
 
         const direccionEnvio = `${cliente.direccion}, ${cliente.comuna}, ${cliente.ciudad}, ${cliente.region}`;
         console.log('Dirección de Envío:', direccionEnvio);
-        const total = datosCompra.cantidad * producto.precio;
+        // const total = datosCompra.cantidad * producto.precio;
         console.log('Cliente:', cliente);
-        console.log('Producto:', producto);
+        // console.log('Producto:', producto);
 
         if (!cliente.direccion || !cliente.comuna || !cliente.ciudad || !cliente.region) {
             console.error('Faltan datos de dirección del cliente');
@@ -71,7 +71,7 @@ export class ComprasService {
 
         const compra = this.comprasRepository.create({
             cliente: cliente,
-            total: total,
+            // total: total,
             calle_numero: datosCompra.calle_numero,
             depto_casa_oficina: datosCompra.depto_casa_oficina,
             ciudad: datosCompra.ciudad,
@@ -120,6 +120,16 @@ export class ComprasService {
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
+
+
+            if (producto.stock < productoCarrito.cantidad) {
+                throw new HttpException({
+                    status: HttpStatus.BAD_REQUEST,
+                    error: `Stock insuficiente para el producto: ${producto.nombre}. Disponibles: ${producto.stock}, solicitados: ${productoCarrito.cantidad}`,
+                }, HttpStatus.BAD_REQUEST);
+            }
+
+
             totalCompra += productoCarrito.cantidad * producto.precio;
             productosTicket.push({
                 nombre: producto.nombre,
