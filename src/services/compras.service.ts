@@ -126,6 +126,13 @@ export class ComprasService {
                 cantidad: productoCarrito.cantidad,
                 precio: producto.precio
             });
+
+
+            console.log(`Stock actual del producto ID ${producto.id}: ${producto.stock}`);
+            producto.stock -= productoCarrito.cantidad;
+            await this.productosRepository.save(producto);
+            console.log(`Stock actualizado del producto ID ${producto.id}: ${producto.stock}`);
+
         }
 
         const compra = this.comprasRepository.create({
