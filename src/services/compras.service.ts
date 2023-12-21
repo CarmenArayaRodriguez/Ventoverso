@@ -37,10 +37,11 @@ export class ComprasService {
     ) { }
 
 
-    async confirmarCompra(rutCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
+    async confirmarCompra(idCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
+        console.log('Carrito ID en servicio:', carritoId);
         console.log('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
         console.log('Datos de compra:', datosCompra);
-        console.log(`Buscando cliente con RUT: ${rutCliente}`);
+        console.log(`Buscando cliente con RUT: ${idCliente}`);
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
 
         if (!cliente) {
@@ -146,7 +147,9 @@ export class ComprasService {
         await this.comprasRepository.save(compra);
         console.log('Compra guardada con estado:', compra);
 
-        await this.carritoService.vaciarCarrito(rutCliente);
+        console.log('ConfirmarCompra Service - carritoId:', carritoId);
+
+        await this.carritoService.vaciarCarrito(carritoId);
 
         const respuesta = new CrearCompraResponseDto();
         respuesta.mensaje = 'Compra realizada con éxito';

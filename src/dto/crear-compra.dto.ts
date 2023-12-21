@@ -38,10 +38,11 @@ export class CrearCompraDto {
     @ApiProperty({ description: 'ID del método de envio', example: 1 })
     idMetodoEnvio: number;
 
-
     @ApiProperty()
     @IsOptional()
     @IsString()
     codigoCupon?: string;
 
+    @ApiProperty()
+    carritoId: number;
 }

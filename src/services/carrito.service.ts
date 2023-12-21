@@ -292,16 +292,35 @@ export class CarritoService {
         return carrito;
     }
 
-    async vaciarCarrito(rutCliente: string): Promise<void> {
+    // async vaciarCarrito(rutCliente: string): Promise<void> {
 
-        const itemsCarrito = await this.carritoRepository.find({
-            where: { rutCliente: rutCliente }
+    //     const itemsCarrito = await this.carritoRepository.find({
+    //         where: { rutCliente: rutCliente }
+    //     });
+
+
+    //     if (itemsCarrito.length > 0) {
+    //         await this.carritoRepository.remove(itemsCarrito);
+    //     }
+    // }
+    async vaciarCarrito(carritoId: number): Promise<void> {
+        // Obtener el carrito con sus productos asociados
+        const carrito = await this.carritoRepository.findOne({
+            where: { id: carritoId },
+            relations: ['productos'] // Asume que 'productos' es el campo que contiene los productos del carrito
         });
+        console.log('VaciarCarrito - carritoId:', carritoId);
+        if (!carrito) {
+            throw new NotFoundException(`Carrito con ID ${carritoId} no encontrado`);
+        }
 
-
-        if (itemsCarrito.length > 0) {
-            await this.carritoRepository.remove(itemsCarrito);
+        // Si el carrito tiene productos, eliminarlos primero
+        if (carrito.productos && carrito.productos.length > 0) {
+            // Asumiendo que tienes un método en tu servicio para eliminar productos del carrito
+            // Este método debería encargarse de eliminar las relaciones en la base de datos
+            await Promise.all(carrito.productos.map(producto =>
+                this.eliminarProductoDelCarrito(carritoId, producto.id)
+            ));
         }
     }
-
 }
