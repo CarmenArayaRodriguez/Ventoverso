@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { CrearProductoDTO } from '../dto/crear-producto.dto';
@@ -49,6 +49,7 @@ export class ProductoController {
     @Post()
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('ADMINISTRADOR')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Crear un nuevo producto' })
     @ApiResponse({
         status: 201,
@@ -72,6 +73,7 @@ export class ProductoController {
     @Put(':id')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('ADMINISTRADOR')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Actualizar un producto' })
     @ApiResponse({
         status: 200,
@@ -112,6 +114,7 @@ export class ProductoController {
     @Delete(':id')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('ADMINISTRADOR')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Eliminar un producto' })
     @ApiResponse({
         status: 200,
