@@ -72,6 +72,7 @@ async function bootstrap() {
     .setTitle('Ventoverso Carrito API')
     .setDescription('API para el Carrito')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
     .build();
   const carritoDocument = SwaggerModule.createDocument(app, carritoOptions, {
     include: [CarritoModule],
@@ -95,6 +96,7 @@ async function bootstrap() {
     .setTitle('API de Producto')
     .setDescription('API para la gestión de producto en Ventoverso')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
     .build();
   const productoDocument = SwaggerModule.createDocument(app, productoSwaggerConfig, {
     include: [ProductoModule],
@@ -207,6 +209,7 @@ async function bootstrap() {
     .setTitle('Ventoverso Compras API')
     .setDescription('API para compras')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
     .build();
   const comprasDocument = SwaggerModule.createDocument(app, comprasOptions, {
     include: [ComprasModule],

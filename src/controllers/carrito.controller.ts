@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Patch, Delete, Param, Body, Res, HttpStatus, InternalServerErrorException, NotFoundException, UseGuards } from '@nestjs/common';
 import { CarritoService } from 'src/services/carrito.service';
 import { CrearCarritoDTO } from '../dto/crear-carrito.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AgregarProductoCarritoRequestDTO } from 'src/dto/agregar-producto-carrito-request.dto';
 import { ActualizarProductoCarritoDTO } from 'src/dto/actualizar-producto-carrito.dto';
 import { JWTGuard } from 'src/jwt.guard';
@@ -19,6 +19,7 @@ export class CarritoController {
     @Post()
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Crear un nuevo carrito' })
     @ApiResponse({ status: 201, description: 'Carrito creado con éxito.' })
     @ApiResponse({ status: 400, description: 'Datos inválidos.' })
@@ -30,6 +31,7 @@ export class CarritoController {
     @Post('/producto')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Agregar un producto al carrito' })
     @ApiResponse({ status: 201, description: 'Producto agregado al carrito.' })
     @ApiResponse({ status: 404, description: 'Carrito no encontrado.' })
@@ -44,6 +46,9 @@ export class CarritoController {
     }
 
     @Patch(':idCarrito/producto/:idProducto')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Actualizar la cantidad de un producto en el carrito' })
     @ApiResponse({ status: 200, description: 'Cantidad del producto actualizada.' })
     @ApiResponse({ status: 404, description: 'Producto o carrito no encontrado.' })
@@ -58,6 +63,7 @@ export class CarritoController {
     @Get('/:rutCliente')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Ver los productos en el carrito' })
     @ApiResponse({ status: 200, description: 'Carrito recuperado con éxito.', type: CarritoConProductosResponseDTO })
     async verCarrito(@Param('rutCliente') rutCliente: string): Promise<CarritoConProductosResponseDTO> {
@@ -67,6 +73,7 @@ export class CarritoController {
     @Delete(':idCarrito/producto/:idProducto')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Eliminar un producto del carrito' })
     @ApiResponse({ status: 200, description: 'Producto eliminado del carrito.' })
     @ApiResponse({ status: 404, description: 'Producto o carrito no encontrado.' })
@@ -90,6 +97,7 @@ export class CarritoController {
     @Delete(':idCarrito')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Eliminar un carrito completo' })
     @ApiResponse({ status: 200, description: 'Carrito eliminado con éxito.' })
     @ApiResponse({ status: 404, description: 'Carrito no encontrado.' })
@@ -110,12 +118,16 @@ export class CarritoController {
     @Get('/carrito')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     async obtenerCarrito(@Request() req) {
         const rutCliente = req.user.rutCliente;
         return this.carritoService.obtenerCarritoPorCliente(rutCliente);
     }
 
     @Post('/:idCarrito/aplicar-cupon')
+    @UseGuards(JWTGuard, RolesGuard)
+    @Roles('USUARIO')
+    @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Aplicar un cupón de descuento a un carrito' })
     @ApiResponse({ status: 200, description: 'Descuento aplicado con éxito', type: DescuentoResponseDTO })
     @ApiResponse({ status: 400, description: 'Datos inválidos' })
