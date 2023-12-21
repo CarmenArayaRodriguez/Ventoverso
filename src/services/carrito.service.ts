@@ -60,16 +60,37 @@ export class CarritoService {
             iva,
             total
         };
+
     }
 
-    private obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
+    async asignarCuponACarrito(idCarrito: number, cupon: string): Promise<Carrito> {
+        console.log(`Asignando cupón ${cupon} al carrito ${idCarrito}`);
+        const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
+        if (!carrito) {
+            throw new NotFoundException(`Carrito con ID ${idCarrito} no encontrado`);
+        }
+        console.log(`Cupón actual en el carrito antes de asignar: ${carrito.cupon}`);
+
+        carrito.cupon = cupon;
+        await this.carritoRepository.save(carrito);
+        console.log(`Cupón asignado al carrito: ${carrito.cupon}`);
+        console.log(`Cupón asignado al carrito (Después de guardar): ${carrito.cupon}`);
+        return carrito;
+    }
+
+    public obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
+        console.log(`Carrito recibido para calcular descuento:`, carrito);
         const cuponAplicado = carrito.cupon;
         if (cuponAplicado === 'DESC10') {
             const porcentajeDescuento = 0.10; // 10%
             const montoDescuento = carrito.subtotal * porcentajeDescuento;
+            console.log(`Cupón aplicado: ${cuponAplicado}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
             const nuevoSubtotal = carrito.subtotal - montoDescuento;
             const nuevoIVA = nuevoSubtotal * 0.19;
             const nuevoTotal = nuevoSubtotal + nuevoIVA;
+
+            console.log(`Cupón aplicado: ${carrito.cupon}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
+            console.log(`Nuevo subtotal después del descuento: ${nuevoSubtotal}, Nuevo IVA: ${nuevoIVA}, Nuevo total: ${nuevoTotal}`);
             return {
                 montoDescuento: montoDescuento,
                 nuevoSubtotal: carrito.subtotal - montoDescuento,
@@ -94,27 +115,28 @@ export class CarritoService {
         const nuevoCarrito = this.carritoRepository.create({
             rutCliente,
             statusCarrito: 'activo',
-            creacionDate: new Date()
+            creacionDate: new Date(),
+            subtotal: 0
         });
         const carritoGuardado = await this.carritoRepository.save(nuevoCarrito);
         console.log('crearCarrito - carritoGuardado:', carritoGuardado);
         return carritoGuardado;
     }
 
+
     async agregarProductoAlCarrito(
         agregarProductoDTO: AgregarProductoCarritoRequestDTO,
     ): Promise<ProductoCarrito> {
+        console.log('DTO AgregarProductoCarrito:', agregarProductoDTO);
+        console.log(`Buscando carrito con ID: ${agregarProductoDTO.carritoId}`);
         let carrito = await this.carritoRepository.findOne({ where: { id: agregarProductoDTO.carritoId } });
 
-        if (!carrito) {
-            carrito = await this.crearCarrito(agregarProductoDTO.rutCliente);
-        }
-
+        console.log(`Buscando producto con ID: ${agregarProductoDTO.productoId}`);
         const producto = await this.productoRepository.findOne({ where: { id: agregarProductoDTO.productoId } });
         if (!producto) {
             throw new NotFoundException(`Producto con ID ${agregarProductoDTO.productoId} no encontrado`);
         }
-
+        console.log('Producto encontrado:', producto);
 
         if (producto.stock < agregarProductoDTO.cantidad) {
             throw new HttpException({
@@ -123,19 +145,34 @@ export class CarritoService {
             }, HttpStatus.BAD_REQUEST);
         }
 
-        console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
+        if (!carrito) {
+            console.log('Carrito no encontrado, creando un nuevo carrito y agregando el producto...');
+            carrito = this.carritoRepository.create({
+                rutCliente: agregarProductoDTO.rutCliente,
+                statusCarrito: 'activo',
+                creacionDate: new Date(),
+                subtotal: producto.precio * agregarProductoDTO.cantidad
+            });
+            await this.carritoRepository.save(carrito);
+            console.log('Nuevo carrito creado:', carrito);
+        } else {
+            console.log(`Carrito existente encontrado. ID del Carrito: ${carrito.id}`);
+            carrito.subtotal = (carrito.subtotal || 0) + producto.precio * agregarProductoDTO.cantidad;
+            await this.carritoRepository.save(carrito);
+            console.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
+        }
 
+        console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
         const productoCarrito = this.productoCarritoRepository.create({
             carritoId: carrito.id,
             productoId: agregarProductoDTO.productoId,
             cantidad: agregarProductoDTO.cantidad
         });
+        await this.productoCarritoRepository.save(productoCarrito);
 
-        carrito.subtotal += producto.precio * agregarProductoDTO.cantidad;
-        await this.carritoRepository.save(carrito);
-
-        return this.productoCarritoRepository.save(productoCarrito);
+        return productoCarrito;
     }
+
 
     async actualizarProductoEnCarrito(actualizarCantidadDTO: ActualizarProductoCarritoDTO): Promise<ProductoCarrito> {
         const { carritoId, productoId, cantidad } = actualizarCantidadDTO;
@@ -191,7 +228,7 @@ export class CarritoService {
     }
 
     async aplicarDescuentoAlCarrito(subtotal: number, cupon: string): Promise<DescuentoResponseDTO> {
-
+        console.log(`Aplicando descuento. Subtotal: ${subtotal}, Cupón: ${cupon}`);
         if (cupon !== 'DESC10') {
             throw new HttpException({
                 status: HttpStatus.BAD_REQUEST,
@@ -205,6 +242,8 @@ export class CarritoService {
         const nuevoIVA = nuevoSubtotal * 0.19; // IVA de 19%
         const nuevoTotal = nuevoSubtotal + nuevoIVA;
 
+        console.log(`Descuento aplicado. Nuevo subtotal: ${nuevoSubtotal}, Nuevo total: ${nuevoTotal}`);
+
         return {
             montoDescuento: montoDescuento,
             nuevoSubtotal: nuevoSubtotal,
@@ -212,26 +251,6 @@ export class CarritoService {
             nuevoTotal: nuevoTotal
         };
     }
-
-    async aplicarCuponAlCarrito(idCarrito: number, cupon: string): Promise<Carrito> {
-        const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
-        if (!carrito) {
-            throw new NotFoundException('Carrito no encontrado');
-        }
-
-        try {
-            const descuento = await this.aplicarDescuentoAlCarrito(carrito.subtotal, cupon);
-            carrito.cupon = cupon;
-            carrito.subtotal = descuento.nuevoSubtotal;
-            await this.carritoRepository.save(carrito);
-
-            return carrito;
-        } catch (error) {
-
-            throw error;
-        }
-    }
-
 
     async eliminarCarrito(idCarrito: number): Promise<void> {
         console.log(`Intentando eliminar carrito con ID: ${idCarrito}`);
@@ -253,6 +272,21 @@ export class CarritoService {
 
         if (!carrito) {
             throw new NotFoundException('Carrito no encontrado para el cliente.');
+        }
+
+        return carrito;
+    }
+
+
+    async obtenerCarritoPorID(idCarrito: number): Promise<Carrito> {
+        console.log(`Obteniendo carrito con ID: ${idCarrito}`);
+        const carrito = await this.carritoRepository.findOne({
+            where: { id: idCarrito },
+            relations: ['productos']
+        });
+        console.log('Carrito encontrado:', carrito);
+        if (!carrito) {
+            throw new NotFoundException(`Carrito con ID ${idCarrito} no encontrado`);
         }
 
         return carrito;

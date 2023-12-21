@@ -36,91 +36,52 @@ export class ComprasService {
         private estadoCompraRepository: Repository<EstadoCompra>
     ) { }
 
-    async crearCompra(datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
-        console.log('Datos de Compra:', datosCompra);
-        console.log('Iniciando método crearCompra');
-        // const producto = await this.productosRepository.findOne({ where: { id: datosCompra.id_producto } });
-        // console.log('Producto encontrado:', producto);
-        // if (!producto) {
-        //     throw new HttpException({
-        //         status: HttpStatus.BAD_REQUEST,
-        //         error: 'Producto no encontrado con el ID proporcionado',
-        //     }, HttpStatus.BAD_REQUEST);
-        // }
 
-        const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
-        console.log('Cliente encontrado:', cliente);
-        if (!cliente) {
-            throw new HttpException({
-                status: HttpStatus.BAD_REQUEST,
-                error: 'Cliente no encontrado con el RUT proporcionado',
-            }, HttpStatus.BAD_REQUEST);
-        }
-
-        const direccionEnvio = `${cliente.direccion}, ${cliente.comuna}, ${cliente.ciudad}, ${cliente.region}`;
-        console.log('Dirección de Envío:', direccionEnvio);
-        // const total = datosCompra.cantidad * producto.precio;
-        console.log('Cliente:', cliente);
-        // console.log('Producto:', producto);
-
-        if (!cliente.direccion || !cliente.comuna || !cliente.ciudad || !cliente.region) {
-            console.error('Faltan datos de dirección del cliente');
-            throw new HttpException('Faltan datos de dirección del cliente', HttpStatus.BAD_REQUEST);
-        }
-
-
-        const compra = this.comprasRepository.create({
-            cliente: cliente,
-            // total: total,
-            calle_numero: datosCompra.calle_numero,
-            depto_casa_oficina: datosCompra.depto_casa_oficina,
-            ciudad: datosCompra.ciudad,
-            comuna: datosCompra.comuna,
-            region: datosCompra.region,
-        });
-        console.log('Compra a guardar:', compra);
-        await this.comprasRepository.save(compra);
-
-
-        return { mensaje: 'Compra realizada con éxito' };
-
-    }
-
-    async confirmarCompra(rutCliente: string, datosCompra: CrearCompraDto): Promise<CrearCompraResponseDto> {
+    async confirmarCompra(rutCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
+        console.log('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
         console.log('Datos de compra:', datosCompra);
+        console.log(`Buscando cliente con RUT: ${rutCliente}`);
+        const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
 
-        const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: rutCliente } });
         if (!cliente) {
             throw new NotFoundException('Cliente no encontrado');
         }
+        console.log('Cliente encontrado:', cliente);
 
         const metodoPago = await this.metodoPagoRepository.findOne({ where: { id: datosCompra.metodoPagoId } });
         if (!metodoPago) {
             throw new NotFoundException('Método de pago no encontrado');
         }
+        console.log('Método de pago encontrado:', metodoPago);
 
         const metodoEnvio = await this.metodoEnvioRepository.findOne({ where: { id: datosCompra.idMetodoEnvio } });
         if (!metodoEnvio) {
             throw new NotFoundException('Método de envío no encontrado');
         }
+        console.log('Método de envío encontrado:', metodoEnvio);
 
-        const carrito = await this.carritoService.verCarrito(rutCliente);
+        if (codigoCupon) {
+            console.log(`Aplicando cupón al carrito ID: ${carritoId}`);
+            await this.carritoService.asignarCuponACarrito(carritoId, codigoCupon);
+        }
+
+
+        const carrito = await this.carritoService.obtenerCarritoPorID(carritoId);
         console.log(`Carrito encontrado:`, carrito);
+        console.log(`Carrito obtenido (Antes de confirmar compra): `, carrito);
         if (!carrito || carrito.productos.length === 0) {
             console.error('Carrito no encontrado o vacío');
             throw new NotFoundException('Carrito no encontrado o vacío');
         }
 
-        let totalCompra = 0;
+        let totalSinDescuento = 0;
         let productosTicket = [];
 
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
-            console.log(`Producto en carrito:`, producto);
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
-
 
             if (producto.stock < productoCarrito.cantidad) {
                 throw new HttpException({
@@ -129,25 +90,31 @@ export class ComprasService {
                 }, HttpStatus.BAD_REQUEST);
             }
 
-
-            totalCompra += productoCarrito.cantidad * producto.precio;
+            totalSinDescuento += productoCarrito.cantidad * producto.precio;
             productosTicket.push({
                 nombre: producto.nombre,
                 cantidad: productoCarrito.cantidad,
                 precio: producto.precio
             });
-
+            console.log(`Total sin descuento: ${totalSinDescuento}`);
 
             console.log(`Stock actual del producto ID ${producto.id}: ${producto.stock}`);
             producto.stock -= productoCarrito.cantidad;
             await this.productosRepository.save(producto);
             console.log(`Stock actualizado del producto ID ${producto.id}: ${producto.stock}`);
-
         }
 
+        const descuento = this.carritoService.obtenerDescuento(carrito);
+        const subtotal = totalSinDescuento;
+        const montoDescuento = descuento.montoDescuento;
+        const iva = (subtotal - montoDescuento) * 0.19;
+        const totalFinal = subtotal - montoDescuento + iva;
+
+        console.log(`Total final (con IVA): ${totalFinal}`);
+        console.log(`Creando entidad Compra con: Cupón: ${carrito.cupon}, Cliente RUT: ${cliente.rut_cliente}`);
         const compra = this.comprasRepository.create({
             cliente: cliente,
-            total: totalCompra,
+            total: totalFinal,
             metodoPago: metodoPago,
             metodoEnvio: metodoEnvio,
             calle_numero: datosCompra.calle_numero,
@@ -155,50 +122,46 @@ export class ComprasService {
             ciudad: datosCompra.ciudad,
             comuna: datosCompra.comuna,
             region: datosCompra.region,
-        });
+            cuponUsado: carrito.cupon
 
+        });
         await this.comprasRepository.save(compra);
+        console.log('Compra creada:', compra);
 
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
-            if (!producto) {
-                throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
-            }
-
+            console.log(`Producto encontrado: ${producto.nombre}, Cantidad: ${productoCarrito.cantidad}, Precio unitario: ${producto.precio}`);
             const detalle = this.detalleCompraRepository.create({
                 compra: compra,
                 producto: producto,
                 cantidad: productoCarrito.cantidad,
-                precio: productoCarrito.precio,
+                precio: producto.precio,
             });
-            console.log(`Detalle a guardar:`, detalle);
             await this.detalleCompraRepository.save(detalle);
+            console.log(`Detalle de compra guardado:`, detalle);
         }
 
         const estadoEntregado = await this.estadoCompraRepository.findOne({ where: { estado: 'Entregado' } });
-        console.log('Estado Entregado:', estadoEntregado);
-        if (!estadoEntregado) {
-            throw new NotFoundException('Estado de compra "Entregado" no encontrado');
-        }
-        console.log('Asignando estado a la compra', compra);
         compra.estado = estadoEntregado;
-        console.log('Compra con estado asignado:', compra);
         await this.comprasRepository.save(compra);
         console.log('Compra guardada con estado:', compra);
 
         await this.carritoService.vaciarCarrito(rutCliente);
 
+        const respuesta = new CrearCompraResponseDto();
+        respuesta.mensaje = 'Compra realizada con éxito';
+        respuesta.idPedido = compra.id;
+        respuesta.subtotal = subtotal;
+        respuesta.montoDescuento = montoDescuento;
+        respuesta.IVA = iva;
+        respuesta.total = totalFinal;
+        respuesta.productos = productosTicket.map(pt => ({
+            nombre: pt.nombre,
+            cantidad: pt.cantidad,
+            precio: pt.precio
+        }));
 
-        return {
-            mensaje: 'Compra realizada con éxito',
-            idPedido: compra.id,
-            total: totalCompra,
-            productos: productosTicket.map(pt => ({
-                nombre: pt.nombre,
-                cantidad: pt.cantidad,
-                precio: pt.precio
-            }))
-        };
+        return respuesta;
     }
 
 

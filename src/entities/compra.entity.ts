@@ -4,6 +4,7 @@ import { Producto } from './producto.entity';
 import { MetodoPago } from './metodo-de-pago.entity';
 import { MetodoEnvio } from './metodo-de-envio.entity';
 import { EstadoCompra } from './estado-compra.entity';
+import { Carrito } from './carrito.entity';
 
 @Entity('compra')
 export class Compra {
@@ -14,12 +15,6 @@ export class Compra {
     @JoinColumn({ name: 'rut_cliente' })
     cliente: Cliente;
 
-    // @ManyToOne(() => Producto)
-    // @JoinColumn({ name: 'id_producto' })
-    // producto: Producto;
-
-    // @Column('int')
-    // cantidad: number;
 
     @Column('int')
     total: number;
@@ -51,7 +46,11 @@ export class Compra {
     @Column('varchar', { length: 255 })
     region: string;
 
+    @Column({ type: 'varchar', nullable: true })
+    cuponUsado?: string;
+
     @ManyToOne(type => EstadoCompra)
     @JoinColumn({ name: 'id_estadoCompra' })
     estado: EstadoCompra;
+
 }

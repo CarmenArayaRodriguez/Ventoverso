@@ -13,4 +13,13 @@ export class CrearCompraResponseDto {
 
     @ApiProperty({ example: 39980, description: 'Total de la compra' })
     total?: number;
+
+    @ApiProperty({ example: 35000, description: 'Subtotal de la compra antes de aplicar descuentos' })
+    subtotal?: number;
+
+    @ApiProperty({ example: 5000, description: 'Monto del descuento aplicado' })
+    montoDescuento?: number;
+
+    @ApiProperty({ example: 6650, description: 'IVA aplicado sobre el total' })
+    IVA?: number;
 }

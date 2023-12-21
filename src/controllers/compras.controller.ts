@@ -33,15 +33,16 @@ export class ComprasController {
     async confirmarCompra(
         @Request() req,
         @Body() datosCompra: CrearCompraDto,
+        @Body('carritoId') carritoId: number
     ): Promise<CrearCompraResponseDto> {
         console.log('Info Usuario en Controlador:', req.user);
         if (!req.user) {
             throw new UnauthorizedException('Usuario no autenticado');
         }
-        const rutCliente = req.user.rutCliente;
+        const rutCliente = req.user.idCliente;
         console.log('Datos recibidos:', datosCompra);
         try {
-            return await this.comprasService.confirmarCompra(rutCliente, datosCompra);
+            return await this.comprasService.confirmarCompra(rutCliente, carritoId, datosCompra, datosCompra.codigoCupon);
         } catch (e) {
 
             console.error('Error al confirmar la compra:', e);
