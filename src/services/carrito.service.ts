@@ -109,27 +109,17 @@ export class CarritoService {
         };
     }
 
-
-    async crearCarrito(rutCliente: string): Promise<Carrito> {
-        console.log('crearCarrito - rutCliente:', rutCliente);
-        const nuevoCarrito = this.carritoRepository.create({
-            rutCliente,
-            statusCarrito: 'activo',
-            creacionDate: new Date(),
-            subtotal: 0
-        });
-        const carritoGuardado = await this.carritoRepository.save(nuevoCarrito);
-        console.log('crearCarrito - carritoGuardado:', carritoGuardado);
-        return carritoGuardado;
-    }
-
-
     async agregarProductoAlCarrito(
         agregarProductoDTO: AgregarProductoCarritoRequestDTO,
     ): Promise<ProductoCarrito> {
         console.log('DTO AgregarProductoCarrito:', agregarProductoDTO);
-        console.log(`Buscando carrito con ID: ${agregarProductoDTO.carritoId}`);
-        let carrito = await this.carritoRepository.findOne({ where: { id: agregarProductoDTO.carritoId } });
+
+        let carrito = await this.carritoRepository.findOne({
+            where: {
+                rutCliente: agregarProductoDTO.rutCliente,
+                statusCarrito: 'activo'
+            }
+        });
 
         console.log(`Buscando producto con ID: ${agregarProductoDTO.productoId}`);
         const producto = await this.productoRepository.findOne({ where: { id: agregarProductoDTO.productoId } });
@@ -151,28 +141,28 @@ export class CarritoService {
                 rutCliente: agregarProductoDTO.rutCliente,
                 statusCarrito: 'activo',
                 creacionDate: new Date(),
-                subtotal: producto.precio * agregarProductoDTO.cantidad
+                subtotal: 0
             });
             await this.carritoRepository.save(carrito);
             console.log('Nuevo carrito creado:', carrito);
-        } else {
-            console.log(`Carrito existente encontrado. ID del Carrito: ${carrito.id}`);
-            carrito.subtotal = (carrito.subtotal || 0) + producto.precio * agregarProductoDTO.cantidad;
-            await this.carritoRepository.save(carrito);
-            console.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
         }
 
+        console.log(`Carrito encontrado o creado. ID del Carrito: ${carrito.id}`);
+        carrito.subtotal = (carrito.subtotal || 0) + producto.precio * agregarProductoDTO.cantidad;
+        await this.carritoRepository.save(carrito);
+        console.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
+
         console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
+
         const productoCarrito = this.productoCarritoRepository.create({
             carritoId: carrito.id,
             productoId: agregarProductoDTO.productoId,
             cantidad: agregarProductoDTO.cantidad
         });
-        await this.productoCarritoRepository.save(productoCarrito);
 
+        await this.productoCarritoRepository.save(productoCarrito);
         return productoCarrito;
     }
-
 
     async actualizarProductoEnCarrito(actualizarCantidadDTO: ActualizarProductoCarritoDTO): Promise<ProductoCarrito> {
         const { carritoId, productoId, cantidad } = actualizarCantidadDTO;
@@ -292,35 +282,15 @@ export class CarritoService {
         return carrito;
     }
 
-    // async vaciarCarrito(rutCliente: string): Promise<void> {
+    async vaciarCarrito(rutCliente: string): Promise<void> {
 
-    //     const itemsCarrito = await this.carritoRepository.find({
-    //         where: { rutCliente: rutCliente }
-    //     });
-
-
-    //     if (itemsCarrito.length > 0) {
-    //         await this.carritoRepository.remove(itemsCarrito);
-    //     }
-    // }
-    async vaciarCarrito(carritoId: number): Promise<void> {
-        // Obtener el carrito con sus productos asociados
-        const carrito = await this.carritoRepository.findOne({
-            where: { id: carritoId },
-            relations: ['productos'] // Asume que 'productos' es el campo que contiene los productos del carrito
+        const itemsCarrito = await this.carritoRepository.find({
+            where: { rutCliente: rutCliente }
         });
-        console.log('VaciarCarrito - carritoId:', carritoId);
-        if (!carrito) {
-            throw new NotFoundException(`Carrito con ID ${carritoId} no encontrado`);
-        }
 
-        // Si el carrito tiene productos, eliminarlos primero
-        if (carrito.productos && carrito.productos.length > 0) {
-            // Asumiendo que tienes un método en tu servicio para eliminar productos del carrito
-            // Este método debería encargarse de eliminar las relaciones en la base de datos
-            await Promise.all(carrito.productos.map(producto =>
-                this.eliminarProductoDelCarrito(carritoId, producto.id)
-            ));
+
+        if (itemsCarrito.length > 0) {
+            await this.carritoRepository.remove(itemsCarrito);
         }
     }
 }

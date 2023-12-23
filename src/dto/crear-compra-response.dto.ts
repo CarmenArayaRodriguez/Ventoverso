@@ -22,4 +22,6 @@ export class CrearCompraResponseDto {
 
     @ApiProperty({ example: 6650, description: 'IVA aplicado sobre el total' })
     IVA?: number;
+    @ApiProperty()
+    costoEnvio?: number;
 }

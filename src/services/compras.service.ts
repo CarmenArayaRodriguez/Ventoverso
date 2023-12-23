@@ -109,9 +109,12 @@ export class ComprasService {
         const subtotal = totalSinDescuento;
         const montoDescuento = descuento.montoDescuento;
         const iva = (subtotal - montoDescuento) * 0.19;
-        const totalFinal = subtotal - montoDescuento + iva;
+        const costoEnvio = metodoEnvio.costoEnvio;
+        const totalFinal = subtotal - montoDescuento + iva + costoEnvio;
 
-        console.log(`Total final (con IVA): ${totalFinal}`);
+        console.log(`Total antes de envío: ${subtotal + iva}`);
+        console.log(`Costo de envío: ${costoEnvio}`);
+        console.log(`Total final con envío: ${totalFinal}`);
         console.log(`Creando entidad Compra con: Cupón: ${carrito.cupon}, Cliente RUT: ${cliente.rut_cliente}`);
         const compra = this.comprasRepository.create({
             cliente: cliente,
@@ -149,7 +152,7 @@ export class ComprasService {
 
         console.log('ConfirmarCompra Service - carritoId:', carritoId);
 
-        await this.carritoService.vaciarCarrito(carritoId);
+        await this.carritoService.vaciarCarrito(cliente.rut_cliente);
 
         const respuesta = new CrearCompraResponseDto();
         respuesta.mensaje = 'Compra realizada con éxito';
@@ -157,6 +160,7 @@ export class ComprasService {
         respuesta.subtotal = subtotal;
         respuesta.montoDescuento = montoDescuento;
         respuesta.IVA = iva;
+        respuesta.costoEnvio = costoEnvio;
         respuesta.total = totalFinal;
         respuesta.productos = productosTicket.map(pt => ({
             nombre: pt.nombre,

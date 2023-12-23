@@ -34,7 +34,6 @@ export class ComprasController {
     async confirmarCompra(
         @Request() req,
         @Body() datosCompra: CrearCompraDto,
-        // @Body('carritoId') carritoId: number
     ): Promise<CrearCompraResponseDto> {
         console.log('Carrito ID:', datosCompra.carritoId);
         console.log('Info Usuario en Controlador:', req.user);

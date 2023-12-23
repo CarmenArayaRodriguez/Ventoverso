@@ -16,18 +16,6 @@ import { DescuentoRequestDTO } from 'src/dto/descuento-request.dto';
 export class CarritoController {
     constructor(private readonly carritoService: CarritoService) { }
 
-    @Post()
-    @UseGuards(JWTGuard, RolesGuard)
-    @Roles('USUARIO')
-    @ApiBearerAuth('autenticacionJWT')
-    @ApiOperation({ summary: 'Crear un nuevo carrito' })
-    @ApiResponse({ status: 201, description: 'Carrito creado con éxito.' })
-    @ApiResponse({ status: 400, description: 'Datos inválidos.' })
-    async crearCarrito(@Body() crearCarritoDTO: CrearCarritoDTO) {
-        console.log('crearCarrito Controller - rutCliente:', crearCarritoDTO.rutCliente);
-        return this.carritoService.crearCarrito(crearCarritoDTO.rutCliente);
-    }
-
     @Post('/producto')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
@@ -133,7 +121,6 @@ export class CarritoController {
     @ApiResponse({ status: 400, description: 'Datos inválidos' })
     async aplicarCupon(
         @Param('idCarrito') idCarrito: number,
-        // @Body('cupon') cupon: string
         @Body() descuentoDto: DescuentoRequestDTO
     ): Promise<DescuentoResponseDTO> {
 
