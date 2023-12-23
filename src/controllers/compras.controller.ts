@@ -34,16 +34,27 @@ export class ComprasController {
     async confirmarCompra(
         @Request() req,
         @Body() datosCompra: CrearCompraDto,
-        @Body('carritoId') carritoId: number
     ): Promise<CrearCompraResponseDto> {
+        console.log('Carrito ID:', datosCompra.carritoId);
         console.log('Info Usuario en Controlador:', req.user);
+        console.log('Datos recibidos para confirmar compra:', datosCompra);
         if (!req.user) {
             throw new UnauthorizedException('Usuario no autenticado');
         }
         const rutCliente = req.user.idCliente;
+        const carritoId = datosCompra.carritoId;
+        console.log('ConfirmarCompra - carritoId:', carritoId);
+
         console.log('Datos recibidos:', datosCompra);
+
+
+        console.log('ConfirmarCompra - carritoId:', carritoId);
+
         try {
-            return await this.comprasService.confirmarCompra(rutCliente, carritoId, datosCompra, datosCompra.codigoCupon);
+            console.log('Datos de Compra:', datosCompra);
+            console.log('Carrito ID recibido en el controlador:', datosCompra.carritoId);
+
+            return await this.comprasService.confirmarCompra(req.user.idCliente, datosCompra.carritoId, datosCompra, datosCompra.codigoCupon);
         } catch (e) {
 
             console.error('Error al confirmar la compra:', e);

@@ -37,10 +37,11 @@ export class ComprasService {
     ) { }
 
 
-    async confirmarCompra(rutCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
+    async confirmarCompra(idCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
+        console.log('Carrito ID en servicio:', carritoId);
         console.log('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
         console.log('Datos de compra:', datosCompra);
-        console.log(`Buscando cliente con RUT: ${rutCliente}`);
+        console.log(`Buscando cliente con RUT: ${idCliente}`);
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
 
         if (!cliente) {
@@ -108,9 +109,12 @@ export class ComprasService {
         const subtotal = totalSinDescuento;
         const montoDescuento = descuento.montoDescuento;
         const iva = (subtotal - montoDescuento) * 0.19;
-        const totalFinal = subtotal - montoDescuento + iva;
+        const costoEnvio = metodoEnvio.costoEnvio;
+        const totalFinal = subtotal - montoDescuento + iva + costoEnvio;
 
-        console.log(`Total final (con IVA): ${totalFinal}`);
+        console.log(`Total antes de envío: ${subtotal + iva}`);
+        console.log(`Costo de envío: ${costoEnvio}`);
+        console.log(`Total final con envío: ${totalFinal}`);
         console.log(`Creando entidad Compra con: Cupón: ${carrito.cupon}, Cliente RUT: ${cliente.rut_cliente}`);
         const compra = this.comprasRepository.create({
             cliente: cliente,
@@ -146,7 +150,9 @@ export class ComprasService {
         await this.comprasRepository.save(compra);
         console.log('Compra guardada con estado:', compra);
 
-        await this.carritoService.vaciarCarrito(rutCliente);
+        console.log('ConfirmarCompra Service - carritoId:', carritoId);
+
+        await this.carritoService.vaciarCarrito(cliente.rut_cliente);
 
         const respuesta = new CrearCompraResponseDto();
         respuesta.mensaje = 'Compra realizada con éxito';
@@ -154,6 +160,7 @@ export class ComprasService {
         respuesta.subtotal = subtotal;
         respuesta.montoDescuento = montoDescuento;
         respuesta.IVA = iva;
+        respuesta.costoEnvio = costoEnvio;
         respuesta.total = totalFinal;
         respuesta.productos = productosTicket.map(pt => ({
             nombre: pt.nombre,

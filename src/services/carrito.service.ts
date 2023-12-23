@@ -109,27 +109,17 @@ export class CarritoService {
         };
     }
 
-
-    async crearCarrito(rutCliente: string): Promise<Carrito> {
-        console.log('crearCarrito - rutCliente:', rutCliente);
-        const nuevoCarrito = this.carritoRepository.create({
-            rutCliente,
-            statusCarrito: 'activo',
-            creacionDate: new Date(),
-            subtotal: 0
-        });
-        const carritoGuardado = await this.carritoRepository.save(nuevoCarrito);
-        console.log('crearCarrito - carritoGuardado:', carritoGuardado);
-        return carritoGuardado;
-    }
-
-
     async agregarProductoAlCarrito(
         agregarProductoDTO: AgregarProductoCarritoRequestDTO,
     ): Promise<ProductoCarrito> {
         console.log('DTO AgregarProductoCarrito:', agregarProductoDTO);
-        console.log(`Buscando carrito con ID: ${agregarProductoDTO.carritoId}`);
-        let carrito = await this.carritoRepository.findOne({ where: { id: agregarProductoDTO.carritoId } });
+
+        let carrito = await this.carritoRepository.findOne({
+            where: {
+                rutCliente: agregarProductoDTO.rutCliente,
+                statusCarrito: 'activo'
+            }
+        });
 
         console.log(`Buscando producto con ID: ${agregarProductoDTO.productoId}`);
         const producto = await this.productoRepository.findOne({ where: { id: agregarProductoDTO.productoId } });
@@ -151,28 +141,28 @@ export class CarritoService {
                 rutCliente: agregarProductoDTO.rutCliente,
                 statusCarrito: 'activo',
                 creacionDate: new Date(),
-                subtotal: producto.precio * agregarProductoDTO.cantidad
+                subtotal: 0
             });
             await this.carritoRepository.save(carrito);
             console.log('Nuevo carrito creado:', carrito);
-        } else {
-            console.log(`Carrito existente encontrado. ID del Carrito: ${carrito.id}`);
-            carrito.subtotal = (carrito.subtotal || 0) + producto.precio * agregarProductoDTO.cantidad;
-            await this.carritoRepository.save(carrito);
-            console.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
         }
 
+        console.log(`Carrito encontrado o creado. ID del Carrito: ${carrito.id}`);
+        carrito.subtotal = (carrito.subtotal || 0) + producto.precio * agregarProductoDTO.cantidad;
+        await this.carritoRepository.save(carrito);
+        console.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
+
         console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
+
         const productoCarrito = this.productoCarritoRepository.create({
             carritoId: carrito.id,
             productoId: agregarProductoDTO.productoId,
             cantidad: agregarProductoDTO.cantidad
         });
-        await this.productoCarritoRepository.save(productoCarrito);
 
+        await this.productoCarritoRepository.save(productoCarrito);
         return productoCarrito;
     }
-
 
     async actualizarProductoEnCarrito(actualizarCantidadDTO: ActualizarProductoCarritoDTO): Promise<ProductoCarrito> {
         const { carritoId, productoId, cantidad } = actualizarCantidadDTO;
@@ -303,5 +293,4 @@ export class CarritoService {
             await this.carritoRepository.remove(itemsCarrito);
         }
     }
-
 }
