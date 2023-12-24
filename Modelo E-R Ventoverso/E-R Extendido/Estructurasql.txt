@@ -13,21 +13,19 @@ table cliente {
 	
 }
 
-table estadoCompra {
-  id integer [increment,pk]
-  estado varchar(10)
-    
-}
+
 
 table compra {
 id integer [increment,pk]
 rut_cliente varchar(10) [ref: > cliente.rut_cliente]
 id_producto integer [ref: > producto.id]
 id_direccionEnvio integer [ref: > direccionEnvio.id] // Nueva referencia a la tabla direccionEnvio
-id_estadoCompra integer [ref: > estadoCompra.id]
 total int [not null]
 fecha timestamp [default: `current_timestamp()`]
 estado varchar (255)
+cuponUsado boolean
+
+
 }
 
 table detalleCompra {

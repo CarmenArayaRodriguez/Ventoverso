@@ -16,20 +16,15 @@ CREATE TABLE `cliente` (
   `roles` varchar(255)
 );
 
-CREATE TABLE `estadoCompra` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `estado` varchar(10)
-);
-
 CREATE TABLE `compra` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
   `id_producto` integer,
   `id_direccionEnvio` integer,
-  `id_estadoCompra` integer,
   `total` int NOT NULL,
   `fecha` timestamp DEFAULT (current_timestamp()),
-  `estado` varchar(255)
+  `estado` varchar(255),
+  `cuponUsado` boolean
 );
 
 CREATE TABLE `detalleCompra` (
@@ -247,8 +242,6 @@ ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_
 ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`id_direccionEnvio`) REFERENCES `direccionEnvio` (`id`);
-
-ALTER TABLE `compra` ADD FOREIGN KEY (`id_estadoCompra`) REFERENCES `estadoCompra` (`id`);
 
 ALTER TABLE `detalleCompra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
