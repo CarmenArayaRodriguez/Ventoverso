@@ -14,7 +14,6 @@ import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 import { DireccionEnvioDto } from 'src/dto/direccion-envio.dto';
 import { Carrito } from 'src/entities/carrito.entity';
 import { DetalleCompra } from 'src/entities/detalle-compra.entity';
-import { EstadoCompra } from 'src/entities/estado-compra.entity';
 
 @Injectable()
 export class ComprasService {
@@ -32,8 +31,6 @@ export class ComprasService {
         private metodoEnvioRepository: Repository<MetodoEnvio>,
         @InjectRepository(DetalleCompra)
         private detalleCompraRepository: Repository<DetalleCompra>,
-        @InjectRepository(EstadoCompra)
-        private estadoCompraRepository: Repository<EstadoCompra>
     ) { }
 
 
@@ -145,10 +142,7 @@ export class ComprasService {
             console.log(`Detalle de compra guardado:`, detalle);
         }
 
-        const estadoEntregado = await this.estadoCompraRepository.findOne({ where: { estado: 'Entregado' } });
-        compra.estado = estadoEntregado;
         await this.comprasRepository.save(compra);
-        console.log('Compra guardada con estado:', compra);
 
         console.log('ConfirmarCompra Service - carritoId:', carritoId);
 
