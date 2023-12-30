@@ -25,10 +25,28 @@ import { ImagenesModule } from './modules/imagenes.module';
 import { AutenticacionModule } from './modules/autenticacion.module';
 import { CategoriaModule } from './modules/categoria.module';
 import { MarcaModule } from './modules/marca.module';
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
+
 
 async function bootstrap() {
   console.log('Iniciando la aplicación...');
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger({
+      transports: [
+        new winston.transports.Console({
+          level: 'debug',
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.ms(),
+            winston.format.colorize(),
+            winston.format.simple()
+          ),
+        }),
+      ]
+    })
+  });
+
   // app.useLogger(new Logger());
   app.use(express.json({ limit: '50mb' })); // Aumentar límite para JSON
   app.use(express.urlencoded({ limit: '50mb', extended: true })); // Aumentar límite para datos de formulario

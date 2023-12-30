@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Compra } from 'src/entities/compra.entity';
@@ -18,6 +18,8 @@ import { EstadoCompra } from 'src/entities/estado-compra.entity';
 
 @Injectable()
 export class ComprasService {
+    private readonly logger = new Logger(ComprasService.name);
+
     constructor(
         @InjectRepository(Compra)
         private comprasRepository: Repository<Compra>,
@@ -41,25 +43,35 @@ export class ComprasService {
         console.log('Carrito ID en servicio:', carritoId);
         console.log('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
         console.log('Datos de compra:', datosCompra);
-        console.log(`Buscando cliente con RUT: ${idCliente}`);
+        this.logger.debug(`Buscando cliente con RUT: ${idCliente}`);
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
+        this.logger.log(`Iniciando proceso de confirmación de compra para el cliente ${cliente.rut_cliente} y carrito ID: ${carritoId}.`);
 
+        this.logger.debug(`Buscando cliente con RUT: ${idCliente}.`);
         if (!cliente) {
+            this.logger.warn(`Cliente no encontrado con RUT: ${idCliente}.`);
             throw new NotFoundException('Cliente no encontrado');
+        } else {
+            this.logger.log(`Cliente encontrado: ${cliente.nombre}.`);
         }
-        console.log('Cliente encontrado:', cliente);
+
 
         const metodoPago = await this.metodoPagoRepository.findOne({ where: { id: datosCompra.metodoPagoId } });
         if (!metodoPago) {
+            this.logger.warn(`Método de pago no encontrado con ID: ${datosCompra.metodoPagoId}.`);
             throw new NotFoundException('Método de pago no encontrado');
+        } else {
+            this.logger.log(`Método de pago encontrado: ${metodoPago.nombreMetodoPago}.`);
         }
-        console.log('Método de pago encontrado:', metodoPago);
 
+        this.logger.debug(`Buscando método de envío con ID: ${datosCompra.idMetodoEnvio}.`);
         const metodoEnvio = await this.metodoEnvioRepository.findOne({ where: { id: datosCompra.idMetodoEnvio } });
         if (!metodoEnvio) {
+            this.logger.warn(`Método de envío no encontrado con ID: ${datosCompra.idMetodoEnvio}.`);
             throw new NotFoundException('Método de envío no encontrado');
+        } else {
+            this.logger.log(`Método de envío encontrado: ${metodoEnvio.descripcion}.`);
         }
-        console.log('Método de envío encontrado:', metodoEnvio);
 
         if (codigoCupon) {
             console.log(`Aplicando cupón al carrito ID: ${carritoId}`);
@@ -130,7 +142,7 @@ export class ComprasService {
 
         });
         await this.comprasRepository.save(compra);
-        console.log('Compra creada:', compra);
+        this.logger.log(`Compra confirmada exitosamente con ID: ${compra.id} para el cliente ${cliente.rut_cliente}.`);
 
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
