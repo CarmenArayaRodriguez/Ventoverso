@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Producto } from '../entities/producto.entity';
@@ -20,6 +20,8 @@ import { ImagenesService } from './imagenes.service';
 
 @Injectable()
 export class ProductoService {
+    private readonly logger = new Logger(ProductoService.name);
+
     constructor(
         @InjectRepository(Producto)
         private productoRepository: Repository<Producto>,
@@ -37,7 +39,7 @@ export class ProductoService {
     ) { }
 
     async obtenerDetalleProducto(id: number): Promise<ProductoDetalleResponseDTO> {
-        console.log(`Buscando producto con ID: ${id}`);
+        this.logger.log(`Buscando producto con ID: ${id}`);
         const producto = await this.productoRepository.findOne({
             where: { id },
             relations: ['categoria', 'marca', 'imagenes', 'detalleProducto'],
@@ -46,7 +48,7 @@ export class ProductoService {
         if (!producto) {
             throw new NotFoundException('Producto no encontrado');
         }
-        console.log('Producto encontrado:', producto);
+        this.logger.log('Producto encontrado:', producto);
 
         const productoDTO = ProductoMapper.toDto(producto);
 
@@ -60,7 +62,7 @@ export class ProductoService {
                         base64: base64Data
                     };
                 } catch (error) {
-                    console.error('Error al leer y convertir archivo de imagen:', error);
+                    this.logger.error('Error al leer y convertir archivo de imagen:', error);
                     return {
                         nombre: imagenProducto.nombreImagen,
                         base64: 'Imagen no disponible'
@@ -94,7 +96,7 @@ export class ProductoService {
             );
             productoGuardado = await this.productoRepository.save(nuevoProducto);
         } catch (error) {
-            console.error('Error al guardar el producto:', error);
+            this.logger.error('Error al guardar el producto:', error);
             throw new InternalServerErrorException('No se pudo guardar el producto');
         }
 
@@ -106,7 +108,7 @@ export class ProductoService {
                 detallesProducto.producto = productoGuardado;
                 await this.detalleProductoRepository.save(detallesProducto);
             } catch (error) {
-                console.error('Error al guardar los detalles del producto:', error);
+                this.logger.error('Error al guardar los detalles del producto:', error);
                 throw new InternalServerErrorException('No se pudieron guardar los detalles del producto');
             }
         }
@@ -119,7 +121,7 @@ export class ProductoService {
                     const base64Data = imagen.base64.split(';base64,').pop();
                     const ruta = `/imagenes-producto/${nombreImagen}`;
 
-                    console.log('Guardando imagen en:', ruta);
+                    this.logger.log('Guardando imagen en:', ruta);
                     const buffer = Buffer.from(base64Data, 'base64');
                     await fs.writeFile('../front-ventoverso/public' + ruta, buffer);
 
@@ -130,7 +132,7 @@ export class ProductoService {
                     await this.imagenProductoRepository.save(imagenProducto);
                 }
             } catch (error) {
-                console.error('Error al guardar imágenes:', error);
+                this.logger.error('Error al guardar imágenes:', error);
                 throw new InternalServerErrorException('No se pudieron guardar las imágenes');
             }
         }
@@ -147,18 +149,18 @@ export class ProductoService {
 
             return ProductoMapper.toDto(productoCompleto);
         } catch (error) {
-            console.error('Error al recuperar el producto completo:', error);
+            this.logger.error('Error al recuperar el producto completo:', error);
             throw new InternalServerErrorException('No se pudo recuperar el producto completo');
         }
     }
 
 
     async actualizarProducto(id: number, actualizarProductoDto: ActualizarProductoDTO): Promise<ProductoDetalleResponseDTO> {
-        console.log('Iniciando actualización de producto. ID:', id, 'Datos:', actualizarProductoDto);
+        this.logger.log('Iniciando actualización de producto. ID:', id, 'Datos:', actualizarProductoDto);
 
         try {
             let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes', 'detalleProducto'] });
-            console.log('Producto encontrado para actualizar:', producto);
+            this.logger.log('Producto encontrado para actualizar:', producto);
 
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${id} no encontrado`);
@@ -179,7 +181,7 @@ export class ProductoService {
 
             if (imagenes && imagenes.length > 0) {
                 for (const imagenDto of imagenes) {
-                    console.log('Procesando imagen:', imagenDto.nombre);
+                    this.logger.log('Procesando imagen:', imagenDto.nombre);
 
                     const nombreImagen = `${Date.now()}-${imagenDto.nombre}`;
                     const rutaImagen = `../front-ventoverso/public/imagenes-producto/${nombreImagen}`;
@@ -190,7 +192,7 @@ export class ProductoService {
                     imagenProducto.nombreImagen = nombreImagen;
                     imagenProducto.producto = producto;
                     await this.imagenProductoRepository.save(imagenProducto);
-                    console.log('Imagen guardada:', imagenProducto);
+                    this.logger.log('Imagen guardada:', imagenProducto);
                 }
             }
 
@@ -206,7 +208,7 @@ export class ProductoService {
 
             return ProductoMapper.toDto(productoCompleto);
         } catch (error) {
-            console.error('Error al actualizar producto. ID:', id, 'Error:', error);
+            this.logger.error('Error al actualizar producto. ID:', id, 'Error:', error);
             throw new InternalServerErrorException('Error al actualizar producto');
         }
     }
@@ -252,21 +254,21 @@ export class ProductoService {
                 throw error;
             }
 
-            console.error(`Error al eliminar producto con ID: ${id}`, error);
+            this.logger.error(`Error al eliminar producto con ID: ${id}`, error);
             throw new InternalServerErrorException('Error al eliminar producto');
         }
     }
 
     async obtenerProductosDestacados(): Promise<DestacadoCardResponseDTO[]> {
         try {
-            console.log("Iniciando obtenerProductosDestacados");
+            this.logger.log("Iniciando obtenerProductosDestacados");
 
             const productosDestacados = await this.productoRepository.find({
                 where: { estrellas: 5 },
                 take: 5
             });
 
-            console.log("Productos destacados encontrados:", productosDestacados);
+            this.logger.log("Productos destacados encontrados:", productosDestacados);
 
             return productosDestacados.map(producto => {
                 const resultado = {
@@ -277,11 +279,11 @@ export class ProductoService {
                     precio: producto.precio,
                 };
 
-                console.log("Resultado mapeado:", resultado);
+                this.logger.log("Resultado mapeado:", resultado);
                 return resultado;
             });
         } catch (error) {
-            console.error("Error al obtener productos destacados:", error);
+            this.logger.error("Error al obtener productos destacados:", error);
             throw new InternalServerErrorException('Descripción del error');
         }
     }

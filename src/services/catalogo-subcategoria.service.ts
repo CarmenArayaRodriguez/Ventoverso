@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Producto } from 'src/entities/producto.entity';
@@ -8,6 +8,8 @@ import { CatalogoSubcategoriaMapper } from 'src/mappers/catalogo-subcategoria.ma
 
 @Injectable()
 export class CatalogoSubcategoriaService {
+    private readonly logger = new Logger(CatalogoSubcategoriaService.name);
+
     constructor(
         @InjectRepository(Producto)
         private productoRepository: Repository<Producto>,
@@ -16,22 +18,22 @@ export class CatalogoSubcategoriaService {
     ) { }
 
     async obtenerProductos(): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
-        console.log("Inicio de obtenerProductos");
-        console.log("Consultando subcategoría con ID 2");
+        this.logger.log("Inicio de obtenerProductos");
+        this.logger.log("Consultando subcategoría con ID 2");
         const subcategoriaObj = await this.subcategoriaRepository.findOne({ where: { id: 2 } });
-        console.log("Subcategoría obtenida:", subcategoriaObj);
-        console.log("Subcategoría obtenida:", subcategoriaObj);
+        this.logger.log("Subcategoría obtenida:", subcategoriaObj);
+        this.logger.log("Subcategoría obtenida:", subcategoriaObj);
         if (!subcategoriaObj) {
             throw new NotFoundException("Subcategoría no encontrada");;
         }
 
-        console.log("Consultando productos de la subcategoría");
+        this.logger.log("Consultando productos de la subcategoría");
         const productos = await this.productoRepository.find({
             where: { subcategoria: subcategoriaObj },
             relations: ['imagenes'],
             take: 16
         });
-        console.log("Productos encontrados:", productos);
+        this.logger.log("Productos encontrados:", productos);
         if (!productos || productos.length === 0) {
             return [];
         }

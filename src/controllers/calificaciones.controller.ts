@@ -1,10 +1,12 @@
-import { Controller, Get, HttpException, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, Logger } from '@nestjs/common';
 import { CalificacionesService } from '../services/calificaciones.service';
 import { CalificacionesPromedioDTO } from 'src/dto/calificaciones-promedio.dto';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('calificaciones')
 export class CalificacionesController {
+    private readonly logger = new Logger(CalificacionesController.name);
+
     constructor(private calificacionesService: CalificacionesService) { }
 
     @Get(':productoId/promedio')
@@ -15,7 +17,7 @@ export class CalificacionesController {
     @ApiNotFoundResponse({ description: 'Producto no encontrado' })
     async obtenerPromedio(@Param('productoId') productoId: number): Promise<CalificacionesPromedioDTO> {
         try {
-            console.log(`Ingresando al endpoint de obtener promedio con productoId: ${productoId}`);
+            this.logger.debug(`Ingresando al endpoint de obtener promedio con productoId: ${productoId}`);
             return await this.calificacionesService.obtenerCalificacionesPromedio(productoId);
         } catch (error) {
             if (error.status === HttpStatus.NOT_FOUND) {

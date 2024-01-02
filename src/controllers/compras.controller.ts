@@ -56,7 +56,9 @@ export class ComprasController {
             this.logger.debug('Datos de Compra:', datosCompra);
             this.logger.debug('Carrito ID recibido en el controlador:', datosCompra.carritoId);
 
-            return await this.comprasService.confirmarCompra(req.user.idCliente, datosCompra.carritoId, datosCompra, datosCompra.codigoCupon);
+            const resultado = await this.comprasService.confirmarCompra(req.user.idCliente, datosCompra.carritoId, datosCompra, datosCompra.codigoCupon);
+            this.logger.log(`Compra confirmada con éxito para el usuario con RUT: ${req.user.idCliente} y carrito ID: ${datosCompra.carritoId}.`);
+            return resultado
         } catch (e) {
 
             this.logger.error('Error al confirmar la compra:', e.message);

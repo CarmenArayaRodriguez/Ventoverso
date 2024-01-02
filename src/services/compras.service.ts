@@ -37,9 +37,9 @@ export class ComprasService {
 
 
     async confirmarCompra(idCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
-        console.log('Carrito ID en servicio:', carritoId);
-        console.log('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
-        console.log('Datos de compra:', datosCompra);
+        this.logger.debug('Carrito ID en servicio:', carritoId);
+        this.logger.debug('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
+        this.logger.debug('Datos de compra:', datosCompra);
         this.logger.debug(`Buscando cliente con RUT: ${idCliente}`);
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
         this.logger.log(`Iniciando proceso de confirmación de compra para el cliente ${cliente.rut_cliente} y carrito ID: ${carritoId}.`);
@@ -71,16 +71,16 @@ export class ComprasService {
         }
 
         if (codigoCupon) {
-            console.log(`Aplicando cupón al carrito ID: ${carritoId}`);
+            this.logger.log(`Aplicando cupón al carrito ID: ${carritoId}`);
             await this.carritoService.asignarCuponACarrito(carritoId, codigoCupon);
         }
 
 
         const carrito = await this.carritoService.obtenerCarritoPorID(carritoId);
-        console.log(`Carrito encontrado:`, carrito);
-        console.log(`Carrito obtenido (Antes de confirmar compra): `, carrito);
+        this.logger.debug(`Carrito encontrado:`, carrito);
+        this.logger.debug(`Carrito obtenido (Antes de confirmar compra): `, carrito);
         if (!carrito || carrito.productos.length === 0) {
-            console.error('Carrito no encontrado o vacío');
+            this.logger.warn('Carrito no encontrado o vacío');
             throw new NotFoundException('Carrito no encontrado o vacío');
         }
 
@@ -106,12 +106,12 @@ export class ComprasService {
                 cantidad: productoCarrito.cantidad,
                 precio: producto.precio
             });
-            console.log(`Total sin descuento: ${totalSinDescuento}`);
+            this.logger.log(`Total sin descuento: ${totalSinDescuento}`);
 
-            console.log(`Stock actual del producto ID ${producto.id}: ${producto.stock}`);
+            this.logger.debug(`Stock actual del producto ID ${producto.id}: ${producto.stock}`);
             producto.stock -= productoCarrito.cantidad;
             await this.productosRepository.save(producto);
-            console.log(`Stock actualizado del producto ID ${producto.id}: ${producto.stock}`);
+            this.logger.log(`Stock actualizado del producto ID ${producto.id}: ${producto.stock}`);
         }
 
         const descuento = this.carritoService.obtenerDescuento(carrito);
@@ -121,10 +121,10 @@ export class ComprasService {
         const costoEnvio = metodoEnvio.costoEnvio;
         const totalFinal = subtotal - montoDescuento + iva + costoEnvio;
 
-        console.log(`Total antes de envío: ${subtotal + iva}`);
-        console.log(`Costo de envío: ${costoEnvio}`);
-        console.log(`Total final con envío: ${totalFinal}`);
-        console.log(`Creando entidad Compra con: Cupón: ${carrito.cupon}, Cliente RUT: ${cliente.rut_cliente}`);
+        this.logger.debug(`Total antes de envío: ${subtotal + iva}`);
+        this.logger.log(`Costo de envío: ${costoEnvio}`);
+        this.logger.log(`Total final con envío: ${totalFinal}`);
+        this.logger.log(`Creando entidad Compra con: Cupón: ${carrito.cupon}, Cliente RUT: ${cliente.rut_cliente}`);
         const compra = this.comprasRepository.create({
             cliente: cliente,
             total: totalFinal,
@@ -143,7 +143,7 @@ export class ComprasService {
 
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
-            console.log(`Producto encontrado: ${producto.nombre}, Cantidad: ${productoCarrito.cantidad}, Precio unitario: ${producto.precio}`);
+            this.logger.debug(`Producto encontrado: ${producto.nombre}, Cantidad: ${productoCarrito.cantidad}, Precio unitario: ${producto.precio}`);
             const detalle = this.detalleCompraRepository.create({
                 compra: compra,
                 producto: producto,
@@ -151,12 +151,12 @@ export class ComprasService {
                 precio: producto.precio,
             });
             await this.detalleCompraRepository.save(detalle);
-            console.log(`Detalle de compra guardado:`, detalle);
+            this.logger.debug(`Detalle de compra guardado:`, detalle);
         }
 
         await this.comprasRepository.save(compra);
 
-        console.log('ConfirmarCompra Service - carritoId:', carritoId);
+        this.logger.debug('ConfirmarCompra Service - carritoId:', carritoId);
 
         await this.carritoService.vaciarCarrito(cliente.rut_cliente);
 

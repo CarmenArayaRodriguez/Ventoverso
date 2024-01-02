@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Carrito } from 'src/entities/carrito.entity';
@@ -12,6 +12,8 @@ import { Producto } from 'src/entities/producto.entity';
 
 @Injectable()
 export class CarritoService {
+    private readonly logger = new Logger(CarritoService.name);
+
     constructor(
         @InjectRepository(Carrito)
         private carritoRepository: Repository<Carrito>,
@@ -64,33 +66,33 @@ export class CarritoService {
     }
 
     async asignarCuponACarrito(idCarrito: number, cupon: string): Promise<Carrito> {
-        console.log(`Asignando cupón ${cupon} al carrito ${idCarrito}`);
+        this.logger.debug(`Asignando cupón ${cupon} al carrito ${idCarrito}`);
         const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
         if (!carrito) {
             throw new NotFoundException(`Carrito con ID ${idCarrito} no encontrado`);
         }
-        console.log(`Cupón actual en el carrito antes de asignar: ${carrito.cupon}`);
+        this.logger.debug(`Cupón actual en el carrito antes de asignar: ${carrito.cupon}`);
 
         carrito.cupon = cupon;
         await this.carritoRepository.save(carrito);
-        console.log(`Cupón asignado al carrito: ${carrito.cupon}`);
-        console.log(`Cupón asignado al carrito (Después de guardar): ${carrito.cupon}`);
+        this.logger.debug(`Cupón asignado al carrito: ${carrito.cupon}`);
+        this.logger.debug(`Cupón asignado al carrito (Después de guardar): ${carrito.cupon}`);
         return carrito;
     }
 
     public obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
-        console.log(`Carrito recibido para calcular descuento:`, carrito);
+        this.logger.debug(`Carrito recibido para calcular descuento:`, carrito);
         const cuponAplicado = carrito.cupon;
         if (cuponAplicado === 'DESC10') {
             const porcentajeDescuento = 0.10; // 10%
             const montoDescuento = carrito.subtotal * porcentajeDescuento;
-            console.log(`Cupón aplicado: ${cuponAplicado}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
+            this.logger.debug(`Cupón aplicado: ${cuponAplicado}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
             const nuevoSubtotal = carrito.subtotal - montoDescuento;
             const nuevoIVA = nuevoSubtotal * 0.19;
             const nuevoTotal = nuevoSubtotal + nuevoIVA;
 
-            console.log(`Cupón aplicado: ${carrito.cupon}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
-            console.log(`Nuevo subtotal después del descuento: ${nuevoSubtotal}, Nuevo IVA: ${nuevoIVA}, Nuevo total: ${nuevoTotal}`);
+            this.logger.debug(`Cupón aplicado: ${carrito.cupon}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
+            this.logger.debug(`Nuevo subtotal después del descuento: ${nuevoSubtotal}, Nuevo IVA: ${nuevoIVA}, Nuevo total: ${nuevoTotal}`);
             return {
                 montoDescuento: montoDescuento,
                 nuevoSubtotal: carrito.subtotal - montoDescuento,
@@ -112,7 +114,7 @@ export class CarritoService {
     async agregarProductoAlCarrito(
         agregarProductoDTO: AgregarProductoCarritoRequestDTO,
     ): Promise<ProductoCarrito> {
-        console.log('DTO AgregarProductoCarrito:', agregarProductoDTO);
+        this.logger.debug('DTO AgregarProductoCarrito:', agregarProductoDTO);
 
         let carrito = await this.carritoRepository.findOne({
             where: {
@@ -121,12 +123,12 @@ export class CarritoService {
             }
         });
 
-        console.log(`Buscando producto con ID: ${agregarProductoDTO.productoId}`);
+        this.logger.debug(`Buscando producto con ID: ${agregarProductoDTO.productoId}`);
         const producto = await this.productoRepository.findOne({ where: { id: agregarProductoDTO.productoId } });
         if (!producto) {
             throw new NotFoundException(`Producto con ID ${agregarProductoDTO.productoId} no encontrado`);
         }
-        console.log('Producto encontrado:', producto);
+        this.logger.debug('Producto encontrado:', producto);
 
         if (producto.stock < agregarProductoDTO.cantidad) {
             throw new HttpException({
@@ -136,7 +138,7 @@ export class CarritoService {
         }
 
         if (!carrito) {
-            console.log('Carrito no encontrado, creando un nuevo carrito y agregando el producto...');
+            this.logger.warn('Carrito no encontrado, creando un nuevo carrito y agregando el producto...');
             carrito = this.carritoRepository.create({
                 rutCliente: agregarProductoDTO.rutCliente,
                 statusCarrito: 'activo',
@@ -144,15 +146,16 @@ export class CarritoService {
                 subtotal: 0
             });
             await this.carritoRepository.save(carrito);
-            console.log('Nuevo carrito creado:', carrito);
+            this.logger.log('Nuevo carrito creado:', carrito);
+            this.logger.log(`Agregando producto ID: ${agregarProductoDTO.productoId} al nuevo carrito ID: ${carrito.id}`);
         }
 
-        console.log(`Carrito encontrado o creado. ID del Carrito: ${carrito.id}`);
+        this.logger.debug(`Carrito encontrado o creado. ID del Carrito: ${carrito.id}`);
         carrito.subtotal = (carrito.subtotal || 0) + producto.precio * agregarProductoDTO.cantidad;
         await this.carritoRepository.save(carrito);
-        console.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
+        this.logger.log(`Subtotal actualizado del carrito: ${carrito.subtotal}`);
 
-        console.log(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
+        this.logger.debug(`Agregando producto al carrito. ID del Carrito: ${carrito.id}, ID del Producto: ${agregarProductoDTO.productoId}, Cantidad: ${agregarProductoDTO.cantidad}`);
 
         const productoCarrito = this.productoCarritoRepository.create({
             carritoId: carrito.id,
@@ -178,12 +181,12 @@ export class CarritoService {
 
 
     async eliminarProductoDelCarrito(idCarrito: number, idProducto: number): Promise<void> {
-        console.log(`Intentando eliminar producto. ID del Carrito: ${idCarrito}, ID del Producto: ${idProducto}`);
+        this.logger.debug(`Intentando eliminar producto. ID del Carrito: ${idCarrito}, ID del Producto: ${idProducto}`);
         const resultado = await this.productoCarritoRepository.delete({
             carritoId: idCarrito,
             productoId: idProducto
         });
-        console.log('Resultado de la eliminación:', resultado);
+        this.logger.debug('Resultado de la eliminación:', resultado);
 
         if (resultado.affected === 0) {
             throw new NotFoundException('Producto no encontrado en el carrito');
@@ -194,10 +197,11 @@ export class CarritoService {
             where: { rutCliente: rutCliente },
             relations: ['productos']
         });
-        console.log(`Carrito para cliente ${rutCliente}:`, carrito);
+        this.logger.debug(`Carrito para cliente ${rutCliente}:`, carrito);
 
 
         if (!carrito) {
+            this.logger.warn('Carrito no encontrado para cliente:', rutCliente);
             throw new NotFoundException('Carrito no encontrado');
         }
 
@@ -218,7 +222,7 @@ export class CarritoService {
     }
 
     async aplicarDescuentoAlCarrito(subtotal: number, cupon: string): Promise<DescuentoResponseDTO> {
-        console.log(`Aplicando descuento. Subtotal: ${subtotal}, Cupón: ${cupon}`);
+        this.logger.debug(`Aplicando descuento. Subtotal: ${subtotal}, Cupón: ${cupon}`);
         if (cupon !== 'DESC10') {
             throw new HttpException({
                 status: HttpStatus.BAD_REQUEST,
@@ -232,7 +236,7 @@ export class CarritoService {
         const nuevoIVA = nuevoSubtotal * 0.19; // IVA de 19%
         const nuevoTotal = nuevoSubtotal + nuevoIVA;
 
-        console.log(`Descuento aplicado. Nuevo subtotal: ${nuevoSubtotal}, Nuevo total: ${nuevoTotal}`);
+        this.logger.debug(`Descuento aplicado. Nuevo subtotal: ${nuevoSubtotal}, Nuevo total: ${nuevoTotal}`);
 
         return {
             montoDescuento: montoDescuento,
@@ -243,16 +247,16 @@ export class CarritoService {
     }
 
     async eliminarCarrito(idCarrito: number): Promise<void> {
-        console.log(`Intentando eliminar carrito con ID: ${idCarrito}`);
+        this.logger.debug(`Intentando eliminar carrito con ID: ${idCarrito}`);
         const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
         if (!carrito) {
-            console.log('Carrito no encontrado');
+            this.logger.warn('Carrito no encontrado');
             throw new NotFoundException('Carrito no encontrado');
         }
 
         await this.productoCarritoRepository.delete({ carritoId: idCarrito });
         await this.carritoRepository.delete({ id: idCarrito });
-        console.log(`Carrito con ID: ${idCarrito} eliminado`);
+        this.logger.log(`Carrito con ID: ${idCarrito} eliminado`);
     }
 
     async obtenerCarritoPorCliente(rutCliente: string): Promise<Carrito> {
@@ -269,12 +273,12 @@ export class CarritoService {
 
 
     async obtenerCarritoPorID(idCarrito: number): Promise<Carrito> {
-        console.log(`Obteniendo carrito con ID: ${idCarrito}`);
+        this.logger.debug(`Obteniendo carrito con ID: ${idCarrito}`);
         const carrito = await this.carritoRepository.findOne({
             where: { id: idCarrito },
             relations: ['productos']
         });
-        console.log('Carrito encontrado:', carrito);
+        this.logger.debug('Carrito encontrado:', carrito);
         if (!carrito) {
             throw new NotFoundException(`Carrito con ID ${idCarrito} no encontrado`);
         }

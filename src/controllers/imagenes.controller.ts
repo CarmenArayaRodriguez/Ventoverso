@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors, Logger } from '@nestjs/common';
 import { ImagenesService } from 'src/services/imagenes.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -7,6 +7,8 @@ import { Response } from 'express';
 @ApiTags('imagenes')
 @Controller()
 export class ImagenesController {
+    private readonly logger = new Logger(ImagenesController.name);
+
     constructor(private readonly imagenesService: ImagenesService) { }
 
     @Get("writeFileBase64/:nombreArchivo/:texto")
@@ -35,7 +37,7 @@ export class ImagenesController {
             const { nombreArchivo, datosBase64 } = body;
             return await this.imagenesService.guardarImagenBase64(nombreArchivo, datosBase64);
         } catch (error) {
-            console.error('Error al subir imagen en formato base64:', error);
+            this.logger.error('Error al subir imagen en formato base64:', error);
             throw new Error('Error al procesar la imagen en base64');
         }
     }
@@ -48,7 +50,7 @@ export class ImagenesController {
             const nombreArchivo = body.nombreArchivo;
             return await this.imagenesService.guardarImagenBinaria(nombreArchivo, archivo.buffer);
         } catch (error) {
-            console.error('Error al subir archivo binario:', error);
+            this.logger.error('Error al subir archivo binario:', error);
             throw new Error('Error al procesar el archivo binario');
         }
     }

@@ -22,8 +22,4 @@ export class AgregarProductoCarritoRequestDTO {
     @ApiProperty({ description: 'Cantidad del producto a agregar', example: 0 })
     @IsNumber()
     cantidad: number;
-
-    constructor() {
-        console.log('DTO AgregarProductoCarritoRequestDTO creado');
-    }
 }

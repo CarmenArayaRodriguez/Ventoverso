@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Producto } from 'src/entities/producto.entity';
@@ -7,6 +7,8 @@ import { DestacadoCardResponseDTO } from 'src/dto/destacado-card-response.dto';
 
 @Injectable()
 export class ProductosDestacadosService {
+    private readonly logger = new Logger(ProductosDestacadosService.name);
+
     constructor(
         @InjectRepository(Producto)
         private readonly productoRepository: Repository<Producto>,
@@ -30,7 +32,7 @@ export class ProductosDestacadosService {
                 precio: producto.precio,
             }));
         } catch (error) {
-            console.error("Error al obtener productos destacados:", error);
+            this.logger.error("Error al obtener productos destacados:", error);
 
             throw new InternalServerErrorException('Error al obtener productos destacados');
         }

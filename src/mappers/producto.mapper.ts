@@ -33,15 +33,15 @@ export class ProductoMapper {
 
         if (crearProductoDto.id_categoria) {
             producto.categoria = await categoriaRepo.findOne({ where: { id: crearProductoDto.id_categoria } });
-            console.log('ID Categoria:', crearProductoDto.id_categoria);
+
         }
         if (crearProductoDto.id_subcategoria) {
             producto.subcategoria = await subcategoriaRepo.findOne({ where: { id: crearProductoDto.id_subcategoria } });
-            console.log('ID Subcategoria:', crearProductoDto.id_subcategoria);
+
         }
         if (crearProductoDto.id_marcas) {
             producto.marca = await marcaRepo.findOne({ where: { id: crearProductoDto.id_marcas } });
-            console.log('ID Marca:', crearProductoDto.id_marcas);
+
         }
 
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { promises as fs } from 'fs';
 import { ImagenProducto } from 'src/entities/imagen-producto.entity';
@@ -8,6 +8,8 @@ import * as path from 'path';
 
 @Injectable()
 export class ImagenesService {
+    private readonly logger = new Logger(ImagenesService.name);
+
     constructor(
         @InjectRepository(ImagenProducto)
         private imagenProductoRepository: Repository<ImagenProducto>,
@@ -17,7 +19,7 @@ export class ImagenesService {
             await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, texto, 'base64');
             return 'Archivo escrito exitosamente.';
         } catch (error) {
-            console.error('Error al escribir el archivo:', error);
+            this.logger.error('Error al escribir el archivo:', error);
             throw new Error('Error al escribir el archivo');
         }
     }
@@ -25,13 +27,13 @@ export class ImagenesService {
     async leerArchivo(nombreArchivo: string): Promise<string> {
         try {
             const rutaCompleta = path.join(__dirname, '../../', nombreArchivo);
-            console.log(`Leyendo archivo: ${rutaCompleta}`);
+            this.logger.log(`Leyendo archivo: ${rutaCompleta}`);
             const buffer = await fs.readFile(rutaCompleta);
             const contenido = buffer.toString('base64');
             return contenido;
         } catch (error) {
-            console.error('Error al leer el archivo');
-            console.error(error);
+            this.logger.error('Error al leer el archivo');
+            this.logger.error(error);
             throw new Error('Error al leer el archivo');
         }
     }
@@ -47,7 +49,7 @@ export class ImagenesService {
             await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, buffer);
             return `Archivo ${nombreArchivo} guardado desde base64`;
         } catch (error) {
-            console.error('Error al guardar imagen desde base64:', error);
+            this.logger.error('Error al guardar imagen desde base64:', error);
             throw new Error('Error al guardar la imagen en base64');
         }
     }
@@ -58,7 +60,7 @@ export class ImagenesService {
             await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, bufferArchivo);
             return `Archivo ${nombreArchivo} guardado desde binario`;
         } catch (error) {
-            console.error('Error al guardar imagen desde binario:', error);
+            this.logger.error('Error al guardar imagen desde binario:', error);
             throw new Error('Error al guardar la imagen en binario');
         }
     }
@@ -74,13 +76,13 @@ export class ImagenesService {
 
     //Recuperar la ruta de una imagen
     async obtenerRutaImagenProducto(idProducto: number): Promise<string> {
-        console.log(`Obteniendo ruta de imagen para el producto con ID: ${idProducto}`);
+        this.logger.log(`Obteniendo ruta de imagen para el producto con ID: ${idProducto}`);
         try {
             const imagenProducto = await this.imagenProductoRepository.findOne({
                 where: { idProducto: idProducto },
                 select: ['imagen']
             });
-            console.log('Resultado de la consulta:', imagenProducto);
+            this.logger.log('Resultado de la consulta:', imagenProducto);
 
             if (!imagenProducto) {
                 throw new Error('Imagen no encontrada para el producto especificado');
@@ -88,7 +90,7 @@ export class ImagenesService {
 
             return imagenProducto.imagen;
         } catch (error) {
-            console.error('Error al obtener la ruta de la imagen:', error);
+            this.logger.error('Error al obtener la ruta de la imagen:', error);
             throw new Error('Error al obtener la ruta de la imagen');
         }
     }

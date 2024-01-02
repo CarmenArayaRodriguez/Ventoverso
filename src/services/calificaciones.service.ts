@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Calificacion } from '../entities/calificacion.entity';
@@ -8,6 +8,8 @@ import { Producto } from 'src/entities/producto.entity';
 
 @Injectable()
 export class CalificacionesService {
+    private readonly logger = new Logger(CalificacionesService.name);
+
     constructor(
         @InjectRepository(Calificacion)
         private calificacionesRepository: Repository<Calificacion>,
@@ -19,14 +21,14 @@ export class CalificacionesService {
 
     async obtenerCalificacionesPromedio(productoId: number): Promise<CalificacionesPromedioDTO> {
         try {
-            console.log(`Buscando producto con ID: ${productoId}`);
+            this.logger.log(`Buscando producto con ID: ${productoId}`);
 
             const productoExiste = await this.productoRepository.findOne({ where: { id: productoId } });
             if (!productoExiste) {
-                console.log(`Producto con ID ${productoId} no encontrado`);
+                this.logger.log(`Producto con ID ${productoId} no encontrado`);
                 throw new HttpException('Producto no encontrado', HttpStatus.NOT_FOUND);
             }
-            console.log(`Producto encontrado:`, productoExiste);
+            this.logger.log(`Producto encontrado:`, productoExiste);
 
             const calificaciones = await this.calificacionesRepository.find({ where: { producto: { id: productoId } } });
             const totalCalificaciones = calificaciones.length;
@@ -61,7 +63,7 @@ export class CalificacionesService {
             if (error.response === 'Producto no encontrado') {
                 throw error;
             } else {
-                console.error('Error en obtenerCalificacionesPromedio:', error);
+                this.logger.error('Error en obtenerCalificacionesPromedio:', error);
                 throw new HttpException('Error al obtener calificaciones promedio', HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
@@ -70,7 +72,7 @@ export class CalificacionesService {
     async obtenerEstrellasPromedio(productoId: number): Promise<CalificacionesPromedioDTO> {
         try {
             const comentarios = await this.comentariosRepository.find({ where: { id_producto: productoId } });
-            console.log('Comentarios:', comentarios);
+            this.logger.log('Comentarios:', comentarios);
             const totalComentarios = comentarios.length;
             if (totalComentarios === 0) {
                 return {
@@ -84,8 +86,8 @@ export class CalificacionesService {
 
             const sumaEstrellas = comentarios.reduce((acum, comentario) => acum + comentario.estrellas, 0);
             const promedioEstrellas = sumaEstrellas / totalComentarios;
-            console.log('Suma de estrellas:', sumaEstrellas);
-            console.log('Promedio de estrellas:', promedioEstrellas);
+            this.logger.log('Suma de estrellas:', sumaEstrellas);
+            this.logger.log('Promedio de estrellas:', promedioEstrellas);
             return {
                 promedioEstrellas,
                 promedioGeneral: 0,
@@ -94,7 +96,7 @@ export class CalificacionesService {
                 promedioFabricacion: 0
             };
         } catch (error) {
-            console.error('Error en obtenerEstrellasPromedio:', error);
+            this.logger.error('Error en obtenerEstrellasPromedio:', error);
             throw new HttpException('Error al obtener estrellas promedio', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

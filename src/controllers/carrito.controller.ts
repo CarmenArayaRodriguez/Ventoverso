@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Patch, Delete, Param, Body, Res, HttpStatus, InternalServerErrorException, NotFoundException, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Delete, Param, Body, Res, HttpStatus, InternalServerErrorException, NotFoundException, UseGuards, Logger } from '@nestjs/common';
 import { CarritoService } from 'src/services/carrito.service';
 import { CrearCarritoDTO } from '../dto/crear-carrito.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -14,6 +14,8 @@ import { DescuentoRequestDTO } from 'src/dto/descuento-request.dto';
 
 @Controller('carrito')
 export class CarritoController {
+    private readonly logger = new Logger(CarritoController.name);
+
     constructor(private readonly carritoService: CarritoService) { }
 
     @Post('/producto')
@@ -27,10 +29,11 @@ export class CarritoController {
         @Body() agregarProductoDTO: AgregarProductoCarritoRequestDTO,
         @Request() req
     ) {
-        console.log('Usuario autenticado:', req.user);
-        console.log('Solicitud para agregar producto recibida:');
-        console.log(agregarProductoDTO);
-        return this.carritoService.agregarProductoAlCarrito(agregarProductoDTO);
+        this.logger.debug('Usuario autenticado:', req.user);
+        this.logger.debug('Solicitud para agregar producto recibida:', agregarProductoDTO);
+        const resultado = await this.carritoService.agregarProductoAlCarrito(agregarProductoDTO);
+        this.logger.log('Producto agregado al carrito', { producto: agregarProductoDTO });
+        return resultado;
     }
 
     @Patch(':idCarrito/producto/:idProducto')
@@ -45,7 +48,12 @@ export class CarritoController {
         @Body() actualizarCantidadDTO: ActualizarProductoCarritoDTO,
 
     ) {
-        return this.carritoService.actualizarProductoEnCarrito(actualizarCantidadDTO);
+        this.logger.debug('Intentando actualizar producto en carrito', actualizarCantidadDTO);
+        const resultado = await this.carritoService.actualizarProductoEnCarrito(actualizarCantidadDTO);
+
+        this.logger.log('Cantidad del producto actualizada en el carrito', actualizarCantidadDTO);
+
+        return resultado;
     }
 
     @Get('/:rutCliente')
@@ -55,7 +63,10 @@ export class CarritoController {
     @ApiOperation({ summary: 'Ver los productos en el carrito' })
     @ApiResponse({ status: 200, description: 'Carrito recuperado con éxito.', type: CarritoConProductosResponseDTO })
     async verCarrito(@Param('rutCliente') rutCliente: string): Promise<CarritoConProductosResponseDTO> {
-        return await this.carritoService.verCarrito(rutCliente);
+        this.logger.debug('Intentando ver carrito', { rutCliente });
+        const carrito = await this.carritoService.verCarrito(rutCliente);
+        this.logger.log(`Carrito obtenido con éxito para cliente ${rutCliente}`, { carritoId: carrito.carritoId, productosCount: carrito.productos.length });
+        return carrito;
     }
 
     @Delete(':idCarrito/producto/:idProducto')
@@ -71,8 +82,10 @@ export class CarritoController {
     ): Promise<{ message: string }> {
         try {
             await this.carritoService.eliminarProductoDelCarrito(idCarrito, idProducto);
+            this.logger.log('Producto eliminado del carrito', { idCarrito, idProducto });
             return { message: 'Producto eliminado del carrito' };
         } catch (error) {
+            this.logger.error('Error al eliminar producto del carrito', { idCarrito, idProducto, error: error.message });
             if (error instanceof NotFoundException) {
                 throw new NotFoundException('Producto o carrito no encontrado');
             } else {
@@ -93,6 +106,7 @@ export class CarritoController {
     ): Promise<{ message: string }> {
         try {
             await this.carritoService.eliminarCarrito(idCarrito);
+            this.logger.log('Carrito eliminado con éxito', { idCarrito });
             return { message: 'Carrito eliminado con éxito' };
         } catch (error) {
             if (error instanceof NotFoundException) {
@@ -109,7 +123,10 @@ export class CarritoController {
     @ApiBearerAuth('autenticacionJWT')
     async obtenerCarrito(@Request() req) {
         const rutCliente = req.user.rutCliente;
-        return this.carritoService.obtenerCarritoPorCliente(rutCliente);
+        this.logger.debug('Intentando obtener carrito', { rutCliente });
+        const carrito = await this.carritoService.obtenerCarritoPorCliente(rutCliente);
+        this.logger.log('Carrito obtenido con éxito', { rutCliente, carritoId: carrito?.id });
+        return carrito;
     }
 
     @Post('/:idCarrito/aplicar-cupon')
@@ -123,14 +140,16 @@ export class CarritoController {
         @Param('idCarrito') idCarrito: number,
         @Body() descuentoDto: DescuentoRequestDTO
     ): Promise<DescuentoResponseDTO> {
-
+        this.logger.debug('Intentando aplicar cupón al carrito', { idCarrito, cupon: descuentoDto.cupon });
         const carrito = await this.carritoService.obtenerCarritoPorID(idCarrito);
 
         if (!carrito) {
             throw new NotFoundException('Carrito no encontrado');
         }
 
-        return this.carritoService.aplicarDescuentoAlCarrito(carrito.subtotal, descuentoDto.cupon);
+        const resultadoDescuento = await this.carritoService.aplicarDescuentoAlCarrito(carrito.subtotal, descuentoDto.cupon);
+        this.logger.log('Descuento aplicado al carrito con éxito', { idCarrito, descuento: descuentoDto.cupon });
+        return resultadoDescuento;
     }
 
 }

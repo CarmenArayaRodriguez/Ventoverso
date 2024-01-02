@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cliente } from 'src/entities/cliente.entity';
@@ -7,6 +7,8 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AutenticacionService {
+    private readonly logger = new Logger(AutenticacionService.name);
+
     constructor(
         @InjectRepository(Cliente)
         private clientesRepository: Repository<Cliente>,
@@ -37,7 +39,7 @@ export class AutenticacionService {
     }
 
     async validarUsuario(email: string, password: string): Promise<string> {
-        console.log('validarUsuario llamado con email:', email);
+        this.logger.debug('validarUsuario llamado con email:', email);
         const usuario = await this.clientesRepository.findOne({ where: { email } });
 
         if (!usuario) {
@@ -59,10 +61,10 @@ export class AutenticacionService {
             correo: usuario.email,
             roles: usuario.roles,
         };
-        console.log('Payload a firmar:', payload);
+        this.logger.debug('Payload a firmar:', payload);
         return this.jwtService.signAsync(payload);
     } catch(error) {
-        console.error('Error en validarUsuario:', error);
+        this.logger.error('Error en validarUsuario:', error);
         throw error;
     }
 

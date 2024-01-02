@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors, Logger } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
@@ -16,6 +16,8 @@ import { DetalleProductoDto } from 'src/dto/detalle-producto.dto';
 @ApiTags('productos')
 @Controller('productos')
 export class ProductoController {
+    private readonly logger = new Logger(ProductoController.name);
+
     constructor(private readonly productoService: ProductoService) { }
 
     @Get(':id')
@@ -61,11 +63,13 @@ export class ProductoController {
         description: 'Datos inválidos para la creación del producto.',
     })
     async crearProducto(@Body() crearProductoDto: CrearProductoDTO): Promise<{ message: string }> {
-        console.log(crearProductoDto.detalles);
+        this.logger.debug(`Intentando crear producto`, crearProductoDto);
         try {
             const productoCreado = await this.productoService.crearProducto(crearProductoDto);
+            this.logger.log('Producto creado exitosamente', { producto: productoCreado });
             return { message: 'Producto creado exitosamente' };
         } catch (error) {
+            this.logger.error('Error al crear producto', error);
             throw new HttpException('Error al crear producto', HttpStatus.BAD_REQUEST);
         }
     }
@@ -93,16 +97,16 @@ export class ProductoController {
         @Param('id') id: number,
         @Body() actualizarProductoDto: ActualizarProductoDTO,
     ): Promise<{ message: string }> {
-        console.log('DTO recibido:', actualizarProductoDto);
+        this.logger.debug('DTO recibido:', actualizarProductoDto);
         try {
-            console.log('Datos recibidos para actualizar:', actualizarProductoDto);
+            this.logger.debug('Datos recibidos para actualizar:', actualizarProductoDto);
 
             await this.productoService.actualizarProducto(id, actualizarProductoDto);
 
-            console.log('Producto actualizado con éxito');
+            this.logger.log('Producto actualizado con éxito');
             return { message: 'Producto actualizado con éxito' };
         } catch (error) {
-            console.error('Error al actualizar producto:', error);
+            this.logger.error('Error al actualizar producto:', error);
             if (error instanceof NotFoundException) {
                 throw new NotFoundException('Producto no encontrado');
             } else {

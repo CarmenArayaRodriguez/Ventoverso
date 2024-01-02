@@ -30,7 +30,9 @@ import * as winston from 'winston';
 
 
 async function bootstrap() {
-  console.log('Iniciando la aplicación...');
+  const logger = new Logger('Bootstrap');
+
+  logger.log('Iniciando la aplicación...');
   const app = await NestFactory.create(AppModule, {
     logger: WinstonModule.createLogger({
       transports: [
@@ -304,7 +306,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
   await app.listen(3000);
-  console.log('Aplicación iniciada');
+  logger.log('Aplicación iniciada');
 }
 bootstrap();
 
