@@ -3,7 +3,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CatalogoSubcategoriaService } from 'src/services/catalogo-subcategoria.service';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
 
-
 @ApiTags('ClarineteSib')
 @Controller('clarinete-sib')
 export class CatalogoSubcategoriaController {
@@ -16,27 +15,21 @@ export class CatalogoSubcategoriaController {
     @ApiResponse({
         status: 200,
         description: 'Devuelve un conjunto de productos de la subcategoría Clarinete Sib.',
+        type: ProductoCatalogoSubcategoriaResponseDTO,
+        isArray: true
     })
     @ApiResponse({
         status: 404,
         description: 'Subcategoría no encontrada.',
-        type: ProductoCatalogoSubcategoriaResponseDTO,
-        isArray: true
     })
-
     async getClarineteSibProductos(): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
         this.logger.debug("Inicio de getClarineteSibProductos");
-        try {
-            const productos = await this.catalogoSubcategoriaService.obtenerProductos();
-            this.logger.debug("Productos obtenidos:", productos);
-            if (productos.length === 0) {
-                throw new HttpException('Subcategoría no encontrada', HttpStatus.NOT_FOUND);
-            }
-            return productos;
-        } catch (error) {
-            this.logger.error("Error en getClarineteSibProductos", error);
-            throw new HttpException('Error interno del servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+        const productos = await this.catalogoSubcategoriaService.obtenerProductos();
+        if (!productos || productos.length === 0) {
+            this.logger.warn("Subcategoría Clarinete Sib no encontrada o sin productos");
+            throw new HttpException('Subcategoría no encontrada', HttpStatus.NOT_FOUND);
         }
+        this.logger.debug("Productos obtenidos:", productos);
+        return productos;
     }
-
 }

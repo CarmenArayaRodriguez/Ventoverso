@@ -6,8 +6,8 @@ import { BlogYNoticiasModule } from './modules/blog-y-noticias.module';
 // import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
 import { ProductoModule } from './modules/producto.module';
 import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
-import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
-import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
+// import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
+// import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 // import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { CatalogoSubcategoriaModule } from './modules/catalogo-subcategoria.module';
@@ -282,26 +282,26 @@ async function bootstrap() {
   SwaggerModule.setup('docs/marca', app, marcaDocument);
 
   //CONFIGURACION SWAGGER Reserva de Citas
-  const reservasDeCitaOptions = new DocumentBuilder()
-    .setTitle('Ventoverso Reservas de cita API')
-    .setDescription('API para el módulo de Reservas de cita')
-    .setVersion('1.0')
-    .build();
-  const reservasDeCitaDocument = SwaggerModule.createDocument(app, reservasDeCitaOptions, {
-    include: [ReservasDeCitaModule],
-  });
-  SwaggerModule.setup('docs/reservas-de-cita', app, reservasDeCitaDocument);
+  // const reservasDeCitaOptions = new DocumentBuilder()
+  //   .setTitle('Ventoverso Reservas de cita API')
+  //   .setDescription('API para el módulo de Reservas de cita')
+  //   .setVersion('1.0')
+  //   .build();
+  // const reservasDeCitaDocument = SwaggerModule.createDocument(app, reservasDeCitaOptions, {
+  //   include: [ReservasDeCitaModule],
+  // });
+  // SwaggerModule.setup('docs/reservas-de-cita', app, reservasDeCitaDocument);
 
   //CONFIGURACION SWAGGER Servicio al Cliente
-  const servicioAlClienteOptions = new DocumentBuilder()
-    .setTitle('Ventoverso Servicio al cliente API')
-    .setDescription('API para el módulo de Servicio al cliente')
-    .setVersion('1.0')
-    .build();
-  const servicioAlClienteDocument = SwaggerModule.createDocument(app, servicioAlClienteOptions, {
-    include: [ServicioAlClienteModule],
-  });
-  SwaggerModule.setup('docs/servicio-al-cliente', app, servicioAlClienteDocument);
+  // const servicioAlClienteOptions = new DocumentBuilder()
+  //   .setTitle('Ventoverso Servicio al cliente API')
+  //   .setDescription('API para el módulo de Servicio al cliente')
+  //   .setVersion('1.0')
+  //   .build();
+  // const servicioAlClienteDocument = SwaggerModule.createDocument(app, servicioAlClienteOptions, {
+  //   include: [ServicioAlClienteModule],
+  // });
+  // SwaggerModule.setup('docs/servicio-al-cliente', app, servicioAlClienteDocument);
 
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();

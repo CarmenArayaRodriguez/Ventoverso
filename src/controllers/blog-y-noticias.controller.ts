@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Post, Delete, Put, Param } from '@nestjs/common';
+import { Controller, Get, Body, Post, Delete, Put, Param, HttpStatus, HttpException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags, ApiBody, ApiParam } from '@nestjs/swagger';
 import { BlogYNoticiasService } from '../services/blog-y-noticias.service';
 import { CrearPostDTO } from '../dto/crear-post.dto';
@@ -55,41 +55,54 @@ export class BlogYNoticiasController {
         ];
     }
 
-    @Post()
+    @Post('/posts')
     @ApiOperation({ summary: 'Crear un nuevo post' })
     @ApiBody({ type: CrearPostDTO })
-
-    crearPost(@Body() crearPostDto: CrearPostDTO) {
-        return this.blogYNoticiasService.crearNuevoPost(crearPostDto);
-    }
-
-    @Put('/:id')
-    @ApiOperation({ summary: 'Editar un post' })
-    @ApiBody({
-        description: 'Datos para editar un post existente',
-        required: true,
-        schema: {
-            type: 'object',
-            properties: {
-                id: { type: 'string', example: '64b660c5-acda-4122-b895-87592f41d93a' },
-                titulo: { type: 'string', example: 'Mi post editado' },
-                contenido: { type: 'string', example: 'Este es el contenido editado de mi post' },
-                fechaPublicacion: { type: 'string', example: '2023-09-09' },
-                autorId: { type: 'string', example: '12345' }
-            }
+    @ApiResponse({ status: 201, description: 'Post creado correctamente.' })
+    @ApiResponse({ status: 400, description: 'Datos inválidos.' })
+    async crearPost(@Body() crearPostDto: CrearPostDTO): Promise<any> {
+        try {
+            const postCreado = await this.blogYNoticiasService.crearNuevoPost(crearPostDto);
+            return postCreado;
+        } catch (error) {
+            throw new HttpException('Error al crear el post: ' + error.message, HttpStatus.BAD_REQUEST);
         }
-    })
-    @ApiResponse({ status: 200, description: 'Post editado correctamente.' })
-    editar(@Param('id') id: string, @Body() editarPostDto: EditarPostDTO): string {
-        return this.blogYNoticiasService.editarPost(editarPostDto);
     }
 
-    @Delete('/:id')
+    @Put('/posts/:id')
+    @ApiOperation({ summary: 'Editar un post' })
+    @ApiBody({ description: 'Datos para editar un post existente', type: EditarPostDTO })
+    @ApiParam({ name: 'id', required: true, description: 'ID del post a editar' })
+    @ApiResponse({ status: 200, description: 'Post editado correctamente.' })
+    @ApiResponse({ status: 404, description: 'Post no encontrado.' })
+    async editarPost(@Param('id') id: number, @Body() editarPostDto: EditarPostDTO): Promise<any> {
+        try {
+            const postEditado = await this.blogYNoticiasService.editarPost(id, editarPostDto);
+            if (!postEditado) {
+                throw new HttpException('Post no encontrado', HttpStatus.NOT_FOUND);
+            }
+            return postEditado;
+        } catch (error) {
+            throw new HttpException('Error al editar el post: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @Delete('/posts/:id')
     @ApiOperation({ summary: 'Eliminar un post' })
-    @ApiParam({ name: 'id', required: true, description: 'ID del post a eliminar', example: '1234' })
+    @ApiParam({ name: 'id', required: true, description: 'ID del post a eliminar' })
     @ApiResponse({ status: 200, description: 'Post eliminado correctamente.' })
-    eliminar(@Param('id') id: string): string {
-        return this.blogYNoticiasService.eliminarPost({ id });
+    @ApiResponse({ status: 404, description: 'Post no encontrado.' })
+    async eliminarPost(@Param('id') id: number): Promise<any> {
+        try {
+            const postEliminado = await this.blogYNoticiasService.eliminarPost(id);
+            if (!postEliminado) {
+                throw new HttpException('Post no encontrado', HttpStatus.NOT_FOUND);
+            }
+            return { message: 'Post eliminado correctamente.' };
+        } catch (error) {
+            throw new HttpException('Error al eliminar el post: ' + error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Get('/clarinetes-cards')

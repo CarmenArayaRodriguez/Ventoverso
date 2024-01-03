@@ -2,14 +2,13 @@ import { Controller, Get, NotFoundException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SubcategoriaService } from '../services/subcategoria.service';
 import { SubcategoriaDTO } from 'src/dto/subcategoria.dto';
-import { Subcategoria } from 'src/entities/subcategoria.entity';
 
 @ApiTags('Subcategorias')
 @Controller('subcategorias')
 export class SubcategoriaController {
     constructor(private readonly subcategoriaService: SubcategoriaService) { }
 
-    @Get('subcategorias')
+    @Get()
     @ApiOperation({ summary: 'Obtener todas las subcategorías' })
     @ApiResponse({ status: 200, description: 'Lista de subcategorías', type: [SubcategoriaDTO] })
     @ApiResponse({ status: 404, description: 'Subcategorías no encontradas' })

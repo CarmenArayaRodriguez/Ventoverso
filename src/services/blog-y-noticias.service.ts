@@ -1,43 +1,64 @@
+
 import { Injectable } from '@nestjs/common';
 import { CrearPostDTO } from '../dto/crear-post.dto';
-import { v4 as uuidv4 } from 'uuid';
 import { EditarPostDTO } from '../dto/editar-post.dto';
-import { EliminarPostDTO } from '../dto/eliminar-post.dto';
 import { IPost } from '../blog-y-noticias/interfaces/blog-y-noticias.interface';
-import { CategoriaBlog } from '../blog-y-noticias/enums/categoria-blog.enum';
-import { Card } from '../blog-y-noticias/entities/home-card.entity';
-import { BlogPost } from '../blog-y-noticias/entities/post.entity';
-import { CardResponseDTO } from '../dto/home-card-response.dto';
-
+import { CardResponseDTO } from 'src/dto/home-card-response.dto';
+import { CategoriaBlog } from 'src/blog-y-noticias/enums/categoria-blog.enum';
 
 @Injectable()
 export class BlogYNoticiasService {
+    private posts: IPost[] = [];
     getBlogYNoticias(): string {
         return 'Blog y noticias';
     }
-    private posts: BlogPost[] = [];
-
-
 
     crearNuevoPost(postData: CrearPostDTO): IPost {
         const nuevoPost: IPost = {
             ...postData,
-            id: uuidv4(),
+            id: this.posts.length + 1,
+            imagen: 'defaultImage.jpg',
+            categoria: CategoriaBlog.GENERAL,
         };
+        this.posts.push(nuevoPost);
         return nuevoPost;
     }
 
-    editarPost(editarPostDto: EditarPostDTO): string {
-        return 'Post editado correctamente';
+
+    editarPost(id: number, editarPostDto: EditarPostDTO): IPost {
+        const index = this.posts.findIndex(post => post.id === id);
+        if (index === -1) throw new Error('Post no encontrado');
+
+
+        const postEditado: IPost = {
+            ...this.posts[index],
+            ...editarPostDto,
+            imagen: editarPostDto.imagen || this.posts[index].imagen,
+            categoria: editarPostDto.categoria || this.posts[index].categoria
+        };
+
+        this.posts[index] = postEditado;
+        return this.posts[index];
     }
 
-    eliminarPost(eliminarPostDto: EliminarPostDTO): string {
 
+    eliminarPost(id: number): string {
+        const index = this.posts.findIndex(post => post.id === id);
+        if (index === -1) throw new Error('Post no encontrado');
+
+        this.posts.splice(index, 1);
         return 'Post eliminado correctamente';
     }
 
-    getPostsByCategoria(categoria: CategoriaBlog): CardResponseDTO[] {
-        return this.posts.filter(post => post.categoria === categoria);
-    }
 
+    getPostsByCategoria(categoria: CategoriaBlog): CardResponseDTO[] {
+        return this.posts.filter(post => post.categoria === categoria)
+            .map(post => {
+
+                return {
+                    ...post,
+                };
+            });
+
+    }
 }

@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DestacadoCardResponseDTO } from "src/dto/destacado-card-response.dto";
 import { Producto } from "src/entities/producto.entity";
@@ -15,9 +15,7 @@ export class ProductosSimilaresService {
         private readonly subcategoriaRepository: Repository<Subcategoria>,
     ) { }
 
-
     async obtenerProductosSimilares(idSubcategoria: number): Promise<DestacadoCardResponseDTO[]> {
-
         const subcategoriaExistente = await this.subcategoriaRepository.findOne({
             where: { id: idSubcategoria }
         });

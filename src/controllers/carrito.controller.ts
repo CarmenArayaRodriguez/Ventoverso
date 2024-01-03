@@ -117,7 +117,7 @@ export class CarritoController {
         }
     }
 
-    @Get('/carrito')
+    @Get('/mi-carrito')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
     @ApiBearerAuth('autenticacionJWT')
