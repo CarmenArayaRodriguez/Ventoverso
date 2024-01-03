@@ -18,19 +18,11 @@ export class ProductosRelacionadosController {
         status: 404,
         description: 'No se encontraron productos relacionados'
     })
-    @ApiResponse({
-        status: 500,
-        description: 'Error interno del servidor'
-    })
-
     async obtenerProductosPorSubcategoria(@Param('idCategoria') idCategoria: number): Promise<DestacadoCardResponseDTO[]> {
-        try {
-            return await this.productosRelacionadosService.obtenerProductosRelacionados(idCategoria);
-        } catch (error) {
-            if (error.status === HttpStatus.NOT_FOUND) {
-                throw new HttpException('No se encontraron productos relacionados', HttpStatus.NOT_FOUND);
-            }
-            throw new HttpException('Error interno del servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+        const productosRelacionados = await this.productosRelacionadosService.obtenerProductosRelacionados(idCategoria);
+        if (!productosRelacionados || productosRelacionados.length === 0) {
+            throw new HttpException('No se encontraron productos relacionados', HttpStatus.NOT_FOUND);
         }
+        return productosRelacionados;
     }
 }

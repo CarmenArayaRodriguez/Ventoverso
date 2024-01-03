@@ -26,7 +26,7 @@ export class CrearUsuarioDTO {
         description: 'Digito verificador del rut de usuario a editar',
         example: '5'
     })
-    dv: number;
+    dv: string;
 
     @ApiProperty({ description: 'e-mail del usuario' })
     @IsNotEmpty()

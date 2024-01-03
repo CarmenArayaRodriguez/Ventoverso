@@ -1,26 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { SuscripcionDTO } from '../dto/suscripcion.dto';
-import { EditarSuscripcionDTO } from '../dto/editar-suscripcion.dto';
+// import { Injectable } from '@nestjs/common';
+// import { SuscripcionDTO } from '../dto/suscripcion.dto';
+// import { EditarSuscripcionDTO } from '../dto/editar-suscripcion.dto';
 
-@Injectable()
-export class ServicioAlClienteService {
-    getServicioAlCliente(): string {
-        return 'Servicio al cliente';
-    }
+// @Injectable()
+// export class ServicioAlClienteService {
+//     getServicioAlCliente(): string {
+//         return 'Servicio al cliente';
+//     }
 
-    suscribir(suscripcionDTO: SuscripcionDTO) {
+//     suscribir(suscripcionDTO: SuscripcionDTO) {
 
-        return { mensaje: `Correo ${suscripcionDTO.correo} suscrito exitosamente!` };
-    }
+//         return { mensaje: `Correo ${suscripcionDTO.correo} suscrito exitosamente!` };
+//     }
 
-    editarSuscripcion(editarSuscripcionDTO: EditarSuscripcionDTO) {
+//     editarSuscripcion(editarSuscripcionDTO: EditarSuscripcionDTO) {
 
-        return { mensaje: `Correo con ID ${editarSuscripcionDTO.id} editado a ${editarSuscripcionDTO.nuevoCorreo} exitosamente!` };
-    }
+//         return { mensaje: `Correo con ID ${editarSuscripcionDTO.id} editado a ${editarSuscripcionDTO.nuevoCorreo} exitosamente!` };
+//     }
 
-    darDeBaja(id: string) {
+//     darDeBaja(id: string) {
 
-        return { mensaje: `Suscripción con ID ${id} dada de baja exitosamente!` };
-    }
-}
+//         return { mensaje: `Suscripción con ID ${id} dada de baja exitosamente!` };
+//     }
+// }
 

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 // import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { ProductoModule } from './modules/producto.module';
-import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
+// import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
 // import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
 import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
 import { BlogYNoticiasModule } from './modules/blog-y-noticias.module';
-import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
+// import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Producto } from './entities/producto.entity';
@@ -55,7 +55,7 @@ import { DetalleProducto } from './entities/detalle-producto.entity';
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true
 
-  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ReservasDeCitaModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule],
+  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule],
   controllers: [AppController],
   providers: [],
 

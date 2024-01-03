@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+// import { Injectable } from '@nestjs/common';
 
-@Injectable()
-export class ReservasDeCitaService {
-    getReservasDeCita(): string {
-        return 'Reservas de cita';
-    }
-}
+// @Injectable()
+// export class ReservasDeCitaService {
+//     getReservasDeCita(): string {
+//         return 'Reservas de cita';
+//     }
+// }

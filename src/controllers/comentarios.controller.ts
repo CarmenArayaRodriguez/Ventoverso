@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, NotFoundException } from '@nestjs/common';
 import { ComentariosService } from '../services/comentarios.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ComentarioClienteResponseDTO } from 'src/dto/comentario-cliente-response.dto';
@@ -19,6 +19,10 @@ export class ComentariosController {
         description: 'Comentarios no encontrados para el producto especificado'
     })
     async obtenerComentarios(@Param('productoId') productoId: number): Promise<ComentarioClienteResponseDTO[]> {
-        return this.comentariosService.obtenerComentariosDelProducto(productoId);
+        const comentarios = await this.comentariosService.obtenerComentariosDelProducto(productoId);
+        if (!comentarios || comentarios.length === 0) {
+            throw new NotFoundException('Comentarios no encontrados para el producto especificado');
+        }
+        return comentarios;
     }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, NotFoundException } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CarruselService } from 'src/services/carrusel.service';
 import { CarruselItemResponseDTO } from 'src/dto/carrusel-item-response.dto';
@@ -12,12 +12,18 @@ export class CarruselController {
     @Get(':id')
     @ApiOkResponse({ type: CarruselItemResponseDTO })
     @ApiNotFoundResponse({ description: 'Carrusel no encontrado' })
-    async obtenerCarrusel(@Param('id') id: number): Promise<CarruselItemResponseDTO> {
+    async obtenerCarrusel(@Param('id', ParseIntPipe) id: number): Promise<CarruselItemResponseDTO> {
         const carrusel = await this.carruselService.obtenerCarrusel(id);
+        if (!carrusel) {
+            throw new NotFoundException('Carrusel no encontrado');
+        }
         return this.transformarACarruselItemResponseDTO(carrusel);
     }
 
     private transformarACarruselItemResponseDTO(carrusel: Carrusel): CarruselItemResponseDTO {
+        if (!carrusel) {
+            throw new Error('El carrusel no puede ser nulo');
+        }
         return {
             id: carrusel.id,
             titulo: carrusel.nombre,

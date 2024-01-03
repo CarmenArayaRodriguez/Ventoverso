@@ -19,7 +19,6 @@ export class CrearPostDTO {
     @Transform(({ value }) => new Date(value))
     fechaPublicacion: Date;
 
-    @ApiProperty({ example: '12345' })
-    @IsString()
-    autorId: string;
+    @ApiProperty({ example: 12345 })
+    autorId: number;
 }

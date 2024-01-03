@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { CategoriaService } from 'src/services/categoria.service';
 import { Categoria } from 'src/entities/categoria.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -12,6 +12,14 @@ export class CategoriaController {
     @ApiOperation({ summary: 'Obtener todas las categorías' })
     @ApiResponse({ status: 200, description: 'Retorna todas las categorías.' })
     async obtenerTodasLasCategorias(): Promise<Categoria[]> {
-        return this.categoriaService.obtenerTodasLasCategorias();
+        try {
+            const categorias = await this.categoriaService.obtenerTodasLasCategorias();
+            if (!categorias || categorias.length === 0) {
+                throw new HttpException('No se encontraron categorías', HttpStatus.NOT_FOUND);
+            }
+            return categorias;
+        } catch (error) {
+            throw new HttpException('Error interno del servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

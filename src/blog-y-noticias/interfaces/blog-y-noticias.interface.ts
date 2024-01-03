@@ -1,7 +1,11 @@
+import { CategoriaBlog } from "../enums/categoria-blog.enum";
+
 export interface IPost {
-    id: string;
+    id: number;
     titulo: string;
     contenido: string;
     fechaPublicacion: Date;
-    autorId: string;
+    autorId: number;
+    imagen: string;
+    categoria: CategoriaBlog;
 }
