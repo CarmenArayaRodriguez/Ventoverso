@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors, Logger } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors, Logger, Query } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
@@ -11,6 +11,7 @@ import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorador';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DetalleProductoDto } from 'src/dto/detalle-producto.dto';
+import { CatalogoSubcategoriaService } from 'src/services/catalogo-subcategoria.service';
 
 
 @ApiTags('productos')
@@ -18,7 +19,8 @@ import { DetalleProductoDto } from 'src/dto/detalle-producto.dto';
 export class ProductoController {
     private readonly logger = new Logger(ProductoController.name);
 
-    constructor(private readonly productoService: ProductoService) { }
+    constructor(private readonly productoService: ProductoService,
+    ) { }
 
     @Get(':id')
     @ApiOperation({ summary: 'Obtener detalle de un producto' })
@@ -156,6 +158,7 @@ export class ProductoController {
     async obtenerProductosPorCategoria(@Param('idCategoria') idCategoria: number): Promise<ProductoCatalogoSubcategoriaResponseDTO[]> {
         return await this.productoService.obtenerProductosPorCategoria(idCategoria);
     }
+
 
 
 }
