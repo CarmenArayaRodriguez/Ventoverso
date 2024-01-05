@@ -1,11 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsNotEmpty, IsEmail, IsPhoneNumber } from 'class-validator';
 
 export class DatosCompradorRequestDTO {
-    @ApiProperty({ description: 'El ID del usuario', example: 'user123' })
-    @IsString()
+    @ApiProperty({ description: 'El ID del usuario', example: 12 })
     @IsNotEmpty()
-    userId: string;
+    userId: number;
 
     @ApiProperty({ description: 'El nombre del usuario', example: 'Juan' })
     @IsNotEmpty()

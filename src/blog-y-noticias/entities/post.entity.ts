@@ -6,6 +6,6 @@ export class BlogPost {
     titulo: string;
     contenido: string;
     fechaPublicacion: Date;
-    autorId: string;
+    autorId: number;
     categoria: CategoriaBlog;
 }

@@ -4,8 +4,8 @@ import { ResumenCompraResponseDTO } from './resumen-compra-response.dto';
 import { DescuentoResponseDTO } from './descuento-response.dto';
 
 export class CarritoConProductosResponseDTO {
-    @ApiProperty({ description: 'ID único del carrito', example: 'carrito123' })
-    carritoId: string;
+    @ApiProperty({ description: 'ID único del carrito', example: 1 })
+    carritoId: number;
 
     @ApiProperty({ description: 'Productos en el carrito', type: [ProductoEnCarritoResponseDTO] })
     productos: ProductoEnCarritoResponseDTO[];

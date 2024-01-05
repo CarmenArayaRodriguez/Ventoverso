@@ -15,8 +15,7 @@ class Estrella {
 
 export class DetalleEstrellasResponseDTO {
     @ApiProperty()
-    @IsString()
-    productoId: string = uuidv4();
+    productoId: number;
 
     @ApiProperty({
         type: Estrella,

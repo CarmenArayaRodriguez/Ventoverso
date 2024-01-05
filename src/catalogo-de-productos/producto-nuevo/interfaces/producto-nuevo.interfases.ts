@@ -1,5 +1,5 @@
 export interface IProductoNuevo {
-    id: string;
+    id: number;
     nombre: string;
     marca: string;
     modelo: string;
@@ -7,7 +7,6 @@ export interface IProductoNuevo {
     imagenes: string[];
     precio: number;
     linkDetalle: string;
-    // caracteristicasPrincipales: string;
     descripcion: string;
     categoria: string;
     subcategoria: string;

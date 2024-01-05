@@ -5,7 +5,7 @@ export class AgregarDestacadoDTO {
     @ApiProperty({ description: 'ID del producto destacado' })
     @IsString()
     @IsNotEmpty()
-    productoId: string;
+    productoId: number;
 }
 
 
