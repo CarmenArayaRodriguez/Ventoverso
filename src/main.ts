@@ -25,8 +25,12 @@ import { ImagenesModule } from './modules/imagenes.module';
 import { AutenticacionModule } from './modules/autenticacion.module';
 import { CategoriaModule } from './modules/categoria.module';
 import { MarcaModule } from './modules/marca.module';
+import { RegionesModule } from './modules/region.module';
 import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
+import { CiudadModule } from './modules/ciudad.module';
+import { ComunaModule } from './modules/comuna.module';
+
 
 
 async function bootstrap() {
@@ -280,6 +284,40 @@ async function bootstrap() {
     include: [MarcaModule],
   });
   SwaggerModule.setup('docs/marca', app, marcaDocument);
+
+
+  //CONFIGURACION SWAGGER regiones
+  const regionOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para regiones')
+    .setVersion('1.0')
+    .build();
+  const regionDocument = SwaggerModule.createDocument(app, regionOptions, {
+    include: [RegionesModule],
+  });
+  SwaggerModule.setup('docs/regiones', app, regionDocument);
+
+  //CONFIGURACION SWAGGER ciudades
+  const ciudadOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para ciudades')
+    .setVersion('1.0')
+    .build();
+  const ciudadDocument = SwaggerModule.createDocument(app, ciudadOptions, {
+    include: [CiudadModule],
+  });
+  SwaggerModule.setup('docs/ciudades', app, ciudadDocument);
+
+  //CONFIGURACION SWAGGER comunas
+  const comunaOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para comunas')
+    .setVersion('1.0')
+    .build();
+  const comunaDocument = SwaggerModule.createDocument(app, comunaOptions, {
+    include: [ComunaModule],
+  });
+  SwaggerModule.setup('docs/comunas', app, comunaDocument);
 
   //CONFIGURACION SWAGGER Reserva de Citas
   // const reservasDeCitaOptions = new DocumentBuilder()
