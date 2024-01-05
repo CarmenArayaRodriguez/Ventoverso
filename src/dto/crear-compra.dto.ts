@@ -21,16 +21,13 @@ export class CrearCompraDto {
     depto_casa_oficina?: string;
 
     @ApiProperty()
-    @IsString()
-    ciudad: string;
+    ciudad: number;
 
     @ApiProperty()
-    @IsString()
-    comuna: string;
+    comuna: number;
 
     @ApiProperty()
-    @IsString()
-    region: string;
+    region: number;
 
     @ApiProperty({ description: 'ID del método de pago', example: 1 })
     metodoPagoId: number;

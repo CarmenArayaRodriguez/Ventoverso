@@ -40,6 +40,12 @@ import { DetalleCompra } from './entities/detalle-compra.entity';
 import { CategoriaModule } from './modules/categoria.module';
 import { MarcaModule } from './modules/marca.module';
 import { DetalleProducto } from './entities/detalle-producto.entity';
+import { Region } from './entities/region.entity';
+import { RegionesModule } from './modules/region.module';
+import { CiudadModule } from './modules/ciudad.module';
+import { Ciudad } from './entities/ciudad.entity';
+import { Comuna } from './entities/comuna.entity';
+import { ComunaModule } from './modules/comuna.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -49,13 +55,13 @@ import { DetalleProducto } from './entities/detalle-producto.entity';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto, Region, Ciudad, Comuna],
 
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
     // logging: true
 
-  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule],
+  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule, RegionesModule, CiudadModule, ComunaModule],
   controllers: [AppController],
   providers: [],
 
