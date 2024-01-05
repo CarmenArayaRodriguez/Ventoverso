@@ -1,5 +1,5 @@
 export interface ICategoriaClarinete {
-    id: string;
+    id: number;
     nombre: string;
     imagenUrl: string;
     linkDetalle: string

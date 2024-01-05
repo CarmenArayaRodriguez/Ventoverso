@@ -21,12 +21,12 @@ export class CarritoDeComprasService {
 
         return new ProductoCarrito();
     }
-    actualizarProducto(carritoId: string, productoId: string, actualizarProductoDto: ActualizarProductoCarritoDTO): ProductoCarrito {
+    actualizarProducto(carritoId: number, productoId: number, actualizarProductoDto: ActualizarProductoCarritoDTO): ProductoCarrito {
 
         return new ProductoCarrito();
     }
 
-    eliminarProducto(carritoId: string, productoId: string): boolean {
+    eliminarProducto(carritoId: number, productoId: number): boolean {
 
         return true;
     }

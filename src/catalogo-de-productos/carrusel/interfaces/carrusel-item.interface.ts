@@ -1,5 +1,5 @@
 export interface ICarruselItem {
-    id: string;
+    id: number;
     titulo: string;
     descripcion: string;
     imagenUrl: string;

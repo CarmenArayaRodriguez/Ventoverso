@@ -36,8 +36,8 @@ import { DatosEnvioDTO } from './datos-envio.dto';
 import { DatosPagoDTO } from './datos-pago.dto';
 
 export class CheckoutResponseDTO {
-    @ApiProperty({ description: 'El ID del carrito', example: 'carrito123' })
-    carritoId: string;
+    @ApiProperty({ description: 'El ID del carrito', example: 1 })
+    carritoId: number;
 
     @ApiProperty({ description: 'Lista de productos en el carrito', type: [ProductoEnCarritoResponseDTO] })
     productos: ProductoEnCarritoResponseDTO[];

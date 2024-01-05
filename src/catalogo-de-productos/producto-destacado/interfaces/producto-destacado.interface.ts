@@ -1,7 +1,7 @@
 export interface IDestacado {
-    id: string;
-    productoId: string;
-    usuarioId: string;
+    id: number;
+    productoId: number;
+    usuarioId: number;
     fechaDestacado: Date;
 }
 

@@ -1,7 +1,7 @@
 import { ProductoCarrito } from '../../entities/producto-carrito.entity';
 
 export interface ICarrito {
-    id: string;
-    userId: string;
+    id: number;
+    userId: number;
     productos?: ProductoCarrito[];
 }

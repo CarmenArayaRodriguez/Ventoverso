@@ -1,5 +1,5 @@
 export interface ISuscripcion {
-    id: string;
+    id: number;
     correo: string;
     fechaSuscripcion: Date;
 }

@@ -1,6 +1,6 @@
 export interface IFavorito {
-    id: string;
-    productoId: string;
-    usuarioId: string;
+    id: number;
+    productoId: number;
+    usuarioId: number;
     fechaAgregado: Date;
 }

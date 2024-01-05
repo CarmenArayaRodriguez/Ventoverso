@@ -24,7 +24,7 @@ export class CatalogoDeProductosService {
     agregarDestacado(agregarDestacadoDTO: AgregarDestacadoDTO) {
         const nuevoDestacado = new Destacado();
         nuevoDestacado.productoId = agregarDestacadoDTO.productoId;
-        nuevoDestacado.usuarioId = "User 9999";
+        nuevoDestacado.usuarioId = 1234;
         nuevoDestacado.fechaDestacado = new Date();
 
         this.destacados.push(nuevoDestacado);
@@ -32,7 +32,7 @@ export class CatalogoDeProductosService {
         return { mensaje: 'Producto añadido a destacados', productoId: agregarDestacadoDTO.productoId };
     }
 
-    eliminarDestacado(id: string) {
+    eliminarDestacado(id: number) {
         return { mensaje: `Producto con ID ${id} eliminado de producto destacado` };
     }
 

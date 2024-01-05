@@ -214,7 +214,7 @@ export class CarritoService {
         const descuentoAplicado = this.obtenerDescuento(carrito);
 
         return {
-            carritoId: carrito.id.toString(),
+            carritoId: carrito.id,
             productos: productosEnCarritoResponse,
             resumen: resumenCompra,
             descuento: descuentoAplicado

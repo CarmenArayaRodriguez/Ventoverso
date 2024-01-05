@@ -19,12 +19,12 @@ export class PerfilDeUsuarioService {
     }
 
     // Producto Favorito
-    agregarFavorito(agregarFavoritoDTO: AgregarFavoritoRequestDTO): { mensaje: string; productoId: string } {
+    agregarFavorito(agregarFavoritoDTO: AgregarFavoritoRequestDTO): { mensaje: string; productoId: number } {
 
         return { mensaje: 'Producto añadido a favoritos', productoId: agregarFavoritoDTO.productoId };
     }
 
-    eliminarFavorito(productoId: string): { mensaje: string } {
+    eliminarFavorito(productoId: number): { mensaje: string } {
 
         return { mensaje: `Producto con ID ${productoId} eliminado de favoritos` };
     }

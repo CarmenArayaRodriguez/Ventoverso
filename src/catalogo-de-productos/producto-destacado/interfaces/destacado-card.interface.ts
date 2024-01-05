@@ -1,5 +1,5 @@
 export interface IDestacadoCard {
-    id: string;
+    id: number;
     imagenUrl: string;
     estrellas: number;
     nombre: string;

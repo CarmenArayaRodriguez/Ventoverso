@@ -46,11 +46,10 @@ import { IsNotEmpty, IsEmail, IsString, IsPhoneNumber } from 'class-validator';
 export class CheckoutRequestDTO {
     @ApiProperty({
         description: 'El ID del usuario',
-        example: 'user123',
+        example: 123,
     })
-    @IsString()
     @IsNotEmpty()
-    userId: string;
+    userId: number;
 
     @ApiProperty({
         description: 'El nombre del usuario',
