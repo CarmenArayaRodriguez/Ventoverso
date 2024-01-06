@@ -47,7 +47,7 @@ CREATE TABLE `direccionEnvio` (
 CREATE TABLE `regionEnvio` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100),
-  `codigo_postal` bigint
+  `codigo_postal` integer
 );
 
 CREATE TABLE `ciudad` (

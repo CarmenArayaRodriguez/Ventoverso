@@ -64,7 +64,7 @@ nombre varchar(255)
 
 table comuna {
   id integer [increment, pk]
-  id_ciudad integer [ref: > ciudad.id]
+  id_ciudad integer [ref: - ciudad.id]
   nombre varchar(255)
   }
 
