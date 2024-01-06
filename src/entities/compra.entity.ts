@@ -35,16 +35,6 @@ export class Compra {
     @Column('varchar', { length: 255, nullable: true })
     depto_casa_oficina: string;
 
-
-    @Column('int')
-    ciudad: number;
-
-    @Column('int')
-    comuna: number;
-
-    @Column('int')
-    region: number;
-
     @Column({ type: 'varchar', nullable: true })
     cuponUsado?: string;
 
