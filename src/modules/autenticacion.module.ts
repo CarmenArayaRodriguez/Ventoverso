@@ -8,7 +8,7 @@ import { AutenticacionController } from 'src/controllers/autenticacion.controlle
 @Module({
     imports: [
         JwtModule.register({
-            secret: 'aB3!fGh1#kLmN5^pQrSt7*wxYz0&Zj',
+            secret: process.env.JWT_SECRET,
             signOptions: { expiresIn: '1h' },
         }),
         TypeOrmModule.forFeature([Cliente]),

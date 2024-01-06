@@ -15,7 +15,8 @@ export class JWTGuard implements CanActivate {
             throw new UnauthorizedException("Token no proporcionado");
         }
         try {
-            const payload = await this.jwtService.verifyAsync(token.replace('Bearer ', ''), { secret: "aB3!fGh1#kLmN5^pQrSt7*wxYz0&Zj" });
+            const secret = process.env.JWT_SECRET;
+            const payload = await this.jwtService.verifyAsync(token.replace('Bearer ', ''), { secret });
             this.logger.log('Payload decodificado en JWTGuard:', payload);
             request.user = payload;
         } catch (e) {

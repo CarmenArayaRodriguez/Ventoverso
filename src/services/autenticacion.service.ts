@@ -61,8 +61,9 @@ export class AutenticacionService {
             correo: usuario.email,
             roles: usuario.roles,
         };
+        const secret = process.env.JWT_SECRET;
         this.logger.debug('Payload a firmar:', payload);
-        return this.jwtService.signAsync(payload);
+        return this.jwtService.signAsync(payload, { secret });
     } catch(error) {
         this.logger.error('Error en validarUsuario:', error);
         throw error;
