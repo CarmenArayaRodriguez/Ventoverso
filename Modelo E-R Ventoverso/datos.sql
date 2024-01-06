@@ -5,16 +5,26 @@ use ventoverso;
 
 
 /* INSERT TABLA CLIENTES */
-INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
-VALUES ('13132227463', 'Juan', 'Pérez', 'claudio@example.com', 'Calle 131323', 'VINA DEL MAR', 'VALPARAISO', 'Región V', 'contrasena131323', '555-555-555');
-INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
-VALUES ('1313222356', 'Felipe', 'Contreras', 'felipe@example.com', 'Calle 222', 'VINA DEL MAR', 'VALPARAISO', 'Región V', 'contrasena131324', '555-444-555');
-INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
-VALUES ('13133554351313', 'Eduardo', 'Perez', 'eduardo@example.com', 'Calle Magnolias 254', 'VENTISCAS', 'TALCA', 'Región VII', 'contrasena131325', '333-444-555');
-INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
-VALUES ('13134333565', 'Antonio', 'Rojas', 'antonio@example.com', 'Calle Blanco Encalada 13138000', 'SANTIAGO CENTRO', 'SANTIAGO', 'Región Metropolitana', 'contrasena131321313', '333-443-655');
-INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
-VALUES ('13139265589', 'Antonia', 'Gonzalez', 'anto2@example.com', 'Calle Ls Rosas 254', 'QUILPUE', 'VALPARAISO', 'Región V', 'contrasena131325', '333-444-555');
+-- INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+-- VALUES ('13132227463', 'Juan', 'Pérez', 'claudio@example.com', 'Calle 131323', 'VINA DEL MAR', 'VALPARAISO', 'Región V', 'contrasena131323', '555-555-555');
+-- INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+-- VALUES ('1313222356', 'Felipe', 'Contreras', 'felipe@example.com', 'Calle 222', 'VINA DEL MAR', 'VALPARAISO', 'Región V', 'contrasena131324', '555-444-555');
+-- INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+-- VALUES ('13133554351313', 'Eduardo', 'Perez', 'eduardo@example.com', 'Calle Magnolias 254', 'VENTISCAS', 'TALCA', 'Región VII', 'contrasena131325', '333-444-555');
+-- INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+-- VALUES ('13134333565', 'Antonio', 'Rojas', 'antonio@example.com', 'Calle Blanco Encalada 13138000', 'SANTIAGO CENTRO', 'SANTIAGO', 'Región Metropolitana', 'contrasena131321313', '333-443-655');
+-- INSERT INTO `cliente` (`rut_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+-- VALUES ('13139265589', 'Antonia', 'Gonzalez', 'anto2@example.com', 'Calle Ls Rosas 254', 'QUILPUE', 'VALPARAISO', 'Región V', 'contrasena131325', '333-444-555');
+INSERT INTO `cliente` (`rut_cliente`, `dv_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+VALUES ('12227463', '2', 'Juan', 'Pérez', 'juan@example.com', 'Calle 123', 'VINA DEL MAR', 'VALPARAISO', 'Región V', '$2b$10$PRxq5fD5OjcWxr07zH0IeeBTXRvgiSJNlFNqo/ou.eHCJcsFteM06', '555-555-555');
+INSERT INTO `cliente` (`rut_cliente`, `dv_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+VALUES ('11222356', '1', 'Felipe', 'Contreras', 'felipe@example.com', 'Calle 222', 'VINA DEL MAR', 'VALPARAISO', 'Región V', '$2b$10$zbuylQuf/yuv1J9LU2qPgOxiKki.5GuC4RgONMM8U.i/iTexBiRca', '555-444-555');
+INSERT INTO `cliente` (`rut_cliente`, `dv_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+VALUES ('13554351', '5', 'Eduardo', 'Perez', 'eduardo@example.com', 'Calle Magnolias 254', 'VENTISCAS', 'TALCA', 'Región VII', '$2b$10$vTjX7/c2.enTI8HpZMW12uyVJZe55SeByMsBgMr9yXQHieBikyyMq', '333-444-555');
+INSERT INTO `cliente` (`rut_cliente`, `dv_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+VALUES ('14333565', '1', 'Antonio', 'Rojas', 'antonio@example.com', 'Calle Blanco Encalada 18000', 'SANTIAGO CENTRO', 'SANTIAGO', 'Región Metropolitana', '$2b$10$AEs/ZxMhZ4wKtdXqJLw53em12IC5yA67v4JYoxD1hZETIg5NwKzGi', '333-443-655');
+INSERT INTO `cliente` (`rut_cliente`, `dv_cliente`, `nombre`, `apellido`, `email`, `direccion`, `ciudad`, `comuna`, `region`, `password`, `telefono`)
+VALUES ('19265589', '1', 'Antonia', 'Gonzalez', 'anto2@example.com', 'Calle Ls Rosas 254', 'QUILPUE', 'VALPARAISO', 'Región V', '$2b$10$TW9gw8DDy8udUvt5JbjVbuFPULmCWR7sMFFeiY/N3HtOv1l4fx3q2', '333-444-555');
 
 /* INSERT TABLA CATEGORIA */
 INSERT INTO `categoria` (`nombre`, `descripcion`)
