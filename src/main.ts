@@ -31,7 +31,7 @@ import * as winston from 'winston';
 import { CiudadModule } from './modules/ciudad.module';
 import { ComunaModule } from './modules/comuna.module';
 
-
+require('dotenv').config();
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');

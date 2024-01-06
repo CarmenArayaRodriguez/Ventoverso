@@ -22,7 +22,7 @@ async function hashPassword(password) {
 }
 
 
-const passwordPlana = 'contrasena125';
+const passwordPlana = 'password';
 hashPassword(passwordPlana).then((hashedPassword) => {
     logger.debug(hashedPassword);
 
