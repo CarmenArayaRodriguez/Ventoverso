@@ -132,9 +132,6 @@ export class ComprasService {
             metodoEnvio: metodoEnvio,
             calle_numero: datosCompra.calle_numero,
             depto_casa_oficina: datosCompra.depto_casa_oficina,
-            ciudad: datosCompra.ciudad,
-            comuna: datosCompra.comuna,
-            region: datosCompra.region,
             cuponUsado: carrito.cupon
 
         });

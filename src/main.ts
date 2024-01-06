@@ -267,6 +267,7 @@ async function bootstrap() {
     .setTitle('Ventoverso login API')
     .setDescription('API para lista de categorias y subcategorias')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
     .build();
   const categoriaDocument = SwaggerModule.createDocument(app, categoriaOptions, {
     include: [CategoriaModule],
@@ -279,6 +280,7 @@ async function bootstrap() {
     .setTitle('Ventoverso login API')
     .setDescription('API para lista de marcas')
     .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
     .build();
   const marcaDocument = SwaggerModule.createDocument(app, marcaOptions, {
     include: [MarcaModule],
