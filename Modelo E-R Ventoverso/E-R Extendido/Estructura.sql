@@ -37,14 +37,14 @@ CREATE TABLE `detalleCompra` (
 CREATE TABLE `direccionEnvio` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
-  `calle_numero` int,
-  `depto_casa_oficina` int,
+  `calle_numero` varchar(255),
+  `depto_casa_oficina` varchar(255),
   `id_ciudad` integer,
   `id_comuna` integer,
   `id_regionEnvio` integer
 );
 
-CREATE TABLE `regionEnvio` (
+CREATE TABLE `region` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100),
   `codigo_postal` bigint
@@ -58,7 +58,7 @@ CREATE TABLE `ciudad` (
 
 CREATE TABLE `comuna` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_ciudad` integer,
+  `ciudadId` integer,
   `nombre` varchar(255)
 );
 

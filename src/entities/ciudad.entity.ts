@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 import { Region } from './region.entity';
 import { Comuna } from './comuna.entity';
 
@@ -14,16 +14,8 @@ export class Ciudad {
     idRegionEnvio: number;
 
     @ManyToOne(() => Region)
+    @JoinColumn({ name: 'id_regionEnvio' })
     region: Region;
-
-    @Column({ type: 'varchar', length: 12 })
-    rut: string;
-
-    @Column({ type: 'varchar' })
-    telefono: string;
-
-    @Column("simple-array")
-    instrumentos: string[]
 
     @OneToOne(() => Comuna, comuna => comuna.ciudad)
     comuna: Comuna;

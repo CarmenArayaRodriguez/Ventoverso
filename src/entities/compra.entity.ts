@@ -4,6 +4,7 @@ import { Producto } from './producto.entity';
 import { MetodoPago } from './metodo-de-pago.entity';
 import { MetodoEnvio } from './metodo-de-envio.entity';
 import { Carrito } from './carrito.entity';
+import { DireccionEnvio } from './direccion-envio.entity';
 
 @Entity('compra')
 export class Compra {
@@ -29,13 +30,11 @@ export class Compra {
     @JoinColumn({ name: 'id_metodo_envio' })
     metodoEnvio: MetodoEnvio;
 
-    @Column('varchar', { length: 255 })
-    calle_numero: string;
-
-    @Column('varchar', { length: 255, nullable: true })
-    depto_casa_oficina: string;
-
     @Column({ type: 'varchar', nullable: true })
     cuponUsado?: string;
+
+    @ManyToOne(() => DireccionEnvio, direccionEnvio => direccionEnvio.compras)
+    @JoinColumn({ name: 'id_direccionEnvio' })
+    direccionEnvio: DireccionEnvio;
 
 }

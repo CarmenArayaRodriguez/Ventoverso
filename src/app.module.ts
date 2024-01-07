@@ -48,6 +48,7 @@ import { Comuna } from './entities/comuna.entity';
 import { ComunaModule } from './modules/comuna.module';
 import { Cita } from './entities/cita.entity';
 import { CitaModule } from './modules/cita.module';
+import { DireccionEnvio } from './entities/direccion-envio.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -57,7 +58,7 @@ import { CitaModule } from './modules/cita.module';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto, Region, Ciudad, Comuna, Cita],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto, Region, Ciudad, Comuna, Cita, DireccionEnvio],
 
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)

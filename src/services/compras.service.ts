@@ -14,6 +14,10 @@ import { MetodoEnvio } from 'src/entities/metodo-de-envio.entity';
 import { DireccionEnvioDto } from 'src/dto/direccion-envio.dto';
 import { Carrito } from 'src/entities/carrito.entity';
 import { DetalleCompra } from 'src/entities/detalle-compra.entity';
+import { DireccionEnvio } from 'src/entities/direccion-envio.entity';
+import { Ciudad } from 'src/entities/ciudad.entity';
+import { Comuna } from 'src/entities/comuna.entity';
+import { Region } from 'src/entities/region.entity';
 
 @Injectable()
 export class ComprasService {
@@ -33,6 +37,14 @@ export class ComprasService {
         private metodoEnvioRepository: Repository<MetodoEnvio>,
         @InjectRepository(DetalleCompra)
         private detalleCompraRepository: Repository<DetalleCompra>,
+        @InjectRepository(DireccionEnvio)
+        private direccionEnvioRepository: Repository<DireccionEnvio>,
+        @InjectRepository(Ciudad)
+        private ciudadRepository: Repository<Ciudad>,
+        @InjectRepository(Comuna)
+        private comunaRepository: Repository<Comuna>,
+        @InjectRepository(Region)
+        private regionRepository: Repository<Region>,
     ) { }
 
 
@@ -125,13 +137,26 @@ export class ComprasService {
         this.logger.log(`Costo de envío: ${costoEnvio}`);
         this.logger.log(`Total final con envío: ${totalFinal}`);
         this.logger.log(`Creando entidad Compra con: Cupón: ${carrito.cupon}, Cliente RUT: ${cliente.rut_cliente}`);
+
+
+        const direccionEnvio = new DireccionEnvio();
+        direccionEnvio.rut_cliente = cliente.rut_cliente;
+        direccionEnvio.calle_numero = datosCompra.calle_numero;
+        direccionEnvio.depto_casa_oficina = datosCompra.depto_casa_oficina;
+
+        direccionEnvio.ciudad = await this.ciudadRepository.findOne({ where: { id: datosCompra.ciudad } });
+        direccionEnvio.comuna = await this.comunaRepository.findOne({ where: { id: datosCompra.comuna } });
+        direccionEnvio.regionEnvio = await this.regionRepository.findOne({ where: { id: datosCompra.region } });
+
+        await this.direccionEnvioRepository.save(direccionEnvio);
+
+
         const compra = this.comprasRepository.create({
             cliente: cliente,
             total: totalFinal,
             metodoPago: metodoPago,
             metodoEnvio: metodoEnvio,
-            calle_numero: datosCompra.calle_numero,
-            depto_casa_oficina: datosCompra.depto_casa_oficina,
+            direccionEnvio: direccionEnvio,
             cuponUsado: carrito.cupon
 
         });
@@ -146,6 +171,7 @@ export class ComprasService {
                 producto: producto,
                 cantidad: productoCarrito.cantidad,
                 precio: producto.precio,
+
             });
             await this.detalleCompraRepository.save(detalle);
             this.logger.debug(`Detalle de compra guardado:`, detalle);

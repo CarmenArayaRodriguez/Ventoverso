@@ -9,6 +9,9 @@ export class Comuna {
     @Column()
     nombre: string;
 
+    @Column()
+    ciudadId: number;
+
     @OneToOne(() => Ciudad, ciudad => ciudad.comuna)
     @JoinColumn()
     ciudad: Ciudad;
