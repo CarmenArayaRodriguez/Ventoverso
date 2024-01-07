@@ -29,7 +29,7 @@ export class ComunaController {
         const comunaDto = new ComunaDto();
         comunaDto.id = comuna.id;
         comunaDto.nombre = comuna.nombre;
-        comunaDto.idCiudad = comuna.ciudad?.id;
+        comunaDto.idCiudad = comuna.ciudadId;
         return comunaDto;
     }
 }
