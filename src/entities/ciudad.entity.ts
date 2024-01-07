@@ -16,6 +16,15 @@ export class Ciudad {
     @ManyToOne(() => Region)
     region: Region;
 
+    @Column({ type: 'varchar', length: 12 })
+    rut: string;
+
+    @Column({ type: 'varchar' })
+    telefono: string;
+
+    @Column("simple-array")
+    instrumentos: string[]
+
     @OneToOne(() => Comuna, comuna => comuna.ciudad)
     comuna: Comuna;
 }

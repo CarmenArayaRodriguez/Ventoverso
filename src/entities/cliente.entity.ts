@@ -1,4 +1,5 @@
 import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm';
+import { Cita } from './cita.entity';
 
 @Entity('cliente')
 export class Cliente {
@@ -37,4 +38,7 @@ export class Cliente {
 
     @Column("simple-array")
     roles: string[];
+
+    @OneToMany(type => Cita, cita => cita.cliente)
+    citas: Cita[];
 }

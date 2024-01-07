@@ -46,6 +46,8 @@ import { CiudadModule } from './modules/ciudad.module';
 import { Ciudad } from './entities/ciudad.entity';
 import { Comuna } from './entities/comuna.entity';
 import { ComunaModule } from './modules/comuna.module';
+import { Cita } from './entities/cita.entity';
+import { CitaModule } from './modules/cita.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -55,13 +57,13 @@ import { ComunaModule } from './modules/comuna.module';
     username: 'root',
     password: 'Fechita1',
     database: 'ventoverso',
-    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto, Region, Ciudad, Comuna],
+    entities: [Categoria, Producto, ImagenProducto, Marca, Subcategoria, Carrito, ProductoCarrito, VentoNews, Comentario, Calificacion, Cliente, Carrusel, Compra, MetodoPago, MetodoEnvio, DetalleCompra, DetalleProducto, Region, Ciudad, Comuna, Cita],
 
 
     //NO BORRAR ESTA LÍNEA (Sirve para imprimir las consultas)
-    // logging: true
+    logging: true
 
-  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule, RegionesModule, CiudadModule, ComunaModule],
+  }), CatalogoSubcategoriaModule, SubcategoriaModule, ProductoModule, ProductosDestacadosModule, ProductosRelacionadosModule, ProductosSimilaresModule, VentoNewsModule, ComentariosModule, CalificacionesModule, CarruselModule, CarritoModule, ComprasModule, PerfilDeUsuarioModule, BlogYNoticiasModule, ImagenesModule, AutenticacionModule, CategoriaModule, MarcaModule, RegionesModule, CiudadModule, ComunaModule, CitaModule],
   controllers: [AppController],
   providers: [],
 
