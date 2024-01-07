@@ -1,4 +1,4 @@
-table cliente {
+ table cliente {
 	rut_cliente varchar(10) [pk]
 	nombre varchar(255)
 	apellido varchar(255)
@@ -18,7 +18,7 @@ table cliente {
 table compra {
 id integer [increment,pk]
 rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-id_producto integer [ref: > producto.id]
+
 id_direccionEnvio integer [ref: > direccionEnvio.id] // Nueva referencia a la tabla direccionEnvio
 total int [not null]
 fecha timestamp [default: `current_timestamp()`]
@@ -41,7 +41,8 @@ precio int [not null]
 table direccionEnvio {
   id integer [increment, pk]
   rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-  direccion varchar (255)
+  calle_numero int
+  depto_casa_oficina int
   id_ciudad integer [ref: > ciudad.id]
   id_comuna integer [ref: > comuna.id]
   id_regionEnvio integer [ref: > regionEnvio.id]
@@ -52,7 +53,7 @@ table direccionEnvio {
 table regionEnvio {
 id integer [increment,pk]
 nombre varchar(100)
-codigo_postal integer
+codigo_postal bigint
 }
 
 table ciudad {
@@ -258,3 +259,13 @@ incluyeMaleta boolean
 origen varchar(255)
 
 }
+
+table agenda {
+id integer [increment,pk]
+rut_cliente varchar(10) [ref: > cliente.rut_cliente]
+fecha date
+nombre varchar(255)
+email varchar(255)
+
+}
+

@@ -19,7 +19,6 @@ CREATE TABLE `cliente` (
 CREATE TABLE `compra` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
-  `id_producto` integer,
   `id_direccionEnvio` integer,
   `total` int NOT NULL,
   `fecha` timestamp DEFAULT (current_timestamp()),
@@ -38,7 +37,8 @@ CREATE TABLE `detalleCompra` (
 CREATE TABLE `direccionEnvio` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
-  `direccion` varchar(255),
+  `calle_numero` int,
+  `depto_casa_oficina` int,
   `id_ciudad` integer,
   `id_comuna` integer,
   `id_regionEnvio` integer
@@ -47,7 +47,7 @@ CREATE TABLE `direccionEnvio` (
 CREATE TABLE `regionEnvio` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100),
-  `codigo_postal` integer
+  `codigo_postal` bigint
 );
 
 CREATE TABLE `ciudad` (
@@ -237,9 +237,15 @@ CREATE TABLE `detalle_producto` (
   `origen` varchar(255)
 );
 
-ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+CREATE TABLE `agenda` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `rut_cliente` varchar(10),
+  `fecha` date,
+  `nombre` varchar(255),
+  `email` varchar(255)
+);
 
-ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`id_direccionEnvio`) REFERENCES `direccionEnvio` (`id`);
 
@@ -308,3 +314,5 @@ ALTER TABLE `comentario` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (
 ALTER TABLE `comentario` ADD FOREIGN KEY (`id_calificacion`) REFERENCES `calificacion` (`id`);
 
 ALTER TABLE `detalle_producto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
+
+ALTER TABLE `agenda` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);

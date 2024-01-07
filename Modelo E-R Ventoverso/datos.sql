@@ -33,7 +33,7 @@ INSERT INTO `categoria` (`nombre`, `descripcion`)
 VALUES ('Guitarras y Bajos', 'Instrumentos de cuerda.');
 INSERT INTO `categoria` (`nombre`, `descripcion`)
 VALUES ('Baterias y Percusion', 'Instrumentos de percusion.');
-INSERT INTO `categoria` (`nombre`, `descripcion`)
+INSERT INTO `categoria` (`nombre`, `descripcion`)  
 VALUES ('Platillos', 'Instrumentos de percusion.');
 INSERT INTO `categoria` (`nombre`, `descripcion`)
 VALUES ('ACCESORIOS', 'Accesorios para instrumentos de viento.');
