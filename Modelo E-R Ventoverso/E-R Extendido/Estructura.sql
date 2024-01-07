@@ -238,11 +238,13 @@ CREATE TABLE `detalle_producto` (
 );
 
 CREATE TABLE `agenda` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `rut_cliente` varchar(10),
-  `fecha` date,
-  `nombre` varchar(255),
-  `email` varchar(255)
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `clienteRutCliente` VARCHAR(12) NOT NULL,
+  `telefono` VARCHAR(255),
+  `instrumentos` TEXT,
+  `fecha` DATETIME NOT NULL
 );
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
