@@ -30,6 +30,7 @@ import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import { CiudadModule } from './modules/ciudad.module';
 import { ComunaModule } from './modules/comuna.module';
+import { CitaModule } from './modules/cita.module';
 
 require('dotenv').config();
 
@@ -320,6 +321,18 @@ async function bootstrap() {
     include: [ComunaModule],
   });
   SwaggerModule.setup('docs/comunas', app, comunaDocument);
+
+  //CONFIGURACION SWAGGER agenda
+  const agendaOptions = new DocumentBuilder()
+    .setTitle('Ventoverso login API')
+    .setDescription('API para agenda')
+    .setVersion('1.0')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
+    .build();
+  const agendaDocument = SwaggerModule.createDocument(app, agendaOptions, {
+    include: [CitaModule],
+  });
+  SwaggerModule.setup('docs/agenda', app, agendaDocument);
 
   //CONFIGURACION SWAGGER Reserva de Citas
   // const reservasDeCitaOptions = new DocumentBuilder()

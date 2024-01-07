@@ -237,6 +237,17 @@ CREATE TABLE `detalle_producto` (
   `origen` varchar(255)
 );
 
+CREATE TABLE Cita (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fecha DATETIME NOT NULL,
+    cliente_id VARCHAR(10), 
+    CONSTRAINT fk_cliente
+        FOREIGN KEY (cliente_id) 
+        REFERENCES Cliente(rut_cliente)
+        ON DELETE SET NULL
+);
+
+
 ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);

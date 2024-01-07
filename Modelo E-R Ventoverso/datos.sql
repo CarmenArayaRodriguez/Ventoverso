@@ -299,11 +299,11 @@ INSERT INTO compra (rut_cliente, id_producto, id_direccionEnvio, total, fecha, e
 
 
 INSERT INTO direccionEnvio (rut_cliente, direccion, id_ciudad, id_comuna, id_regionEnvio) VALUES
-('13132227463', 'Calle A #131323', 1, 1, 1),
-('1313222356', 'Avenida B #456', 2, 2, 2),
-('13133554351313', 'Carrera C #789', 2, 2, 2);
-('13134333565', 'Carrera C #789', 2, 2, 2);
-('9265589', 'Carrera C #789', 2, 2, 2);
+('13132227463', 'Calle A 131323', 1, 1, 1),
+('1313222356', 'Avenida B 456', 2, 2, 2),
+('13133554351313', 'Carrera C 789', 2, 2, 2);
+('13134333565', 'Carrera C 789', 2, 2, 2);
+('9265589', 'Carrera C 789', 2, 2, 2);
 
 
 INSERT INTO ciudad (id_regionEnvio, nombre) VALUES
