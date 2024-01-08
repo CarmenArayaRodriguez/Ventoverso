@@ -24,14 +24,19 @@ export class CarritoService {
     ) { }
 
     private async convertirProductoACarritoDTO(productoCarrito: ProductoCarrito): Promise<ProductoEnCarritoResponseDTO> {
+        // Obtener detalles del producto desde la base de datos.
+        // Incluye relaciones necesarias para obtener información completa del producto.
         const producto = await this.productoRepository.findOne({
             where: { id: productoCarrito.productoId },
             relations: ['marca', 'imagenes']
         });
+
+        // Si no se encuentra el producto, se lanza una excepción.
         if (!producto) {
             throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
         }
 
+        // Convertir entidad productoCarrito a DTO con la información necesaria para el front-end.
         return {
             productoId: productoCarrito.productoId,
             marca: producto.marca.marca,
@@ -44,17 +49,24 @@ export class CarritoService {
 
 
     private async calcularResumenDeCompra(productosCarrito: ProductoCarrito[]): Promise<any> {
+        // Inicializar subtotal a 0.
         let subtotal = 0;
 
+        // Calcular el subtotal iterando cada producto en el carrito.
         for (const productoCarrito of productosCarrito) {
             const producto = await this.productoRepository.findOne({ where: { id: productoCarrito.productoId } });
+
+            // Si un producto no se encuentra, se lanza una excepción.
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${productoCarrito.productoId} no encontrado`);
             }
+
+            // Sumar al subtotal: cantidad del producto * precio del producto.
             subtotal += productoCarrito.cantidad * producto.precio;
         }
 
-        const iva = subtotal * 0.19;
+        // Calcular IVA y total con base en el subtotal calculado.
+        const iva = subtotal * 0.19; // IVA de 19% aplicado.
         const total = subtotal + iva;
 
         return {
@@ -67,12 +79,16 @@ export class CarritoService {
 
     async asignarCuponACarrito(idCarrito: number, cupon: string): Promise<Carrito> {
         this.logger.debug(`Asignando cupón ${cupon} al carrito ${idCarrito}`);
+        // Buscar el carrito por ID para asignarle un cupón.
         const carrito = await this.carritoRepository.findOne({ where: { id: idCarrito } });
+
+        // Si el carrito no existe, se lanza una excepción.
         if (!carrito) {
             throw new NotFoundException(`Carrito con ID ${idCarrito} no encontrado`);
         }
         this.logger.debug(`Cupón actual en el carrito antes de asignar: ${carrito.cupon}`);
 
+        // Asignar cupón al carrito y guardar en base de datos.
         carrito.cupon = cupon;
         await this.carritoRepository.save(carrito);
         this.logger.debug(`Cupón asignado al carrito: ${carrito.cupon}`);
@@ -81,10 +97,14 @@ export class CarritoService {
     }
 
     public obtenerDescuento(carrito: Carrito): DescuentoResponseDTO {
+        // Este método calcula el descuento basado en el cupón aplicado al carrito.
+        // Actualmente solo soporta un cupón de ejemplo 'DESC10'.
         this.logger.debug(`Carrito recibido para calcular descuento:`, carrito);
+        // Si el cupón aplicado es 'DESC10', calcular el descuento.
         const cuponAplicado = carrito.cupon;
         if (cuponAplicado === 'DESC10') {
-            const porcentajeDescuento = 0.10; // 10%
+            const porcentajeDescuento = 0.10; // 10% de descuento
+            // Calcular montos de descuento y nuevos totales.
             const montoDescuento = carrito.subtotal * porcentajeDescuento;
             this.logger.debug(`Cupón aplicado: ${cuponAplicado}, Porcentaje de descuento: ${porcentajeDescuento}, Monto del descuento: ${montoDescuento}`);
             const nuevoSubtotal = carrito.subtotal - montoDescuento;
@@ -102,7 +122,7 @@ export class CarritoService {
             };
         }
 
-
+        // Si no se aplica ningún descuento, retornar valores originales.
         return {
             montoDescuento: 0,
             nuevoSubtotal: carrito.subtotal,

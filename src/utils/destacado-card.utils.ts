@@ -1,4 +1,4 @@
-import { DestacadoCardResponseDTO } from "../../../dto/destacado-card-response.dto";
+import { DestacadoCardResponseDTO } from "../dto/destacado-card-response.dto";
 import { DestacadoCard } from "../entities/destacado-card.entity";
 
 export function convierteADestacadoCardResponseDTO(destacadoCard: DestacadoCard): DestacadoCardResponseDTO {

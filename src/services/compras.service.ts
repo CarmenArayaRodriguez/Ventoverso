@@ -49,14 +49,19 @@ export class ComprasService {
 
 
     async confirmarCompra(idCliente: string, carritoId: number, datosCompra: CrearCompraDto, codigoCupon?: string): Promise<CrearCompraResponseDto> {
+        // Registro inicial en el log para seguimiento.
         this.logger.debug('Carrito ID en servicio:', carritoId);
         this.logger.debug('Confirmar Compra - Datos de compra:', datosCompra, 'Cupón:', datosCompra.codigoCupon);
         this.logger.debug('Datos de compra:', datosCompra);
         this.logger.debug(`Buscando cliente con RUT: ${idCliente}`);
+
+        // Búsqueda y validación del cliente.
         const cliente = await this.clientesRepository.findOne({ where: { rut_cliente: datosCompra.rut_cliente } });
         this.logger.log(`Iniciando proceso de confirmación de compra para el cliente ${cliente.rut_cliente} y carrito ID: ${carritoId}.`);
 
         this.logger.debug(`Buscando cliente con RUT: ${idCliente}.`);
+
+        // Si no se encuentra el cliente, se lanza una excepción.
         if (!cliente) {
             this.logger.warn(`Cliente no encontrado con RUT: ${idCliente}.`);
             throw new NotFoundException('Cliente no encontrado');
@@ -82,15 +87,18 @@ export class ComprasService {
             this.logger.log(`Método de envío encontrado: ${metodoEnvio.descripcion}.`);
         }
 
+        // Validación y aplicación de cupón de descuento si existe.
         if (codigoCupon) {
             this.logger.log(`Aplicando cupón al carrito ID: ${carritoId}`);
+            // Intenta aplicar el cupón al carrito. 
             await this.carritoService.asignarCuponACarrito(carritoId, codigoCupon);
         }
 
-
+        // Recuperación y validación del carrito de compras.
         const carrito = await this.carritoService.obtenerCarritoPorID(carritoId);
         this.logger.debug(`Carrito encontrado:`, carrito);
         this.logger.debug(`Carrito obtenido (Antes de confirmar compra): `, carrito);
+        // Si no se encuentra el carrito o está vacío, se lanza una excepción.
         if (!carrito || carrito.productos.length === 0) {
             this.logger.warn('Carrito no encontrado o vacío');
             throw new NotFoundException('Carrito no encontrado o vacío');
@@ -150,7 +158,7 @@ export class ComprasService {
 
         await this.direccionEnvioRepository.save(direccionEnvio);
 
-
+        // Crea y guarda una nueva entidad de compra con los detalles calculados.
         const compra = this.comprasRepository.create({
             cliente: cliente,
             total: totalFinal,
@@ -163,6 +171,7 @@ export class ComprasService {
         await this.comprasRepository.save(compra);
         this.logger.log(`Compra confirmada exitosamente con ID: ${compra.id} para el cliente ${cliente.rut_cliente}.`);
 
+        // Crea y guarda los detalles de cada producto en la compra.
         for (const productoCarrito of carrito.productos) {
             const producto = await this.productosRepository.findOne({ where: { id: productoCarrito.productoId } });
             this.logger.debug(`Producto encontrado: ${producto.nombre}, Cantidad: ${productoCarrito.cantidad}, Precio unitario: ${producto.precio}`);
@@ -181,8 +190,10 @@ export class ComprasService {
 
         this.logger.debug('ConfirmarCompra Service - carritoId:', carritoId);
 
+        // Vacía el carrito después de confirmar la compra.
         await this.carritoService.vaciarCarrito(cliente.rut_cliente);
 
+        // Prepara y retorna la respuesta DTO con los detalles de la compra.
         const respuesta = new CrearCompraResponseDto();
         respuesta.mensaje = 'Compra realizada con éxito';
         respuesta.idPedido = compra.id;

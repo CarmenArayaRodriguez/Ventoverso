@@ -39,17 +39,20 @@ export class ProductoService {
     ) { }
 
     async obtenerDetalleProducto(id: number): Promise<ProductoDetalleResponseDTO> {
+        // Registro de inicio de la búsqueda de un producto.
         this.logger.log(`Buscando producto con ID: ${id}`);
+        // Intenta encontrar el producto por ID, incluyendo relaciones necesarias.
         const producto = await this.productoRepository.findOne({
             where: { id },
             relations: ['categoria', 'marca', 'imagenes', 'detalleProducto'],
         });
-
+        // Si no se encuentra el producto, se lanza una excepción.
         if (!producto) {
             throw new NotFoundException('Producto no encontrado');
         }
         this.logger.log('Producto encontrado:', producto);
 
+        // Convertir la entidad del producto a DTO para la respuesta.
         const productoDTO = ProductoMapper.toDto(producto);
 
 
@@ -85,7 +88,8 @@ export class ProductoService {
 
     async crearProducto(crearProductoDto: CrearProductoDTO): Promise<ProductoDetalleResponseDTO> {
         let productoGuardado;
-
+        // Intenta crear y guardar un nuevo producto en la base de datos.
+        // Maneja errores de base de datos y lanza excepciones.
 
         try {
             const nuevoProducto = await ProductoMapper.toEntity(
@@ -100,7 +104,7 @@ export class ProductoService {
             throw new InternalServerErrorException('No se pudo guardar el producto');
         }
 
-
+        // Agrega detalles del producto si están presentes en DTO.
         if (crearProductoDto.detalles) {
             try {
                 const detallesProducto = new DetalleProducto();
@@ -113,7 +117,7 @@ export class ProductoService {
             }
         }
 
-
+        // Guarda las imágenes del producto si están presentes en DTO.
         if (crearProductoDto.imagenes) {
             try {
                 for (const imagen of crearProductoDto.imagenes) {
@@ -157,20 +161,24 @@ export class ProductoService {
 
     async actualizarProducto(id: number, actualizarProductoDto: ActualizarProductoDTO): Promise<ProductoDetalleResponseDTO> {
         this.logger.log('Iniciando actualización de producto. ID:', id, 'Datos:', actualizarProductoDto);
-
+        // Inicia el proceso de actualización de un producto existente.
         try {
+            // Busca el producto existente en la base de datos.
             let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes', 'detalleProducto'] });
             this.logger.log('Producto encontrado para actualizar:', producto);
 
+            // Si no se encuentra el producto, lanza una excepción.
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${id} no encontrado`);
             }
 
             const { imagenes, detalles, ...actualizarProductoInfo } = actualizarProductoDto;
+
+            // Actualiza el producto con la nueva información del DTO.
             producto = this.productoRepository.merge(producto, actualizarProductoInfo);
             await this.productoRepository.save(producto);
 
-
+            // Actualiza los detalles del producto si están presentes.
             if (detalles && producto.detalleProducto) {
                 const detalleProducto = await this.detalleProductoRepository.findOne({ where: { producto: { id } } });
                 if (detalleProducto) {
@@ -179,6 +187,7 @@ export class ProductoService {
                 }
             }
 
+            // Guarda las nuevas imágenes del producto si están presentes.
             if (imagenes && imagenes.length > 0) {
                 for (const imagenDto of imagenes) {
                     this.logger.log('Procesando imagen:', imagenDto.nombre);
@@ -196,7 +205,7 @@ export class ProductoService {
                 }
             }
 
-
+            // Busca el producto completo actualizado para devolver en la respuesta.
             const productoCompleto = await this.productoRepository.findOne({
                 where: { id },
                 relations: ['categoria', 'marca', 'imagenes', 'detalleProducto']
@@ -236,13 +245,15 @@ export class ProductoService {
     }
 
     async eliminarProducto(id: number): Promise<void> {
+        // Inicia el proceso de eliminación de un producto.
         try {
+            // Busca el producto existente en la base de datos.
             const producto = await this.productoRepository.findOne({ where: { id } });
-
+            // Si no se encuentra el producto, lanza una excepción.
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${id} no encontrado`);
             }
-
+            // Utiliza una transacción para eliminar imágenes relacionadas y luego el producto.
             await this.productoRepository.manager.transaction(async entityManager => {
                 await entityManager.delete(ImagenProducto, { producto: { id } });
                 await entityManager.delete(Producto, { id });

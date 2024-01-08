@@ -17,6 +17,7 @@ export class CategoriaController {
     @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Obtener todas las categorías' })
     @ApiResponse({ status: 200, description: 'Retorna todas las categorías.' })
+    @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'No se encontraron categorías' })
     async obtenerTodasLasCategorias(): Promise<Categoria[]> {
         try {
             const categorias = await this.categoriaService.obtenerTodasLasCategorias();

@@ -1,5 +1,5 @@
 import { Body, Controller, Post, HttpStatus, HttpException, ValidationPipe, UsePipes, UseGuards, Request, Logger } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { ComprasService } from 'src/services/compras.service';
 import { CrearCompraDto } from 'src/dto/crear-compra.dto';
 import { CrearCompraResponseDto } from 'src/dto/crear-compra-response.dto';
@@ -17,6 +17,7 @@ export class ComprasController {
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
     @ApiBearerAuth('autenticacionJWT')
+    @ApiOperation({ summary: 'Confirmar compra', description: 'Permite a un usuario confirmar una compra, cerrando el carrito y procesando el pago.' })
     @ApiResponse({
         status: HttpStatus.CREATED,
         description: 'Compra confirmada exitosamente',

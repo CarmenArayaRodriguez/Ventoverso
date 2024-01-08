@@ -1,5 +1,5 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiTags, ApiOkResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { ComunaService } from 'src/services/comuna.service';
 import { ComunaDto } from 'src/dto/comuna.dto';
 import { Comuna } from 'src/entities/comuna.entity';
@@ -12,6 +12,7 @@ export class ComunaController {
     constructor(private readonly comunaService: ComunaService) { }
 
     @Get()
+    @ApiOperation({ summary: 'Obtener todas las comunas', description: 'Devuelve una lista de todas las comunas disponibles.' })
     @ApiOkResponse({ type: [ComunaDto] })
     async obtenerTodasLasComunas(): Promise<ComunaDto[]> {
         this.logger.log('Obteniendo todas las comunas');

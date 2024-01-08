@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { CategoriaBlog } from "src/blog-y-noticias/enums/categoria-blog.enum";
+import { CategoriaBlog } from "src/enums/categoria-blog.enum";
 
 export class EditarPostDTO {
     @ApiProperty({ description: 'ID del post que será editado' })
