@@ -10,6 +10,8 @@ import * as path from 'path';
 export class ImagenesService {
     private readonly logger = new Logger(ImagenesService.name);
 
+    private readonly rutaBase = '/Users/carmen/Desktop/front-ventoverso/public/imagenes-producto';
+
     constructor(
         @InjectRepository(ImagenProducto)
         private imagenProductoRepository: Repository<ImagenProducto>,
@@ -26,14 +28,22 @@ export class ImagenesService {
     //Transformar un archivo a Base64
     async leerArchivo(nombreArchivo: string): Promise<string> {
         try {
-            const rutaCompleta = path.join(__dirname, '../../', nombreArchivo);
-            this.logger.log(`Leyendo archivo: ${rutaCompleta}`);
+            this.logger.log(`Nombre de archivo original: ${nombreArchivo}`);
+
+            // Extrae solo el nombre del archivo del path completo
+            const nombreArchivoLimpio = path.basename(nombreArchivo);
+
+            this.logger.log(`Nombre de archivo limpio: ${nombreArchivoLimpio}`);
+
+            const rutaCompleta = path.join(this.rutaBase, nombreArchivoLimpio);
+
+            this.logger.log(`Ruta completa del archivo: ${rutaCompleta}`);
+
             const buffer = await fs.readFile(rutaCompleta);
             const contenido = buffer.toString('base64');
             return contenido;
         } catch (error) {
-            this.logger.error('Error al leer el archivo');
-            this.logger.error(error);
+            this.logger.error('Error al leer el archivo:', error);
             throw new Error('Error al leer el archivo');
         }
     }
@@ -45,9 +55,12 @@ export class ImagenesService {
             throw new Error('No se proporcionó datos en base64');
         }
         try {
+            const rutaDirectorio = '../front-ventoverso/public/imagenes-producto';
+            const rutaArchivo = `${rutaDirectorio}/${nombreArchivo}`;
             const buffer = Buffer.from(datosBase64, 'base64');
-            await fs.writeFile(`../front-ventoverso/public/imagenes-producto/${nombreArchivo}`, buffer);
-            return `Archivo ${nombreArchivo} guardado desde base64`;
+            await fs.writeFile(rutaArchivo, buffer);
+            const rutaAccesible = `/imagenes-producto/${nombreArchivo}`; // Esta es la ruta que se guarda en la DB
+            return rutaAccesible; // Devuelve la ruta relativa para almacenar en la base de datos
         } catch (error) {
             this.logger.error('Error al guardar imagen desde base64:', error);
             throw new Error('Error al guardar la imagen en base64');
