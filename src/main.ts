@@ -34,6 +34,7 @@ import { CitaModule } from './modules/cita.module';
 
 require('dotenv').config();
 
+
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
