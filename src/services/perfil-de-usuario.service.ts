@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { AgregarFavoritoRequestDTO } from '../dto/agregar-favorito-request.dto';
 import { CrearUsuarioDTO } from '../dto/crear-nuevo-usuario.dto';
-import { Favorito } from '../perfil-de-usuario/producto-favorito/entities/favorito.entity';
-import { Usuario } from '../perfil-de-usuario/gestion-usuario/entities/usuario.entity';
+import { Favorito } from '../entities/favorito.entity';
+import { Usuario } from '../entities/usuario.entity';
 import { IngresarRequestDTO } from '../dto/ingresar-request.dto';
 import { IngresarResponseDTO } from '../dto/ingresar-response.dto';
 import { EditarUsuarioDTO } from 'src/dto/editar-usuario.dto';

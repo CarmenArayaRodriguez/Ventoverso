@@ -2,9 +2,9 @@
 import { Injectable } from '@nestjs/common';
 import { CrearPostDTO } from '../dto/crear-post.dto';
 import { EditarPostDTO } from '../dto/editar-post.dto';
-import { IPost } from '../blog-y-noticias/interfaces/blog-y-noticias.interface';
+import { IPost } from '../interfaces/blog-y-noticias.interface';
 import { CardResponseDTO } from 'src/dto/home-card-response.dto';
-import { CategoriaBlog } from 'src/blog-y-noticias/enums/categoria-blog.enum';
+import { CategoriaBlog } from 'src/enums/categoria-blog.enum';
 
 @Injectable()
 export class BlogYNoticiasService {

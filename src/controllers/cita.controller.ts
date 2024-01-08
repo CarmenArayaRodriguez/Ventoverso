@@ -17,6 +17,8 @@ export class CitaController {
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('ADMINISTRADOR')
     @ApiBearerAuth('autenticacionJWT')
+    @ApiOperation({ summary: 'Obtener todas las citas', description: 'Devuelve una lista de todas las citas disponibles.' })
+    @ApiResponse({ status: 200, description: 'Retorna todas las citas.', type: [CitaResponseDTO] })
 
     async obtenerTodasLasCitas() {
         return this.citaService.obtenerTodasLasCitas();
@@ -25,6 +27,8 @@ export class CitaController {
     @Get('usuario')
     @UseGuards(JWTGuard)
     @ApiBearerAuth('autenticacionJWT')
+    @ApiOperation({ summary: 'Obtener citas de usuario', description: 'Devuelve una lista de todas las citas para el usuario autenticado.' })
+    @ApiResponse({ status: 200, description: 'Citas del usuario devueltas exitosamente', type: [CitaResponseDTO] })
     async obtenerCitasDeUsuario(@Request() req) {
         const emailUsuario = req.user.email;
         return this.citaService.obtenerCitasDeUsuario(emailUsuario);
@@ -35,6 +39,7 @@ export class CitaController {
     @Roles('USUARIO')
     @ApiBearerAuth('autenticacionJWT')
     @ApiResponse({ status: 201, description: 'Cita creada', type: CitaResponseDTO })
+    @ApiResponse({ status: 400, description: 'Datos inválidos para la creación de la cita' })
     async crearCita(@Body() data: CitaDTO): Promise<CitaResponseDTO> {
         this.logger.log(`Solicitud para crear  nueva cita recibida`);
         return this.citaService.crearCita(data);
@@ -46,6 +51,8 @@ export class CitaController {
     @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Actualizar una cita' })
     @ApiResponse({ status: 200, description: 'Cita actualizada', type: CitaDTO })
+    @ApiResponse({ status: 404, description: 'Cita no encontrada' })
+    @ApiResponse({ status: 400, description: 'Datos inválidos para la actualización de la cita' })
     @ApiBody({ type: CitaDTO })
     async actualizarCita(
         @Param('id') id: number,
@@ -60,6 +67,9 @@ export class CitaController {
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
     @ApiBearerAuth('autenticacionJWT')
+    @ApiOperation({ summary: 'Eliminar cita', description: 'Permite a un usuario eliminar una cita existente.' })
+    @ApiResponse({ status: 200, description: 'Cita eliminada exitosamente' })
+    @ApiResponse({ status: 404, description: 'Cita no encontrada' })
     async eliminarCita(@Param('id') id: number) {
         this.logger.log(`Solicitud recibida para eliminar la cita con ID: ${id}`);
         await this.citaService.eliminarCita(id);

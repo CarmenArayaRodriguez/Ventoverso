@@ -5,7 +5,7 @@ import { CrearPostDTO } from '../dto/crear-post.dto';
 import { EditarPostDTO } from '../dto/editar-post.dto';
 import { CardResponseDTO } from '../dto/home-card-response.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { CategoriaBlog } from '../blog-y-noticias/enums/categoria-blog.enum';
+import { CategoriaBlog } from '../enums/categoria-blog.enum';
 
 @ApiTags('Blog y noticias')
 @Controller('blog-y-noticias')

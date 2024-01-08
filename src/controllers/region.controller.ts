@@ -1,5 +1,5 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RegionesService } from 'src/services/region.service';
 import { Region } from 'src/entities/region.entity';
 import { RegionDto } from 'src/dto/region.dto';
@@ -12,6 +12,7 @@ export class RegionesController {
     constructor(private readonly regionesService: RegionesService) { }
 
     @Get()
+    @ApiOperation({ summary: 'Obtener todas las regiones', description: 'Devuelve una lista de todas las regiones disponibles.' })
     @ApiOkResponse({ type: [RegionDto] })
     async obtenerTodasLasRegiones(): Promise<RegionDto[]> {
         this.logger.log('Obteniendo todas las regiones');
