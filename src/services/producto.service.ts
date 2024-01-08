@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Injectable, InternalServerErrorException, NotFoundException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -52,11 +53,11 @@ export class ProductoService {
 
         const productoDTO = ProductoMapper.toDto(producto);
 
-
         if (producto.imagenes && producto.imagenes.length > 0) {
             productoDTO.imagenes = await Promise.all(producto.imagenes.map(async imagenProducto => {
                 try {
-                    const base64Data = await this.imagenesService.leerArchivo(imagenProducto.imagen);
+                    const rutaImagen = path.join(__dirname, '../front-ventoverso/public', imagenProducto.imagen);
+                    const base64Data = await this.imagenesService.leerArchivo(rutaImagen);
                     return {
                         nombre: imagenProducto.nombreImagen,
                         base64: base64Data
@@ -72,7 +73,6 @@ export class ProductoService {
         } else {
             productoDTO.imagenes = [];
         }
-
 
         if (producto.detalleProducto) {
             productoDTO.detalle = DetalleProductoMapper.toDto(producto.detalleProducto);

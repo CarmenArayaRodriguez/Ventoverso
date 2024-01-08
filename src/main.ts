@@ -58,7 +58,7 @@ async function bootstrap() {
   // app.useLogger(new Logger());
   app.use(express.json({ limit: '50mb' })); // Aumentar límite para JSON
   app.use(express.urlencoded({ limit: '50mb', extended: true })); // Aumentar límite para datos de formulario
-  app.use('/imagenes-producto', express.static('../front-ventoverso/public/imagenes-producto')); //Configuración para servir archivos estáticos
+  app.use('/imagenes-producto', express.static('/Users/carmen/Desktop/front-ventoverso/public/imagenes-producto')); //Configuración para servir archivos estáticos
 
   //CONFIGURACION SWAGGER Blog y Noticias
   const blogYNoticiasOptions = new DocumentBuilder()
