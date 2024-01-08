@@ -1,0 +1,15 @@
+# Usuarios de Prueba (Esta es una plantilla, reemplace los valores con sus credenciales reales)
+USER1_EMAIL=example_admin1@example.com #ADMINISTRADOR
+USER1_PASSWORD=your_password_here
+
+USER2_EMAIL=example_admin_user@example.com #ADMINISTRADOR, USUARIO
+USER2_PASSWORD=your_password_here
+
+USER3_EMAIL=example_user1@example.com #USUARIO
+USER3_PASSWORD=your_password_here
+
+USER4_EMAIL=example_user2@example.com #USUARIO
+USER4_PASSWORD=your_password_here
+
+USER5_EMAIL=example_user3@example.com #USUARIO
+USER5_PASSWORD=your_password_here

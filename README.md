@@ -1,73 +1,70 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# VentoVerso - Backend para tienda virtual de instrumentos de viento
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Introducción
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este repositorio contiene el backend para VentoVerso, una tienda virtual especializada en la venta de instrumentos musicales de viento.
 
-## Description
+## Requisitos Previos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Antes de proceder con la instalación y configuración de este proyecto, asegúrese de tener instalado:
 
-## Installation
+- Node.js (Versión recomendada: 14.x o superior)
+- NPM (Node Package Manager, viene con Node.js)
+- Sistema de gestión de base de datos compatible (Recomendado: MySQL versión 5.7 o superior)
+
+## Instalación
+
+Para instalar este proyecto en su entorno de desarrollo o producción, siga los siguientes pasos:
+
+1. **Clonación del Repositorio:**
+
+    Ejecute el siguiente comando para clonar el repositorio:
+
+    ```bash
+    git clone https://github.com/tuusuario/ventoverso.git
+    cd ventoverso
+    ```
+
+2. **Instalación de Dependencias:**
+
+    Ejecute el siguiente comando para instalar las dependencias necesarias:
+
+    ```bash
+    npm install
+    ```
+
+## Configuración
+
+### Base de Datos
+
+Configure su base de datos según las necesidades de su entorno. Asegúrese de crear las tablas y relaciones necesarias antes de ejecutar la aplicación.
+
+### Variables de Entorno
+
+Cree un archivo `.env` en la raíz del proyecto para configurar las variables de entorno. Este archivo no debe ser incluido en el control de versiones por razones de seguridad. En su lugar, se proporciona un archivo `.env.example` en el repositorio como una plantilla. Copie este archivo a uno llamado `.env` y reemplace los valores de ejemplo con sus credenciales reales.
+
+### Credenciales y Datos de Prueba
+
+Para facilitar la prueba y validación del sistema, se pueden utilizar datos de prueba para usuarios y productos. Un archivo `credenciales.txt.example` se proporciona como una plantilla para definir las credenciales de los usuarios de prueba. Copie este archivo a uno llamado `credenciales.txt` y reemplace los valores de ejemplo con información de prueba válida.
+
+## Ejecución
+
+Para iniciar la aplicación en modo desarrollo, ejecute:
 
 ```bash
-$ npm install
+npm run start:dev
 ```
 
-## Running the app
+Para construir y ejecutar la aplicación en producción, ejecute:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
+npm run start:prod
 ```
 
-## Test
+## Soporte
 
-```bash
-# unit tests
-$ npm run test
+Para resolver cualquier duda relacionada con la implementación y funcionamiento del sistema, por favor, abra un issue en este repositorio o contacte al equipo de desarrollo a través de los correos [carmenarayarodriguez@gmail.com](mailto:carmenarayarodriguez@gmail.com) o [csmartinconcha@gmail.com](mailto:csmartinconcha@gmail.com).
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
