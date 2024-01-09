@@ -26,6 +26,7 @@ export class CitaController {
 
     @Get('usuario')
     @UseGuards(JWTGuard)
+    @Roles('USUARIO')
     @ApiBearerAuth('autenticacionJWT')
     @ApiOperation({ summary: 'Obtener citas de usuario', description: 'Devuelve una lista de todas las citas para el usuario autenticado.' })
     @ApiResponse({ status: 200, description: 'Citas del usuario devueltas exitosamente', type: [CitaResponseDTO] })
