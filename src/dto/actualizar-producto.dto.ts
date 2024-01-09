@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
 import { CrearProductoDTO } from './crear-producto.dto';
-import { IsArray, IsOptional, IsUrl } from 'class-validator';
+import { IsArray, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ImagenDTO } from './imagen-producto.dto';
 

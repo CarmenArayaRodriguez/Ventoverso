@@ -36,8 +36,6 @@ export class Producto {
     @OneToOne(() => DetalleProducto, detalleProducto => detalleProducto.producto)
     detalleProducto: DetalleProducto;
 
-    // @Column('varchar', { length: 255 })
-    // caracteristicasPrincipales: string;
 
     @Column('int')
     precio: number;

@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { Cliente } from './cliente.entity';
 import { Ciudad } from './ciudad.entity';
 import { Comuna } from './comuna.entity';
 import { Region } from './region.entity';

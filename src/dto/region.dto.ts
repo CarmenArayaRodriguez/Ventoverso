@@ -1,7 +1,3 @@
-// export class RegionDto {
-//     nombre: string;
-//     codigo_postal: number;
-// }
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RegionDto {

@@ -8,7 +8,6 @@ export function transformaAProductoDetalleResponseDto(producto) {
         imagenes: producto.imagenes,
         precio: producto.precio,
         linkDetalle: producto.linkDetalle,
-        // caracteristicasPrincipales: producto.caracteristicasPrincipales,
         stock: producto.stock,
         descripcion: producto.descripcion
     };

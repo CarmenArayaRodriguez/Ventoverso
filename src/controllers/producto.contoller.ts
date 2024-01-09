@@ -4,14 +4,10 @@ import { ProductoService } from '../services/producto.service';
 import { ProductoDetalleResponseDTO } from '../dto/producto-detalle-response.dto';
 import { CrearProductoDTO } from '../dto/crear-producto.dto';
 import { ActualizarProductoDTO } from '../dto/actualizar-producto.dto';
-import { ProductoMapper } from 'src/mappers/producto.mapper';
 import { ProductoCatalogoSubcategoriaResponseDTO } from 'src/dto/producto-catalogo-subcategoria.dto';
 import { JWTGuard } from 'src/jwt.guard';
 import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorador';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { DetalleProductoDto } from 'src/dto/detalle-producto.dto';
-import { CatalogoSubcategoriaService } from 'src/services/catalogo-subcategoria.service';
 
 
 @ApiTags('productos')

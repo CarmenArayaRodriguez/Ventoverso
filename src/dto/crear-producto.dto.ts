@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsUrl, IsArray, Min, Max, ValidateNested } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsOptional, Min, Max, ValidateNested } from 'class-validator';
 import { ImagenDTO } from './imagen-producto.dto';
 import { DetalleProductoDto } from './detalle-producto.dto';
 import { Type } from 'class-transformer';

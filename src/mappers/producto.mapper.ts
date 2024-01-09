@@ -2,7 +2,7 @@ import { Producto } from "../entities/producto.entity";
 import { ProductoDetalleResponseDTO } from "../dto/producto-detalle-response.dto";
 import { CrearProductoDTO } from "src/dto/crear-producto.dto";
 import { ProductoCatalogoSubcategoriaResponseDTO } from "src/dto/producto-catalogo-subcategoria.dto";
-import { ImagenDTO } from "src/dto/imagen-producto.dto";
+
 export class ProductoMapper {
 
     static toDto(producto: Producto): ProductoDetalleResponseDTO {
@@ -12,9 +12,7 @@ export class ProductoMapper {
         dto.nombre = producto.nombre;
         dto.marca = producto.marca?.marca;
         dto.modelo = producto.modelo;
-        // dto.imagenes = producto.imagenes?.map(imagenProducto => imagenProducto.imagen);
         dto.precio = producto.precio;
-        // dto.caracteristicasPrincipales = producto.caracteristicasPrincipales;
         dto.descripcion = producto.descripcion;
         dto.stock = producto.stock;
 
@@ -28,7 +26,6 @@ export class ProductoMapper {
         producto.precio = crearProductoDto.precio;
         producto.stock = crearProductoDto.stock;
         producto.modelo = crearProductoDto.modelo;
-        // producto.caracteristicasPrincipales = crearProductoDto.caracteristicasPrincipales;
         producto.estrellas = crearProductoDto.estrellas;
 
         if (crearProductoDto.id_categoria) {
