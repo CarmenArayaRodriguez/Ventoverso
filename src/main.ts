@@ -258,6 +258,10 @@ async function bootstrap() {
     .setTitle('Ventoverso login API')
     .setDescription('API para el login')
     .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'autenticacionJWT',
+    )
     .build();
   const loginDocument = SwaggerModule.createDocument(app, loginOptions, {
     include: [AutenticacionModule],
