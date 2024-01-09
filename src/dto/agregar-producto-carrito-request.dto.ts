@@ -3,7 +3,7 @@ import { IsString, IsNotEmpty, IsNumber, Min } from 'class-validator';
 
 export class AgregarProductoCarritoRequestDTO {
 
-    @ApiProperty({ description: 'Rut del cliente', example: "string" })
+    @ApiProperty({ description: 'Rut del cliente', example: "12345678" })
     @IsNotEmpty()
     @IsString()
     rutCliente: string;

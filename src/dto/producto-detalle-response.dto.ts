@@ -4,15 +4,15 @@ import { DetalleProductoDto } from './detalle-producto.dto';
 import { ImagenDTO } from './imagen-producto.dto';
 
 export class ProductoDetalleResponseDTO {
-    @ApiProperty({ description: 'ID del producto' })
+    @ApiProperty({ description: 'ID del producto', example: 1 })
     id: number;
 
-    @ApiProperty({ description: 'Nombre del producto' })
+    @ApiProperty({ description: 'Nombre del producto', example: "Clarinete Sib" })
     @IsString()
     @IsNotEmpty()
     nombre: string;
 
-    @ApiProperty({ description: 'Marca del producto' })
+    @ApiProperty({ description: 'Marca del producto', example: "Yamaha" })
     @IsString()
     @IsNotEmpty()
     marca: string;
@@ -21,7 +21,7 @@ export class ProductoDetalleResponseDTO {
     @IsNumber()
     estrellas: number;
 
-    @ApiProperty({ description: 'Modelo del producto' })
+    @ApiProperty({ description: 'Modelo del producto', example: "Sib 04" })
     @IsString()
     @IsNotEmpty()
     modelo: string;
@@ -31,20 +31,15 @@ export class ProductoDetalleResponseDTO {
     @IsNotEmpty()
     imagenes: ImagenDTO[];
 
-    @ApiProperty({ description: 'Precio del producto' })
+    @ApiProperty({ description: 'Precio del producto', example: 1300000 })
     @IsNumber()
     @IsNotEmpty()
     precio: number;
 
-    // @ApiProperty({ description: 'Características principales del producto' })
-    // @IsString()
-    // @IsNotEmpty()
-    // caracteristicasPrincipales: string;
-
     @ApiProperty({ type: DetalleProductoDto })
     detalle: DetalleProductoDto;
 
-    @ApiProperty({ description: 'Descripción del producto' })
+    @ApiProperty({ description: 'Descripción del producto', example: "Clarinete de madera" })
     @IsString()
     @IsNotEmpty()
     descripcion: string;

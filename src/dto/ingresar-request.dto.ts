@@ -2,11 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class IngresarRequestDTO {
-    @ApiProperty({ example: 'ejemplo@correo.com' })
+    @ApiProperty({ description: "Correo electrónico", example: 'ejemplo@correo.com' })
     @IsEmail()
     email: string;
 
-    @ApiProperty({ example: 'tuContraseña' })
+    @ApiProperty({ description: "Contraseña", example: 'tuContraseña' })
     @IsString()
     @IsNotEmpty()
     password: string;

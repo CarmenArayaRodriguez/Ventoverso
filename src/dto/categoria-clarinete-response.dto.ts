@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CategoriaClarineteResponseDTO {
-    @ApiProperty({ description: 'Identificador único para la categoría.', example: 'id-123' })
+    @ApiProperty({ description: 'Identificador único para la categoría.', example: 123 })
     id: number;
 
     @ApiProperty({ description: 'Nombre de la categoría.', example: 'Clarinete Sib' })
