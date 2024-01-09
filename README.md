@@ -49,9 +49,9 @@ Para facilitar la prueba y validación del sistema, se pueden utilizar datos de 
 
 ## Herramientas de desarrollo
 
-### Script para hashear contraseñas
+### Script para hashear contraseñas (Uso limitado)
 
-En el desarrollo de este proyecto, puede ser necesario generar hashes de contraseñas existentes para almacenar o actualizar las contraseñas en la base de datos a una forma más segura. Para facilitar esta tarea, proporcionamos un script `hash-password.js`.
+Para facilitar la tarea de almacenar o actualizar las contraseñas en la base de datos de manera segura, proporcionamos un script `hash-password.js`. Este script es útil solo para situaciones específicas, como pruebas o migración de datos, y no es parte del funcionamiento normal de la aplicación. **No utilice contraseñas reales en entornos de desarrollo compartidos o públicos**. La aplicación maneja automáticamente el hashing de contraseñas durante la creación y actualización de usuarios.
 
 **Uso**:
 
