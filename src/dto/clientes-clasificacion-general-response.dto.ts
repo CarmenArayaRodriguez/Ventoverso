@@ -4,19 +4,31 @@ import { Type } from 'class-transformer';
 import { CalificacionPorCategoriaDTO } from './calificacion-por-categoria-response.dto';
 
 export class ClientesCalificacionGeneralResponseDTO {
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Identificador único del producto',
+        example: 123
+    })
     @IsString()
     productoId: number;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Promedio de estrellas recibidas por el producto',
+        example: 4.5
+    })
     @IsNumber()
     promedioEstrellas: number;
 
-    @ApiProperty()
+    @ApiProperty({
+        description: 'Número total de comentarios recibidos por el producto',
+        example: 150
+    })
     @IsNumber()
     numeroComentarios: number;
 
-    @ApiProperty({ type: CalificacionPorCategoriaDTO })
+    @ApiProperty({
+        description: 'Promedios de calificaciones por categoría del producto',
+        type: CalificacionPorCategoriaDTO
+    })
     @IsObject()
     @ValidateNested()
     @Type(() => CalificacionPorCategoriaDTO)

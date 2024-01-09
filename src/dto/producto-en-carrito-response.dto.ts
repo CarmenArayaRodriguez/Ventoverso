@@ -6,19 +6,19 @@ export class ProductoEnCarritoResponseDTO {
     @IsString()
     productoId: number;
 
-    @ApiProperty({ description: 'Marca del producto' })
+    @ApiProperty({ description: 'Marca del producto', example: "Yamaha" })
     @IsString()
     marca: string;
 
-    @ApiProperty({ description: 'Modelo del producto' })
+    @ApiProperty({ description: 'Modelo del producto', example: "Sib 04" })
     @IsString()
     modelo: string;
 
-    @ApiProperty({ description: 'Precio del producto' })
+    @ApiProperty({ description: 'Precio del producto', example: 1400000 })
     @IsNumber()
     precio: number;
 
-    @ApiProperty({ description: 'Cantidad del producto' })
+    @ApiProperty({ description: 'Cantidad del producto', example: 1 })
     @IsNumber()
     cantidad: number;
 

@@ -1,33 +1,3 @@
-// import { ProductoEnCarritoResponseDTO } from "./producto-en-carrito-response.dto";
-// import { ResumenCompraResponseDTO } from "./resumen-compra-response.dto";
-
-// export class CheckoutResponseDTO {
-//     carritoId: string;
-//     productos: ProductoEnCarritoResponseDTO[];
-//     resumenCompra: ResumenCompraResponseDTO;
-//     datosComprador: {
-//         userId: string,
-//         nombre: string;
-//         apellido: string;
-//         rut: string;
-//         email: string;
-//         direccion: string;
-//         region: string;
-//         ciudad: string;
-//         comuna: string;
-//         telefono: string;
-//     };
-//     datosEnvio: {
-//         servicioPaqueteria: string;
-//         tiempoEntrega: string;
-//         costoEnvio: number;
-//     };
-//     datosPago: {
-//         metodoPago: string;
-//     };
-//     totalPagar: number;
-//     comentarios?: string;
-// }
 import { ApiProperty } from '@nestjs/swagger';
 import { ProductoEnCarritoResponseDTO } from "./producto-en-carrito-response.dto";
 import { ResumenCompraResponseDTO } from "./resumen-compra-response.dto";
