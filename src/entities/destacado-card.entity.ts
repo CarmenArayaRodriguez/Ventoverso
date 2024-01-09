@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { SeccionDestacado } from '../enums/seccion-destacado.enum';
 import { CategoriaProducto } from 'src/enums/categoria-producto.enum';
 

@@ -1,7 +1,6 @@
 import { Controller, Post, Body, HttpException, HttpStatus, Put, Param, Delete, Get, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { CrearUsuarioDTO } from 'src/dto/crear-nuevo-usuario.dto';
-import { Cliente } from 'src/entities/cliente.entity';
 import { JWTGuard } from 'src/jwt.guard';
 import { Roles } from 'src/roles.decorador';
 import { RolesGuard } from 'src/roles.guard';

@@ -1,9 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Cliente } from './cliente.entity';
-import { Producto } from './producto.entity';
 import { MetodoPago } from './metodo-de-pago.entity';
 import { MetodoEnvio } from './metodo-de-envio.entity';
-import { Carrito } from './carrito.entity';
 import { DireccionEnvio } from './direccion-envio.entity';
 
 @Entity('compra')

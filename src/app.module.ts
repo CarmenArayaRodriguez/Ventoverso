@@ -1,11 +1,7 @@
 import { Module } from '@nestjs/common';
-// import { CatalogoDeProductosModule } from './modules/catalogo-de-productos.module';
 import { ProductoModule } from './modules/producto.module';
-// import { ServicioAlClienteModule } from './modules/servicio-al-cliente.module';
-// import { CarritoDeComprasModule } from './modules/carrito-de-compras.module';
 import { PerfilDeUsuarioModule } from './modules/perfil-de-usuario.module';
 import { BlogYNoticiasModule } from './modules/blog-y-noticias.module';
-// import { ReservasDeCitaModule } from './modules/reservas-de-cita.module';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Producto } from './entities/producto.entity';
