@@ -229,7 +229,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER login
   const loginOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Login API')
     .setDescription('API para el login')
     .setVersion('1.0')
     .addBearerAuth(
@@ -244,7 +244,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER lista de categorias y subcategorias
   const categoriaOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Lista de categorías API')
     .setDescription('API para lista de categorias y subcategorias')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
@@ -257,7 +257,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER lista de marcas
   const marcaOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Marca API')
     .setDescription('API para lista de marcas')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
@@ -270,7 +270,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER regiones
   const regionOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Regiones API')
     .setDescription('API para regiones')
     .setVersion('1.0')
     .build();
@@ -281,7 +281,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER ciudades
   const ciudadOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Ciudades API')
     .setDescription('API para ciudades')
     .setVersion('1.0')
     .build();
@@ -292,7 +292,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER comunas
   const comunaOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Comunas API')
     .setDescription('API para comunas')
     .setVersion('1.0')
     .build();
@@ -303,7 +303,7 @@ async function bootstrap() {
 
   //CONFIGURACION SWAGGER agenda
   const agendaOptions = new DocumentBuilder()
-    .setTitle('Ventoverso login API')
+    .setTitle('Ventoverso Agenda API')
     .setDescription('API para agenda')
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'autenticacionJWT')
