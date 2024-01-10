@@ -238,10 +238,10 @@ CREATE TABLE `detalle_producto` (
 );
 
 CREATE TABLE `agenda` (
-  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
   `nombre` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `clienteRutCliente` varchar(12),
+  `clienteRutCliente` varchar(12) NOT NULL,
   `telefono` varchar(255),
   `instrumentos` text,
   `fecha` datetime NOT NULL
@@ -261,7 +261,7 @@ ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (
 
 ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id`);
 
-ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_region`) REFERENCES `regionEnvio` (`id`);
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
 ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
 
