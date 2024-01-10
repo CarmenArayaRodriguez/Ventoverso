@@ -263,7 +263,7 @@ ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (
 
 ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
-ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
 ALTER TABLE `comuna` ADD FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id`);
 
@@ -301,7 +301,7 @@ ALTER TABLE `envio` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
 
 ALTER TABLE `envio` ADD FOREIGN KEY (`id_metodoEnvio`) REFERENCES `metodoEnvio` (`id`);
 
-ALTER TABLE `envio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+ALTER TABLE `envio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
 ALTER TABLE `pago` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
 
