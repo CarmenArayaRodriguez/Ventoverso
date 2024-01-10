@@ -1,4 +1,4 @@
-import { Controller, Request, Post, Body, Get, UseGuards, Query, Param, Delete, Put, Logger } from '@nestjs/common';
+import { Controller, Request, Post, Body, Get, UseGuards, Query, Param, Delete, Put, Logger, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { CitaService } from 'src/services/cita.service';
 import { CitaDTO } from 'src/dto/cita.dto';
 import { RolesGuard } from 'src/roles.guard';
@@ -64,6 +64,7 @@ export class CitaController {
         this.logger.log(`Cita con ID: ${id} actualizada exitosamente`);
         return actualizaCita;
     }
+
     @Delete(':id')
     @UseGuards(JWTGuard, RolesGuard)
     @Roles('USUARIO')
@@ -73,8 +74,16 @@ export class CitaController {
     @ApiResponse({ status: 404, description: 'Cita no encontrada' })
     async eliminarCita(@Param('id') id: number) {
         this.logger.log(`Solicitud recibida para eliminar la cita con ID: ${id}`);
-        await this.citaService.eliminarCita(id);
-        this.logger.log(`Cita con ID: ${id} eliminada exitosamente`);
+        try {
+            await this.citaService.eliminarCita(id);
+            this.logger.log(`Cita con ID: ${id} eliminada exitosamente`);
+            return { mensaje: 'Cita eliminada exitosamente' };
+        } catch (error) {
+            if (error instanceof NotFoundException) {
+                throw error;
+            }
+            throw new InternalServerErrorException('Error al eliminar la cita');
+        }
     }
 
 }
