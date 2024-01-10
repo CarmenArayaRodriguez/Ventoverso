@@ -45,12 +45,12 @@ table direccionEnvio {
   depto_casa_oficina int
   id_ciudad integer [ref: > ciudad.id]
   id_comuna integer [ref: > comuna.id]
-  id_regionEnvio integer [ref: > regionEnvio.id]
+  id_region integer [ref: > regionEnvio.id]
   
 }
 
 
-table regionEnvio {
+table regionEnvio{
 id integer [increment,pk]
 nombre varchar(100)
 codigo_postal bigint
@@ -260,12 +260,13 @@ origen varchar(255)
 
 }
 
+
 table agenda {
-id integer [increment,pk]
-rut_cliente varchar(10) [ref: > cliente.rut_cliente]
-fecha date
-nombre varchar(255)
-email varchar(255)
-
+  id integer [increment, pk]
+  nombre varchar(255) [not null]
+  email varchar(255) [not null]
+  clienteRutCliente varchar(12) [ref: > cliente.rut_cliente]
+  telefono varchar(255)
+  instrumentos text
+  fecha datetime [not null]
 }
-
