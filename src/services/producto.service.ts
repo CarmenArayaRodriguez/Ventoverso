@@ -158,37 +158,61 @@ export class ProductoService {
         }
     }
 
-
     async actualizarProducto(id: number, actualizarProductoDto: ActualizarProductoDTO): Promise<ProductoDetalleResponseDTO> {
         this.logger.log('Iniciando actualización de producto. ID:', id, 'Datos:', actualizarProductoDto);
-        // Inicia el proceso de actualización de un producto existente.
-        try {
-            // Busca el producto existente en la base de datos.
-            let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes', 'detalleProducto'] });
-            this.logger.log('Producto encontrado para actualizar:', producto);
 
-            // Si no se encuentra el producto, lanza una excepción.
+        try {
+            let producto = await this.productoRepository.findOne({ where: { id }, relations: ['imagenes', 'detalleProducto', 'categoria', 'subcategoria', 'marca'] });
+
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${id} no encontrado`);
             }
 
-            const { imagenes, detalles, ...actualizarProductoInfo } = actualizarProductoDto;
+            const { imagenes, detalles, id_categoria, id_subcategoria, id_marcas, ...actualizarProductoInfo } = actualizarProductoDto;
 
-            // Actualiza el producto con la nueva información del DTO.
+            // Actualiza la información básica del producto
             producto = this.productoRepository.merge(producto, actualizarProductoInfo);
-            await this.productoRepository.save(producto);
 
-            // Actualiza los detalles del producto si están presentes.
-            if (detalles && producto.detalleProducto) {
-                const detalleProducto = await this.detalleProductoRepository.findOne({ where: { producto: { id } } });
-                if (detalleProducto) {
-                    this.detalleProductoRepository.merge(detalleProducto, detalles);
-                    await this.detalleProductoRepository.save(detalleProducto);
+            // Actualizar la categoría si se proporciona
+            if (id_categoria) {
+                const categoria = await this.categoriaRepository.findOne({ where: { id: id_categoria } });
+                if (categoria) {
+                    producto.categoria = categoria;
                 }
             }
 
-            // Guarda las nuevas imágenes del producto si están presentes.
+            // Actualizar la subcategoría si se proporciona
+            if (id_subcategoria) {
+                const subcategoria = await this.subcategoriaRepository.findOne({ where: { id: id_subcategoria } });
+                if (subcategoria) {
+                    producto.subcategoria = subcategoria;
+                }
+            }
+
+            // Actualizar la marca si se proporciona
+            if (id_marcas) {
+                const marca = await this.marcaRepository.findOne({ where: { id: id_marcas } });
+                if (marca) {
+                    producto.marca = marca;
+                }
+            }
+
+            await this.productoRepository.save(producto);
+
+            // Actualiza los detalles del producto si están presentes
+            if (detalles) {
+                let detalleProducto = producto.detalleProducto;
+                if (!detalleProducto) {
+                    detalleProducto = new DetalleProducto();
+                    detalleProducto.producto = producto;
+                }
+                this.detalleProductoRepository.merge(detalleProducto, detalles);
+                await this.detalleProductoRepository.save(detalleProducto);
+            }
+
+            // Actualiza las imágenes si están presentes
             if (imagenes && imagenes.length > 0) {
+
                 for (const imagenDto of imagenes) {
                     this.logger.log('Procesando imagen:', imagenDto.nombre);
 
@@ -203,12 +227,14 @@ export class ProductoService {
                     await this.imagenProductoRepository.save(imagenProducto);
                     this.logger.log('Imagen guardada:', imagenProducto);
                 }
+
             }
 
             // Busca el producto completo actualizado para devolver en la respuesta.
+
             const productoCompleto = await this.productoRepository.findOne({
                 where: { id },
-                relations: ['categoria', 'marca', 'imagenes', 'detalleProducto']
+                relations: ['categoria', 'subcategoria', 'marca', 'imagenes', 'detalleProducto']
             });
 
             if (!productoCompleto) {
@@ -309,7 +335,9 @@ export class ProductoService {
         }
 
         return productos.map(producto => ProductoMapper.toCatalogoSubcategoriaDto(producto));
+
     }
+
 }
 
 

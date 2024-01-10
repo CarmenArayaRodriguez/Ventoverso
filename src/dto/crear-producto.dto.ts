@@ -64,7 +64,7 @@ export class CrearProductoDTO {
 
     @ApiProperty({
         description: 'Precio del producto',
-        example: 99.99
+        example: 99999
     })
     @IsNumber()
     @IsNotEmpty()
