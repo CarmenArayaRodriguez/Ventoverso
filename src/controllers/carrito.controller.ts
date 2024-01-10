@@ -116,20 +116,6 @@ export class CarritoController {
         }
     }
 
-    @Get('/mi-carrito')
-    @UseGuards(JWTGuard, RolesGuard)
-    @Roles('USUARIO')
-    @ApiBearerAuth('autenticacionJWT')
-    @ApiOperation({ summary: 'Obtener mi carrito', description: 'Recupera el carrito de compras del usuario autenticado.' })
-    @ApiResponse({ status: 200, description: 'Carrito recuperado con éxito', type: CarritoConProductosResponseDTO })  // Asumiendo que tienes un DTO para la respuesta
-    @ApiResponse({ status: 404, description: 'Carrito no encontrado' })
-    async obtenerCarrito(@Request() req) {
-        const rutCliente = req.user.rutCliente;
-        this.logger.debug('Intentando obtener carrito', { rutCliente });
-        const carrito = await this.carritoService.obtenerCarritoPorCliente(rutCliente);
-        this.logger.log('Carrito obtenido con éxito', { rutCliente, carritoId: carrito?.id });
-        return carrito;
-    }
 
     @Post('/:idCarrito/aplicar-cupon')
     @UseGuards(JWTGuard, RolesGuard)

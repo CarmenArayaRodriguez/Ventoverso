@@ -70,6 +70,7 @@ export class AutenticacionService {
             // Crear el payload para el token JWT con información relevante del usuario.
             const payload = {
                 idCliente: usuario.rut_cliente,
+                rutCompleto: `${usuario.rut_cliente}-${usuario.dv_cliente}`,
                 nombre: usuario.nombre,
                 apellido: usuario.apellido,
                 correo: usuario.email,
