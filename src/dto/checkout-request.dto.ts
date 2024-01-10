@@ -37,12 +37,12 @@ export class CheckoutRequestDTO {
     @IsEmail()
     email: string;
 
-    @ApiProperty({
-        description: 'La dirección del usuario',
-        example: 'Calle Falsa 123',
-    })
-    @IsNotEmpty()
-    direccion: string;
+    // @ApiProperty({
+    //     description: 'La dirección del usuario',
+    //     example: 'Calle Falsa 123',
+    // })
+    // @IsNotEmpty()
+    // direccion: string;
 
     @ApiProperty({
         description: 'La región del usuario',
