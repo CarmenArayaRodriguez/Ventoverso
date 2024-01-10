@@ -238,13 +238,13 @@ CREATE TABLE `detalle_producto` (
 );
 
 CREATE TABLE `agenda` (
-  `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `nombre` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `clienteRutCliente` VARCHAR(12) NOT NULL,
-  `telefono` VARCHAR(255),
-  `instrumentos` TEXT,
-  `fecha` DATETIME NOT NULL
+  `id` integer AUTO_INCREMENT PRIMARY KEY,
+  `nombre` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `clienteRutCliente` varchar(12) NOT NULL,
+  `telefono` varchar(255),
+  `instrumentos` text,
+  `fecha` datetime NOT NULL
 );
 
 ALTER TABLE `compra` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
@@ -261,7 +261,7 @@ ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (
 
 ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id`);
 
-ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
 ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
 
@@ -317,4 +317,4 @@ ALTER TABLE `comentario` ADD FOREIGN KEY (`id_calificacion`) REFERENCES `calific
 
 ALTER TABLE `detalle_producto` ADD FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`);
 
-ALTER TABLE `agenda` ADD FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut_cliente`);
+ALTER TABLE `agenda` ADD FOREIGN KEY (`clienteRutCliente`) REFERENCES `cliente` (`rut_cliente`);
