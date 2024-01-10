@@ -245,7 +245,6 @@ export class ProductoService {
     }
 
     async eliminarProducto(id: number): Promise<void> {
-        // Inicia el proceso de eliminación de un producto.
         try {
             // Busca el producto existente en la base de datos.
             const producto = await this.productoRepository.findOne({ where: { id } });
@@ -253,22 +252,22 @@ export class ProductoService {
             if (!producto) {
                 throw new NotFoundException(`Producto con ID ${id} no encontrado`);
             }
-            // Utiliza una transacción para eliminar imágenes relacionadas y luego el producto.
+
+            // Utiliza una transacción para eliminar primero los detalles del producto.
             await this.productoRepository.manager.transaction(async entityManager => {
+                await entityManager.delete(DetalleProducto, { producto: { id } });
                 await entityManager.delete(ImagenProducto, { producto: { id } });
                 await entityManager.delete(Producto, { id });
             });
-
         } catch (error) {
             if (error instanceof NotFoundException) {
-
                 throw error;
             }
-
             this.logger.error(`Error al eliminar producto con ID: ${id}`, error);
             throw new InternalServerErrorException('Error al eliminar producto');
         }
     }
+
 
     async obtenerProductosDestacados(): Promise<DestacadoCardResponseDTO[]> {
         try {
