@@ -37,14 +37,14 @@ CREATE TABLE `detalleCompra` (
 CREATE TABLE `direccionEnvio` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `rut_cliente` varchar(10),
-  `calle_numero` int,
-  `depto_casa_oficina` int,
+  `calle_numero` varchar(255),
+  `depto_casa_oficina` varchar(255),
   `id_ciudad` integer,
   `id_comuna` integer,
-  `id_region` integer
+  `id_regionEnvio` integer
 );
 
-CREATE TABLE `regionEnvio` (
+CREATE TABLE `region` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(100),
   `codigo_postal` bigint
@@ -58,7 +58,7 @@ CREATE TABLE `ciudad` (
 
 CREATE TABLE `comuna` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `id_ciudad` integer,
+  `ciudadId` integer,
   `nombre` varchar(255)
 );
 
@@ -263,7 +263,7 @@ ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (
 
 ALTER TABLE `direccionEnvio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
-ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+ALTER TABLE `ciudad` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
 ALTER TABLE `comuna` ADD FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id`);
 
@@ -301,7 +301,7 @@ ALTER TABLE `envio` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
 
 ALTER TABLE `envio` ADD FOREIGN KEY (`id_metodoEnvio`) REFERENCES `metodoEnvio` (`id`);
 
-ALTER TABLE `envio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `regionEnvio` (`id`);
+ALTER TABLE `envio` ADD FOREIGN KEY (`id_regionEnvio`) REFERENCES `region` (`id`);
 
 ALTER TABLE `pago` ADD FOREIGN KEY (`id_compra`) REFERENCES `compra` (`id`);
 
