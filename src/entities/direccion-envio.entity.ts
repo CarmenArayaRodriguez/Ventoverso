@@ -12,8 +12,8 @@ export class DireccionEnvio {
     @Column()
     rut_cliente: string;
 
-    @Column()
-    direccion: string;
+    // @Column()
+    // direccion: string;
 
     @ManyToOne(() => Ciudad)
     @JoinColumn({ name: 'id_ciudad' })
