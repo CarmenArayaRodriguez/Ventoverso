@@ -81,9 +81,5 @@ npm run build
 npm run start:prod
 ```
 
-## Soporte
-
-Para resolver cualquier duda relacionada con la implementación y funcionamiento del sistema, por favor, abra un issue en este repositorio o contacte al equipo de desarrollo a través de los correos [carmenarayarodriguez@gmail.com](mailto:carmenarayarodriguez@gmail.com) o [csmartinconcha@gmail.com](mailto:csmartinconcha@gmail.com).
-
 
 
